@@ -9,3 +9,7 @@ AllCops:
   NewCops: enable
   Exclude:
     - 'db/migrate/20230408013630_devise_token_auth_create_users.rb'
+    - 'db/schema.rb'
+
+Style/Documentation:
+  Enabled: false

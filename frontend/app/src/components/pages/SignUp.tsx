@@ -17,7 +17,7 @@ import { AttachmentIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { PrimaryButton } from "../atoms/button/PrimaryButton";
 import { AuthContext } from "../../App";
 import { signUp } from "../../lib/api/auth";
-import { SignUpFormData} from "../../interfaces/Auth";
+import { SignUpFormData } from "../../interfaces/Auth";
 import { useMessage } from "../../hooks/useMessage";
 
 export const SignUp: FC = () => {
@@ -32,40 +32,40 @@ export const SignUp: FC = () => {
   const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
   const [show, setShow] = useState<boolean>(false);
   const [image, setImage] = useState<string>("");
-  const [preview, setPreview] = useState<string>("")
+  const [preview, setPreview] = useState<string>("");
 
   const handleClick = () => setShow(!show);
 
   // アップロードした画像のデータを取得
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const uploadImage = useCallback((e: any) => {
-    const file = e.target.files[0]
-    setImage(file)
-  }, [])
+    const file = e.target.files[0];
+    setImage(file);
+  }, []);
 
   // 画像プレビューを表示
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const previewImage = useCallback((e: any) => {
-    const file = e.target.files[0]
-    setPreview(window.URL.createObjectURL(file))
-  }, [])
-  
+    const file = e.target.files[0];
+    setPreview(window.URL.createObjectURL(file));
+  }, []);
+
   const createFormData = (): SignUpFormData => {
-    const formData = new FormData()
+    const formData = new FormData();
 
-    formData.append("name", name)
-    formData.append("email", `${name}@temp.com`)
-    formData.append("password", password)
-    formData.append("passwordConfirmation", passwordConfirmation)
-    formData.append("image", image)
+    formData.append("name", name);
+    formData.append("email", `${name}@temp.com`);
+    formData.append("password", password);
+    formData.append("passwordConfirmation", passwordConfirmation);
+    formData.append("image", image);
 
-    return formData
-  }
+    return formData;
+  };
 
   const onClickSignUp = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const data = createFormData()
+    const data = createFormData();
 
     try {
       const res = await signUp(data);
@@ -83,16 +83,15 @@ export const SignUp: FC = () => {
         showMessage({ title: "サインアップしました", status: "success" });
         navigate("/");
 
-        setName("")
-        setPassword("")
-        setPasswordConfirmation("")
+        setName("");
+        setPassword("");
+        setPasswordConfirmation("");
       }
     } catch (err) {
       console.log(err);
       showMessage({ title: "サインアップできません", status: "error" });
     }
   };
-
 
   const onChangeName = (e: ChangeEvent<HTMLInputElement>) =>
     setName(e.target.value);
@@ -109,30 +108,27 @@ export const SignUp: FC = () => {
         </Heading>
         <Divider my={4} />
         <Stack spacing={4} py={4} px={10}>
-        <label htmlFor="icon-button-file">
-          <IconButton
-            colorScheme="blue"
-            aria-label="upload picture"
-            icon={<AttachmentIcon />}
-            onClick={() => {
-              document.getElementById("icon-button-file")?.click();
-            }}
-          />
-          <input
-            accept="image/*"
-            id="icon-button-file"
-            type="file"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              uploadImage(e)
-              previewImage(e)
-            }}
-            style={{ display: "none" }}
-          />
-        </label>
-        <img
-          src={preview}
-          alt="preview img"
-        />
+          <label htmlFor="icon-button-file">
+            <IconButton
+              colorScheme="blue"
+              aria-label="upload picture"
+              icon={<AttachmentIcon />}
+              onClick={() => {
+                document.getElementById("icon-button-file")?.click();
+              }}
+            />
+            <input
+              accept="image/*"
+              id="icon-button-file"
+              type="file"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                uploadImage(e);
+                previewImage(e);
+              }}
+              style={{ display: "none" }}
+            />
+          </label>
+          <img src={preview} alt="preview img" />
           <Input placeholder="名前" value={name} onChange={onChangeName} />
           <InputGroup>
             <Input
@@ -160,9 +156,7 @@ export const SignUp: FC = () => {
           <PrimaryButton
             onClick={onClickSignUp}
             isDisabled={
-              !name || !password || !passwordConfirmation
-                ? true
-                : false
+              !name || !password || !passwordConfirmation ? true : false
             }
           >
             サインアップ
