@@ -1,6 +1,7 @@
 class CreateReports < ActiveRecord::Migration[7.0]
   def change
     create_table :reports do |t|
+      t.date :created_date
       t.string :todays_goal
       t.integer :study_time
       t.string :goal_review

@@ -28,6 +28,9 @@ backend/tmp/storage/*
 # Ignore master key for decrypting credentials and more.
 backend/config/master.key
 
+backend/.env
+backend/public/uploads/user
+
 # dependencies
 frontend/app/node_modules
 frontend/app/.pnp
@@ -51,4 +54,3 @@ frontend/appyarn-debug.log*
 frontend/appyarn-error.log*
 
 .env
-backend/.env
