@@ -28,7 +28,7 @@ export const Header: FC = () => {
             fontSize={{ base: "md", md: "lg" }}
             onClick={() => navigate("/")}
           >
-            Zenn-Login
+            ProgMinder
           </Heading>
         </Flex>
         <Box display={{ base: "none", md: "block" }}>

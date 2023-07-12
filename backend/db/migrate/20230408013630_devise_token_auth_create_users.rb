@@ -33,6 +33,7 @@ class DeviseTokenAuthCreateUsers < ActiveRecord::Migration[7.0]
       t.string :nickname
       t.string :image
       t.string :email
+      t.string :bio
 
       ## Tokens
       t.text :tokens

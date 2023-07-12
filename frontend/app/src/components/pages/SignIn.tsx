@@ -46,7 +46,6 @@ export const SignIn: FC = () => {
       console.log(res);
 
       if (res.status === 200) {
-        // ログインに成功した場合はCookieに各値を格納
         Cookies.set("_access_token", res.headers["access-token"]);
         Cookies.set("_client", res.headers["client"]);
         Cookies.set("_uid", res.headers["uid"]);
@@ -72,12 +71,12 @@ export const SignIn: FC = () => {
     <Flex align="center" justify="center" height="100vh">
       <Box bg="white" w="sm" p={4} borderRadius="md" shadow="md">
         <Heading as="h1" size="lg" textAlign="center">
-          Zenn-Login
+          ProgMinder
         </Heading>
         <Divider my={4} />
         <Stack spacing={4} py={4} px={10}>
           <Input
-            placeholder="ユーザーネーム"
+            placeholder="ユーザーID"
             value={name}
             onChange={onChangeName}
           />

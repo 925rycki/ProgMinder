@@ -51,6 +51,10 @@ export const MenuDrawerAuthButtons: FC<Props> = (props) => {
           <Button w="100%" onClick={() => navigate("/")}>
             ホーム
           </Button>
+          <Button w="100%" onClick={() => navigate("/timeline")}>タイムライン</Button>
+          <Button w="100%" onClick={() => navigate("/report")}>レポート</Button>
+          <Button w="100%" onClick={() => navigate("/log")}>ログ</Button>
+          <Button w="100%" onClick={() => navigate("/profile")}>プロフィール</Button>
           <Button w="100%" onClick={onClickSignOut}>
             サインアウト
           </Button>
