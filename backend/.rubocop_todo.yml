@@ -235,3 +235,12 @@ Style/WordArray:
 # URISchemes: http, https
 Layout/LineLength:
   Max: 198
+
+RSpec/PendingWithoutReason:
+  Enabled: false
+
+Lint/EmptyBlock:
+  Enabled: false
+
+Rails/FilePath:
+  Enabled: false

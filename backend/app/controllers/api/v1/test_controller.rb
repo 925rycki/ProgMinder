@@ -1,5 +1,9 @@
-class Api::V1::TestController < ApplicationController
-  def index
-    render json: { message: 'Hello World!' }
+module Api
+  module V1
+    class TestController < ApplicationController
+      def index
+        render json: { message: 'Hello World!' }
+      end
+    end
   end
 end

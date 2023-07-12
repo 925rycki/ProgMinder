@@ -8,4 +8,4 @@ export type ReportType = {
   learnings: string;
   thoughts: string;
   tomorrowsGoal: string;
-}
+};

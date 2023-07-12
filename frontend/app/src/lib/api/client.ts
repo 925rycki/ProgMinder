@@ -13,11 +13,11 @@ const client = applyCaseMiddleware(
   options
 );
 
-client.interceptors.request.use(config => {
-  config.headers['access-token'] = Cookies.get('_access_token');
-  config.headers['uid'] = Cookies.get('_uid');
-  config.headers['client'] = Cookies.get('_client');
-  
+client.interceptors.request.use((config) => {
+  config.headers["access-token"] = Cookies.get("_access_token");
+  config.headers["uid"] = Cookies.get("_uid");
+  config.headers["client"] = Cookies.get("_client");
+
   return config;
 });
 

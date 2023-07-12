@@ -12,7 +12,9 @@ export const Timeline: FC = () => {
 
   return (
     <Box>
-      <Heading as="h1" size="xl" mb={5}>タイムラインページです。</Heading>
+      <Heading as="h1" size="xl" mb={5}>
+        タイムラインページです。
+      </Heading>
       <Stack spacing={5}>
         {reports.map((report) => (
           <Box key={report.id} p={5} shadow="md" borderWidth="1px">
@@ -28,5 +30,4 @@ export const Timeline: FC = () => {
       </Stack>
     </Box>
   );
-  
 };
