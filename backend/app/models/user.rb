@@ -9,5 +9,7 @@ class User < ApplicationRecord
 
   validates :name, presence: true, uniqueness: true
 
+  has_many :reports
+
   mount_uploader :image, ImageUploader
 end
