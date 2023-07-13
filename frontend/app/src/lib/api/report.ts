@@ -8,3 +8,7 @@ export const getReports = () => {
 export const createReport = (data: ReportType) => {
   return client.post("/reports", data);
 };
+
+export const getUserReports = () => {
+  return client.get("/user_reports");
+}

@@ -9,7 +9,6 @@ export const Timeline: FC = () => {
   useEffect(() => {
     getReports().then((response) => setReports(response.data));
   }, []);
-
   return (
     <Box>
       <Heading as="h1" size="xl" mb={5}>
@@ -25,6 +24,7 @@ export const Timeline: FC = () => {
             <Text>学んだこと：{report.learnings}</Text>
             <Text>感想：{report.thoughts}</Text>
             <Text>明日の目標：{report.tomorrowsGoal}</Text>
+            <Text>id：{report.id}</Text>
           </Box>
         ))}
       </Stack>

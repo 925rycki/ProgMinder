@@ -12,6 +12,8 @@ Rails.application.routes.draw do
       end
 
       resources :reports, only: [:index, :create]
+      
+      get '/user_reports', to: 'reports#user_reports'
     end
   end
 end
