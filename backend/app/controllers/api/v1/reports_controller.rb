@@ -19,6 +19,11 @@ module Api
         end
       end
 
+      def show
+        report = Report.find(params[:id])
+        render json: report
+      end
+
       def update
         report = Report.find(params[:id])
         if current_api_v1_user&.id == report.user_id
@@ -29,6 +34,16 @@ module Api
           end
         else
           render json: { message: "このレポートの更新は許可されていません" }, status: :forbidden
+        end
+      end
+
+      def destroy
+        report = Report.find(params[:id])
+        if current_api_v1_user&.id == report.user_id
+          report.destroy
+          head :no_content
+        else
+          render json: { message: "このレポートの削除は許可されていません" }, status: :forbidden
         end
       end
 

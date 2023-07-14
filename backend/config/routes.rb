@@ -11,8 +11,8 @@ Rails.application.routes.draw do
         resources :sessions, only: [:index]
       end
 
-      resources :reports, only: [:index, :create]
-      
+      resources :reports, only: [:index, :create, :update, :show, :destroy]
+
       get '/user_reports', to: 'reports#user_reports'
     end
   end
