@@ -128,7 +128,11 @@ export const SignUp: FC = () => {
             />
           </label>
           <img src={preview} alt="preview img" />
-          <Input placeholder="ユーザーID(半角英数字)" value={name} onChange={onChangeName} />
+          <Input
+            placeholder="ユーザーID(半角英数字)"
+            value={name}
+            onChange={onChangeName}
+          />
           <InputGroup>
             <Input
               placeholder="パスワード"

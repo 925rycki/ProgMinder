@@ -10,6 +10,7 @@ import { Timeline } from "../components/pages/Timeline";
 import { Report } from "../components/pages/Report";
 import { Log } from "../components/pages/Log";
 import { Profile } from "../components/pages/Profile";
+import { ReportDetail } from "../components/pages/ReportDetail";
 
 export const Router: FC = () => {
   return (
@@ -53,6 +54,14 @@ export const Router: FC = () => {
         element={
           <HeaderLayout>
             <Profile />
+          </HeaderLayout>
+        }
+      />
+      <Route
+        path="/reports/:id"
+        element={
+          <HeaderLayout>
+            <ReportDetail />
           </HeaderLayout>
         }
       />

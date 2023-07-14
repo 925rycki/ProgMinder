@@ -48,10 +48,16 @@ export const AuthButtons: FC<Props> = (props) => {
     if (isSignedIn) {
       return (
         <>
-          <PrimaryButton onClick={() => navigate("/timeline")}>タイムライン</PrimaryButton>
-          <PrimaryButton onClick={() => navigate("/report")}>レポート</PrimaryButton>
+          <PrimaryButton onClick={() => navigate("/timeline")}>
+            タイムライン
+          </PrimaryButton>
+          <PrimaryButton onClick={() => navigate("/report")}>
+            レポート
+          </PrimaryButton>
           <PrimaryButton onClick={() => navigate("/log")}>ログ</PrimaryButton>
-          <PrimaryButton onClick={() => navigate("/profile")}>プロフィール</PrimaryButton>
+          <PrimaryButton onClick={() => navigate("/profile")}>
+            プロフィール
+          </PrimaryButton>
           <PrimaryButton onClick={onClickSignOut}>サインアウト</PrimaryButton>
         </>
       );

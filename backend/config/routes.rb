@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
+      resources :test, only: [:index]
+
       mount_devise_token_auth_for 'User', at: 'auth', controllers: {
         registrations: 'api/v1/auth/registrations'
       }
@@ -9,7 +11,9 @@ Rails.application.routes.draw do
         resources :sessions, only: [:index]
       end
 
-      resources :reports, only: [:index, :create]
+      resources :reports, only: [:index, :create, :update, :show, :destroy]
+
+      get '/user_reports', to: 'reports#user_reports'
     end
   end
 end
