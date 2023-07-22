@@ -23,4 +23,4 @@ export const getReportDetail = (id: number) => {
 
 export const deleteReport = (id: number) => {
   return client.delete(`/reports/${id}`);
-}
+};

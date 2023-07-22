@@ -12,22 +12,24 @@ export const Log: FC = () => {
     getUserReports().then((response) => setReports(response.data));
   }, []);
 
+  const formatDate = (dateString: string) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' } as const;
+    return new Date(dateString).toLocaleDateString('ja-JP', options);
+  }
+
   return (
     <Box>
-      <Heading as="h1" size="xl" mb={5}>
-        ログページです。
-      </Heading>
       <Stack spacing={5}>
         {reports.map((report) => (
           <Box key={report.id} p={5} shadow="md" borderWidth="1px">
-            <Heading fontSize="xl">今日の目標：{report.todaysGoal}</Heading>
+            <Heading fontSize="xl">日付：{formatDate(report.createdDate)}</Heading>
+            <Text>本日の目標：{report.tomorrowsGoal}</Text>
             <Text>学習時間：{report.studyTime}時間</Text>
             <Text>達成度：{report.goalReview}</Text>
             <Text>困難な点：{report.challenges}</Text>
             <Text>学んだこと：{report.learnings}</Text>
             <Text>感想：{report.thoughts}</Text>
             <Text>明日の目標：{report.tomorrowsGoal}</Text>
-            <Text>id:{report.id}</Text>
             <Button onClick={() => navigate(`/reports/${report.id}`)}>
               編集
             </Button>

@@ -2,7 +2,6 @@ import { FC, useContext, useState } from "react";
 import { createReport } from "../../lib/api/report";
 import {
   Box,
-  Button,
   FormControl,
   FormLabel,
   Input,
@@ -11,9 +10,13 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { AuthContext } from "../../App";
+import { PrimaryButton } from "../atoms/button/PrimaryButton";
+import { useMessage } from "../../hooks/useMessage";
 
 export const Report: FC = () => {
   const { currentUser } = useContext(AuthContext);
+
+  const { showMessage } = useMessage();
 
   const [createdDate, setCreatedDate] = useState<string>(
     new Date().toISOString().split("T")[0]
@@ -24,20 +27,28 @@ export const Report: FC = () => {
   const [challenges, setChallenges] = useState<string>("");
   const [learnings, setLearnings] = useState<string>("");
   const [thoughts, setThoughts] = useState<string>("");
-  const [tommorowsGoal, setTommorowsGoal] = useState<string>("");
+  const [tomorrowsGoal, setTomorrowsGoal] = useState<string>("");
 
   const handleCreateReport = async () => {
-    const response = await createReport({
-      createdDate: createdDate,
-      todaysGoal: todaysGoal,
-      studyTime: studyTime,
-      goalReview: goalReview,
-      challenges: challenges,
-      learnings: learnings,
-      thoughts: thoughts,
-      tomorrowsGoal: tommorowsGoal,
-    });
-
+    try {
+      await createReport({
+        createdDate: createdDate,
+        todaysGoal: todaysGoal,
+        studyTime: studyTime,
+        goalReview: goalReview,
+        challenges: challenges,
+        learnings: learnings,
+        thoughts: thoughts,
+        tomorrowsGoal: tomorrowsGoal,
+      });
+  
+      showMessage({ title: "日報を作成しました", status: "success" });
+    } catch (error) {
+      showMessage({ title: "日報の作成に失敗しました", status: "error"});
+      console.error(error);
+      return;
+    }
+  
     setCreatedDate(new Date().toISOString().split("T")[0]);
     setTodaysGoal("");
     setStudyTime(0);
@@ -45,8 +56,9 @@ export const Report: FC = () => {
     setChallenges("");
     setLearnings("");
     setThoughts("");
-    setTommorowsGoal("");
+    setTomorrowsGoal("");
   };
+  
 
   return (
     <>
@@ -54,7 +66,7 @@ export const Report: FC = () => {
 
       <Box p={4}>
         <FormControl id="createdDate">
-          <FormLabel>作成日</FormLabel>
+          <FormLabel>日付</FormLabel>
           <Input
             type="date"
             value={createdDate}
@@ -63,7 +75,7 @@ export const Report: FC = () => {
         </FormControl>
 
         <FormControl id="todaysGoal">
-          <FormLabel>今日の目標</FormLabel>
+          <FormLabel>本日の目標(TODO目標/できるようになりたいこと)</FormLabel>
           <Input
             type="text"
             value={todaysGoal}
@@ -72,7 +84,7 @@ export const Report: FC = () => {
         </FormControl>
 
         <FormControl id="studyTime">
-          <FormLabel>勉強時間</FormLabel>
+          <FormLabel>学習時間</FormLabel>
           <NumberInput
             value={studyTime}
             onChange={(valueString) => setStudyTime(Number(valueString))}
@@ -84,7 +96,9 @@ export const Report: FC = () => {
         </FormControl>
 
         <FormControl id="goalReview">
-          <FormLabel>目標レビュー</FormLabel>
+          <FormLabel>
+            目標振り返り(TODO進捗/できるようになりたいこと振り返り)
+          </FormLabel>
           <Textarea
             value={goalReview}
             onChange={(e) => setGoalReview(e.target.value)}
@@ -92,7 +106,9 @@ export const Report: FC = () => {
         </FormControl>
 
         <FormControl id="challenges">
-          <FormLabel>課題</FormLabel>
+          <FormLabel>
+            詰まっていること(実現したいこと/現状/行ったこと/仮説)
+          </FormLabel>
           <Textarea
             value={challenges}
             onChange={(e) => setChallenges(e.target.value)}
@@ -100,7 +116,7 @@ export const Report: FC = () => {
         </FormControl>
 
         <FormControl id="learnings">
-          <FormLabel>学び</FormLabel>
+          <FormLabel>学んだこと(新しい気付き、学び)</FormLabel>
           <Textarea
             value={learnings}
             onChange={(e) => setLearnings(e.target.value)}
@@ -108,25 +124,23 @@ export const Report: FC = () => {
         </FormControl>
 
         <FormControl id="thoughts">
-          <FormLabel>思考</FormLabel>
+          <FormLabel>感想(一日の感想、雑談)</FormLabel>
           <Textarea
             value={thoughts}
             onChange={(e) => setThoughts(e.target.value)}
           />
         </FormControl>
 
-        <FormControl id="tommorowsGoal">
-          <FormLabel>明日の目標</FormLabel>
+        <FormControl id="tomorrowsGoal">
+          <FormLabel>明日の目標(TODO目標/できるようになりたいこと)</FormLabel>
           <Input
             type="text"
-            value={tommorowsGoal}
-            onChange={(e) => setTommorowsGoal(e.target.value)}
+            value={tomorrowsGoal}
+            onChange={(e) => setTomorrowsGoal(e.target.value)}
           />
         </FormControl>
 
-        <Button onClick={handleCreateReport} mt={4}>
-          送信
-        </Button>
+        <PrimaryButton onClick={handleCreateReport}>日報作成</PrimaryButton>
       </Box>
     </>
   );
