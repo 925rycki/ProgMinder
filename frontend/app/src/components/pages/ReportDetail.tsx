@@ -1,8 +1,21 @@
 import { FC, useEffect, useState } from "react";
 import { ReportType } from "../../types/report";
-import { deleteReport, getReportDetail, updateReport } from "../../lib/api/report";
-import { Box, Button, FormControl, FormLabel, Heading, Input, NumberInput, NumberInputField, Stack, Text, Textarea } from "@chakra-ui/react";
+import {
+  deleteReport,
+  getReportDetail,
+  updateReport,
+} from "../../lib/api/report";
+import {
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  NumberInput,
+  NumberInputField,
+  Textarea,
+} from "@chakra-ui/react";
 import { useNavigate, useParams } from "react-router-dom";
+import { PrimaryButton } from "../atoms/button/PrimaryButton";
 
 export const ReportDetail: FC = () => {
   // const [report, setReport] = useState<ReportType>();
@@ -21,12 +34,12 @@ export const ReportDetail: FC = () => {
   const [challenges, setChallenges] = useState<string>("");
   const [learnings, setLearnings] = useState<string>("");
   const [thoughts, setThoughts] = useState<string>("");
-  const [tommorowsGoal, setTommorowsGoal] = useState<string>("");
+  const [tomorrowsGoal, setTomorrowsGoal] = useState<string>("");
 
   // useEffect(() => {
   //   getReportDetail(id).then((response) => setReport(response.data));
   // }, []);
-  
+
   useEffect(() => {
     getReportDetail(id).then((response) => {
       // setReport(response.data);
@@ -37,7 +50,7 @@ export const ReportDetail: FC = () => {
       setChallenges(response.data.challenges);
       setLearnings(response.data.learnings);
       setThoughts(response.data.thoughts);
-      setTommorowsGoal(response.data.tommorowsGoal);
+      setTomorrowsGoal(response.data.tomorrowsGoal);
     });
   }, []);
 
@@ -51,7 +64,7 @@ export const ReportDetail: FC = () => {
       challenges: challenges,
       learnings: learnings,
       thoughts: thoughts,
-      tomorrowsGoal: tommorowsGoal
+      tomorrowsGoal: tomorrowsGoal,
     };
     await updateReport(id, updatedReport);
     navigate("/log");
@@ -60,89 +73,83 @@ export const ReportDetail: FC = () => {
   const handleDeleteReport = async () => {
     await deleteReport(id);
     navigate("/log");
-  }
+  };
 
   return (
     <Box p={4}>
-      {/* <Text>{report?.id}</Text>
-      <Text>{report?.todaysGoal}</Text>
-      <Text>{report?.studyTime}</Text>
-      <Text>{report?.goalReview}</Text>
-      <Text>{report?.challenges}</Text>
-      <Text>{report?.learnings}</Text>
-      <Text>{report?.thoughts}</Text>
-      <Text>{report?.tomorrowsGoal}</Text> */}
       <FormControl id="createdDate">
-        <FormLabel>作成日</FormLabel>
+        <FormLabel>日付</FormLabel>
         <Input
           type="date"
           value={createdDate}
-          onChange={(e) => setTodaysGoal(e.target.value)}
+          onChange={(e) => setCreatedDate(e.target.value)}
         />
       </FormControl>
       <FormControl id="todaysGoal">
-        <FormLabel>今日の目標</FormLabel>
+        <FormLabel>本日の目標(TODO目標/できるようになりたいこと)</FormLabel>
         <Textarea
           value={todaysGoal}
           onChange={(e) => setTodaysGoal(e.target.value)}
         />
       </FormControl>
       <FormControl id="studyTime">
-          <FormLabel>勉強時間</FormLabel>
-          <NumberInput
-            value={studyTime}
-            onChange={(valueString) => setStudyTime(Number(valueString))}
-            precision={2}
-            min={0}
-          >
-            <NumberInputField />
-          </NumberInput>
-        </FormControl>
+        <FormLabel>学習時間(Hour)</FormLabel>
+        <NumberInput
+          value={studyTime}
+          onChange={(valueString) => setStudyTime(Number(valueString))}
+          precision={2}
+          min={0}
+        >
+          <NumberInputField />
+        </NumberInput>
+      </FormControl>
 
-        <FormControl id="goalReview">
-          <FormLabel>目標レビュー</FormLabel>
-          <Textarea
-            value={goalReview}
-            onChange={(e) => setGoalReview(e.target.value)}
-          />
-        </FormControl>
+      <FormControl id="goalReview">
+        <FormLabel>
+          目標振り返り(TODO進捗/できるようになりたいこと振り返り)
+        </FormLabel>
+        <Textarea
+          value={goalReview}
+          onChange={(e) => setGoalReview(e.target.value)}
+        />
+      </FormControl>
 
-        <FormControl id="challenges">
-          <FormLabel>課題</FormLabel>
-          <Textarea
-            value={challenges}
-            onChange={(e) => setChallenges(e.target.value)}
-          />
-        </FormControl>
+      <FormControl id="challenges">
+        <FormLabel>
+          詰まっていること(実現したいこと/現状/行ったこと/仮説)
+        </FormLabel>
+        <Textarea
+          value={challenges}
+          onChange={(e) => setChallenges(e.target.value)}
+        />
+      </FormControl>
 
-        <FormControl id="learnings">
-          <FormLabel>学び</FormLabel>
-          <Textarea
-            value={learnings}
-            onChange={(e) => setLearnings(e.target.value)}
-          />
-        </FormControl>
+      <FormControl id="learnings">
+        <FormLabel>学んだこと(新しい気付き、学び)</FormLabel>
+        <Textarea
+          value={learnings}
+          onChange={(e) => setLearnings(e.target.value)}
+        />
+      </FormControl>
 
-        <FormControl id="thoughts">
-          <FormLabel>思考</FormLabel>
-          <Textarea
-            value={thoughts}
-            onChange={(e) => setThoughts(e.target.value)}
-          />
-        </FormControl>
+      <FormControl id="thoughts">
+        <FormLabel>感想(一日の感想、雑談)</FormLabel>
+        <Textarea
+          value={thoughts}
+          onChange={(e) => setThoughts(e.target.value)}
+        />
+      </FormControl>
 
-        <FormControl id="tommorowsGoal">
-          <FormLabel>明日の目標</FormLabel>
-          <Input
-            type="text"
-            value={tommorowsGoal}
-            onChange={(e) => setTommorowsGoal(e.target.value)}
-          />
-        </FormControl>
-      <Button mt={4} onClick={handleUpdateReport}>
-        更新
-      </Button>
-      <Button mt={4} onClick={handleDeleteReport}>削除</Button>
+      <FormControl id="tomorrowsGoal">
+        <FormLabel>明日の目標(TODO目標/できるようになりたいこと)</FormLabel>
+        <Input
+          type="text"
+          value={tomorrowsGoal}
+          onChange={(e) => setTomorrowsGoal(e.target.value)}
+        />
+      </FormControl>
+      <PrimaryButton onClick={handleUpdateReport}>更新</PrimaryButton>
+      <PrimaryButton onClick={handleDeleteReport}>削除</PrimaryButton>
     </Box>
   );
 };
