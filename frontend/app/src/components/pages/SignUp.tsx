@@ -1,6 +1,7 @@
 import { ChangeEvent, FC, useCallback, useContext, useState } from "react";
 import {
   Box,
+  Button,
   Divider,
   Flex,
   Heading,
@@ -164,6 +165,9 @@ export const SignUp: FC = () => {
           >
             サインアップ
           </PrimaryButton>
+          <Button bg="white" size="sm" variant="link" onClick={() => navigate("/signin")}>
+            サインインはこちら
+          </Button>
         </Stack>
       </Box>
     </Flex>
