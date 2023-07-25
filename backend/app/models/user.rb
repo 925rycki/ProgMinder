@@ -10,6 +10,7 @@ class User < ApplicationRecord
   validates :name, presence: true, uniqueness: true
 
   has_many :reports, dependent: :destroy
+  has_many :likes, dependent: :destroy
 
   mount_uploader :image, ImageUploader
 end

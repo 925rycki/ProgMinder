@@ -19,6 +19,8 @@ import { PrimaryButton } from "../atoms/button/PrimaryButton";
 
 export const ReportDetail: FC = () => {
   // const [report, setReport] = useState<ReportType>();
+  type ReportUpdateType = Omit<ReportType, "likesCount" | "isLiked">;
+
 
   const navigate = useNavigate();
 
@@ -55,16 +57,18 @@ export const ReportDetail: FC = () => {
   }, []);
 
   const handleUpdateReport = async () => {
-    const updatedReport: ReportType = {
-      id: id,
-      createdDate: createdDate,
-      todaysGoal: todaysGoal,
-      studyTime: studyTime,
-      goalReview: goalReview,
-      challenges: challenges,
-      learnings: learnings,
-      thoughts: thoughts,
-      tomorrowsGoal: tomorrowsGoal,
+    const updatedReport: ReportUpdateType = {
+      report: {
+        id: id,
+        createdDate: createdDate,
+        todaysGoal: todaysGoal,
+        studyTime: studyTime,
+        goalReview: goalReview,
+        challenges: challenges,
+        learnings: learnings,
+        thoughts: thoughts,
+        tomorrowsGoal: tomorrowsGoal,
+      },
     };
     await updateReport(id, updatedReport);
     navigate("/log");
