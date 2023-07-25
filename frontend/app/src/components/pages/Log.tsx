@@ -9,28 +9,26 @@ export const Log: FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getUserReports().then((response) => setReports(response.data));
+    getUserReports().then((response) => {
+      console.log(response.data);
+      setReports(response.data);
+    });
   }, []);
-
-  const formatDate = (dateString: string) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' } as const;
-    return new Date(dateString).toLocaleDateString('ja-JP', options);
-  }
 
   return (
     <Box>
       <Stack spacing={5}>
-        {reports.map((report) => (
-          <Box key={report.id} p={5} shadow="md" borderWidth="1px">
-            <Heading fontSize="xl">日付：{formatDate(report.createdDate)}</Heading>
-            <Text>本日の目標：{report.tomorrowsGoal}</Text>
-            <Text>学習時間：{report.studyTime}時間</Text>
-            <Text>達成度：{report.goalReview}</Text>
-            <Text>困難な点：{report.challenges}</Text>
-            <Text>学んだこと：{report.learnings}</Text>
-            <Text>感想：{report.thoughts}</Text>
-            <Text>明日の目標：{report.tomorrowsGoal}</Text>
-            <Button onClick={() => navigate(`/reports/${report.id}`)}>
+        {reports.map((data) => (
+          <Box key={data.report.id} p={5} shadow="md" borderWidth="1px">
+            <Heading fontSize="xl">日付：{data.report.createdDate}</Heading>
+            <Text>本日の目標：{data.report.todaysGoal}</Text>
+            <Text>学習時間：{data.report.studyTime}時間</Text>
+            <Text>達成度：{data.report.goalReview}</Text>
+            <Text>困難な点：{data.report.challenges}</Text>
+            <Text>学んだこと：{data.report.learnings}</Text>
+            <Text>感想：{data.report.thoughts}</Text>
+            <Text>明日の目標：{data.report.tomorrowsGoal}</Text>
+            <Button onClick={() => navigate(`/reports/${data.report.id}`)}>
               編集
             </Button>
           </Box>

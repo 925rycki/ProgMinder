@@ -2,8 +2,24 @@ module Api
   module V1
     class ReportsController < ApplicationController
       def index
-        reports = Report.all
-        render json: reports
+        if current_api_v1_user
+          reports = Report.includes(:likes).all.map do |report|
+            {
+              report: report,
+              likes_count: report.likes.count,
+              is_liked: report.likes.exists?(user_id: current_api_v1_user.id),
+            }
+          end
+          render json: reports
+        else
+          reports = Report.includes(:likes).all.map do |report|
+            {
+              report: report,
+              likes_count: report.likes.count
+            }
+          end
+          render json: reports
+        end
       end
 
       def create
@@ -49,7 +65,11 @@ module Api
 
       def user_reports
         if current_api_v1_user
-          user_reports = current_api_v1_user.reports
+          user_reports = current_api_v1_user.reports.map do |report|
+            {
+              report: report
+            }
+          end
           render json: user_reports
         else
           render json: { message: "ログインしてください" }, status: :unauthorized
@@ -59,7 +79,7 @@ module Api
       private
 
       def report_params
-        params.permit(:created_date, :todays_goal, :study_time, :goal_review, :challenges, :learnings, :thoughts, :tomorrows_goal)
+        params.require(:report).permit(:created_date, :todays_goal, :study_time, :goal_review, :challenges, :learnings, :thoughts, :tomorrows_goal)
       end
     end
   end

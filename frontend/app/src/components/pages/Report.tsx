@@ -32,23 +32,25 @@ export const Report: FC = () => {
   const handleCreateReport = async () => {
     try {
       await createReport({
-        createdDate: createdDate,
-        todaysGoal: todaysGoal,
-        studyTime: studyTime,
-        goalReview: goalReview,
-        challenges: challenges,
-        learnings: learnings,
-        thoughts: thoughts,
-        tomorrowsGoal: tomorrowsGoal,
+        report: {
+          createdDate: createdDate,
+          todaysGoal: todaysGoal,
+          studyTime: studyTime,
+          goalReview: goalReview,
+          challenges: challenges,
+          learnings: learnings,
+          thoughts: thoughts,
+          tomorrowsGoal: tomorrowsGoal,
+        },
       });
-  
+
       showMessage({ title: "日報を作成しました", status: "success" });
     } catch (error) {
-      showMessage({ title: "日報の作成に失敗しました", status: "error"});
+      showMessage({ title: "日報の作成に失敗しました", status: "error" });
       console.error(error);
       return;
     }
-  
+
     setCreatedDate(new Date().toISOString().split("T")[0]);
     setTodaysGoal("");
     setStudyTime(0);
@@ -58,7 +60,6 @@ export const Report: FC = () => {
     setThoughts("");
     setTomorrowsGoal("");
   };
-  
 
   return (
     <>

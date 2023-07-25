@@ -9,7 +9,7 @@ class CreateReports < ActiveRecord::Migration[7.0]
       t.string :learnings
       t.string :thoughts
       t.string :tomorrows_goal
-      t.integer :user_id
+      t.bigint :user_id
 
       t.timestamps
     end
