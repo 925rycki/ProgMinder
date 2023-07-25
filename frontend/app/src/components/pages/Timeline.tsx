@@ -17,29 +17,9 @@ export const Timeline: FC = () => {
     return new Date(dateString).toLocaleDateString("ja-JP", options);
   };
 
-  // const handleCreateLike = (id: number) => {
-  //   createLike(id)
-  //     .then(() => {
-  //       console.log("いいねが作成されました！");
-  //     })
-  //     .catch((e) => {
-  //       console.error(e);
-  //     });
-  // };
-
-  // const handleDeleteLike = (id: number) => {
-  //   deleteLike(id)
-  //     .then(() => {
-  //       console.log("いいねが削除されました！");
-  //     })
-  //     .catch((e) => {
-  //       console.error(e);
-  //     });
-  // };
   const handleCreateLike = (id: number) => {
     createLike(id)
       .then(() => {
-        // Set new state after like is created
         setReports(
           reports.map((report) =>
             report.report.id === id
@@ -52,11 +32,10 @@ export const Timeline: FC = () => {
         console.error(e);
       });
   };
-  
+
   const handleDeleteLike = (id: number) => {
     deleteLike(id)
       .then(() => {
-        // Set new state after like is deleted
         setReports(
           reports.map((report) =>
             report.report.id === id
@@ -69,7 +48,6 @@ export const Timeline: FC = () => {
         console.error(e);
       });
   };
-  
 
   return (
     <Box>
@@ -80,7 +58,7 @@ export const Timeline: FC = () => {
               {formatDate(data.report.createdDate)}
             </Heading>
             <Text>本日の目標：{data.report.todaysGoal}</Text>
-            <Text>学習時間：{data.report.studyTime}[h]</Text>
+            <Text>学習時間[h]：{data.report.studyTime}</Text>
             <Text>目標振り返り：{data.report.goalReview}</Text>
             <Text>詰まっていること：{data.report.challenges}</Text>
             <Text>学んだこと：{data.report.learnings}</Text>

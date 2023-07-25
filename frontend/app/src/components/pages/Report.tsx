@@ -44,7 +44,7 @@ export const Report: FC = () => {
         },
       });
 
-      showMessage({ title: "日報を作成しました", status: "success" });
+      showMessage({ title: "Good job!", status: "success" });
     } catch (error) {
       showMessage({ title: "日報の作成に失敗しました", status: "error" });
       console.error(error);

@@ -11,5 +11,5 @@ export type ReportType = {
     tomorrowsGoal: string;
   };
   likesCount: number;
-  isLiked?: boolean;
+  isLiked: boolean;
 };

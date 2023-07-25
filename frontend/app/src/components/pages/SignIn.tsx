@@ -104,7 +104,12 @@ export const SignIn: FC = () => {
           >
             サインイン
           </PrimaryButton>
-          <Button bg="white" size="sm" variant="link" onClick={() => navigate("/signup")}>
+          <Button
+            bg="white"
+            size="sm"
+            variant="link"
+            onClick={() => navigate("/signup")}
+          >
             サインアップはこちら
           </Button>
         </Stack>
