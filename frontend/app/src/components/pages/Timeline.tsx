@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { ReportType } from "../../types/report";
 import { createLike, deleteLike, getReports } from "../../lib/api/report";
-import { Box, Flex, Heading, Stack, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, Image, Stack, Text } from "@chakra-ui/react";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { LiaComment } from "react-icons/lia";
 
@@ -54,6 +54,10 @@ export const Timeline: FC = () => {
       <Stack spacing={5}>
         {reports.map((data: ReportType) => (
           <Box key={data.report.id} p={5} shadow="md" borderWidth="1px">
+            <Flex align="center">
+              <Image borderRadius="full" boxSize="50px" src={data.user?.image.url} alt="User image" />
+              <Text fontWeight="bold" >{data.user?.name}</Text>
+            </Flex>
             <Heading fontSize="xl">
               {formatDate(data.report.createdDate)}
             </Heading>

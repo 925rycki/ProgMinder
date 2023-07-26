@@ -2,24 +2,18 @@ module Api
   module V1
     class ReportsController < ApplicationController
       def index
-        if current_api_v1_user
-          reports = Report.includes(:likes).all.map do |report|
-            {
-              report: report,
-              likes_count: report.likes.count,
-              is_liked: report.likes.exists?(user_id: current_api_v1_user.id),
+        reports = Report.includes(:likes, :user).order(created_at: :desc).map do |report|
+          {
+            report: report,
+            likes_count: report.likes.count,
+            is_liked: report.likes.exists?(user_id: current_api_v1_user.id),
+            user: {
+              name: report.user.name,
+              image: report.user.image
             }
-          end
-          render json: reports
-        else
-          reports = Report.includes(:likes).all.map do |report|
-            {
-              report: report,
-              likes_count: report.likes.count
-            }
-          end
-          render json: reports
+          }
         end
+        render json: reports
       end
 
       def create

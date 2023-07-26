@@ -12,4 +12,10 @@ export type ReportType = {
   };
   likesCount: number;
   isLiked: boolean;
+  user?: {
+    name: string;
+    image: {
+      url: string;
+    }
+  }
 };
