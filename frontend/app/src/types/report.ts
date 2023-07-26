@@ -11,5 +11,11 @@ export type ReportType = {
     tomorrowsGoal: string;
   };
   likesCount: number;
-  isLiked?: boolean;
+  isLiked: boolean;
+  user?: {
+    name: string;
+    image: {
+      url: string;
+    }
+  }
 };

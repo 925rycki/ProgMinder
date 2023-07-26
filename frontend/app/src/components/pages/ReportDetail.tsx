@@ -21,7 +21,6 @@ export const ReportDetail: FC = () => {
   // const [report, setReport] = useState<ReportType>();
   type ReportUpdateType = Omit<ReportType, "likesCount" | "isLiked">;
 
-
   const navigate = useNavigate();
 
   const idString = useParams<{ id: string }>().id;

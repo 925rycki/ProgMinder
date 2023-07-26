@@ -5,22 +5,18 @@ export const getReports = () => {
   return client.get("/reports");
 };
 
-export const createReport = (data: {
-  report: {
-    createdDate: string;
-    todaysGoal: string;
-    studyTime: number;
-    goalReview: string;
-    challenges: string;
-    learnings: string;
-    thoughts: string;
-    tomorrowsGoal: string;
-  };
-}) => {
+export type ReportWithoutId = Omit<ReportType['report'], 'id'>;
+
+export const createReport = (
+  data: { report: ReportWithoutId; } & Omit<ReportType, 'report' | 'likesCount' | 'isLiked' | 'user'>
+) => {
   return client.post("/reports", data);
 };
 
-export const updateReport = (id: number, data: Omit<ReportType, "likesCount" | "isLiked">) => {
+export const updateReport = (
+  id: number,
+  data: Omit<ReportType, "likesCount" | "isLiked" | "user">
+) => {
   return client.put(`/reports/${id}`, data);
 };
 
