@@ -12,6 +12,7 @@ export type ReportType = {
   };
   likesCount: number;
   isLiked: boolean;
+  commentsCount?: number;
   user?: {
     name: string;
     image: {

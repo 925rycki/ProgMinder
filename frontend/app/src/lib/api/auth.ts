@@ -14,13 +14,12 @@ export const signIn = (data: SignInData) => {
 
 // サインアウト
 export const signOut = () => {
-  return client.delete("auth/sign_out", {
-    headers: {
-      "access-token": Cookies.get("_access_token"),
-      client: Cookies.get("_client"),
-      uid: Cookies.get("_uid"),
-    },
-  });
+  return client.delete("auth/sign_out");
+};
+
+// アカウント削除
+export const accountDelete = () => {
+  return client.delete("auth");
 };
 
 // 認証中ユーザーの情報を取得
