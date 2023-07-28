@@ -21,7 +21,7 @@ export const updateReport = (
 };
 
 export const getUserReports = () => {
-  return client.get("/user_reports");
+  return client.get("/get_current_api_v1_user_reports");
 };
 
 export const getReportDetail = (id: number) => {
