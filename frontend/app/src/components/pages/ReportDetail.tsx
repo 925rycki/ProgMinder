@@ -1,6 +1,7 @@
 import { FC, useContext, useEffect, useState } from "react";
 import {
   createComment,
+  deleteComment,
   getReportDetail,
 } from "../../lib/api/report";
 import {
@@ -49,21 +50,39 @@ export const ReportDetail: FC = () => {
     });
   }, []);
 
-  // const handleCreateComment = async () => {
-  //   if (comment) {
-  //     await createComment(id, comment);
-  //     setComment("");
-      
-  //   }
-  // };
-
   const handleCreateComment = async () => {
-  if (comment) {
-    const newComment = await createComment(id, comment);
-    setComments((prevComments) => [...prevComments, newComment]);
-    setComment("");
-  }
-};
+    if (comment) {
+      await createComment(id, comment);
+      setComment("");
+      getReportDetail(id).then((response) => {
+        setCreatedDate(response.data.createdDate);
+        setTodaysGoal(response.data.todaysGoal);
+        setStudyTime(response.data.studyTime);
+        setGoalReview(response.data.goalReview);
+        setChallenges(response.data.challenges);
+        setLearnings(response.data.learnings);
+        setThoughts(response.data.thoughts);
+        setTomorrowsGoal(response.data.tomorrowsGoal);
+        setComments(response.data.comments);
+      });
+    }
+  };
+
+  const handleDeleteComment = async (commentId: number) => {
+    await deleteComment(commentId);
+    // Refetch the report details after a successful delete operation
+    getReportDetail(id).then((response) => {
+      setCreatedDate(response.data.createdDate);
+      setTodaysGoal(response.data.todaysGoal);
+      setStudyTime(response.data.studyTime);
+      setGoalReview(response.data.goalReview);
+      setChallenges(response.data.challenges);
+      setLearnings(response.data.learnings);
+      setThoughts(response.data.thoughts);
+      setTomorrowsGoal(response.data.tomorrowsGoal);
+      setComments(response.data.comments);
+    });
+  };
 
   return (
     <Box p={4}>
@@ -87,9 +106,11 @@ export const ReportDetail: FC = () => {
       {comments.map((commentData, index) => (
         <Box key={index}>
           <Flex align="center">
-            <Image borderRadius="full" boxSize="50px" src={commentData.user.image.url} alt="User image" />
-            <Text fontWeight="bold" >{commentData.user.name}</Text>
-          <Text>コメント: {commentData.comment.content}</Text>
+            <Image borderRadius="full" boxSize="50px" src={commentData.user?.image?.url} alt="User image" />
+            <Text fontWeight="bold" >{commentData.user?.name}</Text>
+            <Text fontWeight="bold" >コメントのuser_id{commentData.comment?.userId}</Text>
+            <Text>: {commentData.comment?.content}</Text>
+            {currentUser?.id === commentData.comment?.userId && <Button onClick={() => handleDeleteComment(commentData.comment?.id)}>削除</Button>}
           </Flex>
         </Box>
       ))}
