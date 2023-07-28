@@ -8,14 +8,14 @@ export const getReports = () => {
 export type ReportWithoutId = Omit<ReportType['report'], 'id'>;
 
 export const createReport = (
-  data: { report: ReportWithoutId; } & Omit<ReportType, 'report' | 'likesCount' | 'isLiked' | 'user'>
+  data: { report: ReportWithoutId; } & Omit<ReportType, 'report' | 'likesCount' | 'isLiked' | 'commentsCount' | 'user'>
 ) => {
   return client.post("/reports", data);
 };
 
 export const updateReport = (
   id: number,
-  data: Omit<ReportType, "likesCount" | "isLiked" | "user">
+  data: Omit<ReportType, "likesCount" | "isLiked" | "commentsCount" | "user">
 ) => {
   return client.put(`/reports/${id}`, data);
 };
@@ -38,4 +38,8 @@ export const createLike = (reportId: number) => {
 
 export const deleteLike = (reportId: number) => {
   return client.delete(`/likes/${reportId}`);
+};
+
+export const createComment = (reportId: number, content: string) => {
+  return client.post("/comments", { report_id: reportId, content: content });
 };

@@ -4,9 +4,11 @@ import { createLike, deleteLike, getReports } from "../../lib/api/report";
 import { Box, Flex, Heading, Image, Stack, Text } from "@chakra-ui/react";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { LiaComment } from "react-icons/lia";
+import { useNavigate } from "react-router-dom";
 
 export const Timeline: FC = () => {
   const [reports, setReports] = useState<ReportType[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getReports().then((response) => setReports(response.data));
@@ -79,11 +81,11 @@ export const Timeline: FC = () => {
                     onClick={() => handleCreateLike(data.report.id)}
                   />
                 )}
-                ：{data.likesCount}
+                 {data.likesCount}
               </Flex>
               <Flex align="center">
-                <LiaComment />
-                ：コメント数
+                <LiaComment onClick={() => navigate(`/reports/${data.report.id}`)} />
+                 {data.commentsCount}
               </Flex>
             </Flex>
           </Box>

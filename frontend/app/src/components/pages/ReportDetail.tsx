@@ -1,27 +1,21 @@
-import { FC, useEffect, useState } from "react";
-import { ReportType } from "../../types/report";
+import { FC, useContext, useEffect, useState } from "react";
 import {
-  deleteReport,
+  createComment,
   getReportDetail,
-  updateReport,
 } from "../../lib/api/report";
 import {
   Box,
-  FormControl,
-  FormLabel,
+  Button,
+  Flex,
+  Image,
   Input,
-  NumberInput,
-  NumberInputField,
-  Textarea,
+  Text
 } from "@chakra-ui/react";
-import { useNavigate, useParams } from "react-router-dom";
-import { PrimaryButton } from "../atoms/button/PrimaryButton";
+import { useParams } from "react-router-dom";
+import { AuthContext } from "../../App";
 
 export const ReportDetail: FC = () => {
-  // const [report, setReport] = useState<ReportType>();
-  type ReportUpdateType = Omit<ReportType, "likesCount" | "isLiked">;
-
-  const navigate = useNavigate();
+  const { currentUser } = useContext(AuthContext);
 
   const idString = useParams<{ id: string }>().id;
   const id = Number(idString);
@@ -37,13 +31,12 @@ export const ReportDetail: FC = () => {
   const [thoughts, setThoughts] = useState<string>("");
   const [tomorrowsGoal, setTomorrowsGoal] = useState<string>("");
 
-  // useEffect(() => {
-  //   getReportDetail(id).then((response) => setReport(response.data));
-  // }, []);
+  const [comment, setComment] = useState<string>("");
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [comments, setComments] = useState<any[]>([]);
 
   useEffect(() => {
     getReportDetail(id).then((response) => {
-      // setReport(response.data);
       setCreatedDate(response.data.createdDate);
       setTodaysGoal(response.data.todaysGoal);
       setStudyTime(response.data.studyTime);
@@ -52,107 +45,54 @@ export const ReportDetail: FC = () => {
       setLearnings(response.data.learnings);
       setThoughts(response.data.thoughts);
       setTomorrowsGoal(response.data.tomorrowsGoal);
+      setComments(response.data.comments);
     });
   }, []);
 
-  const handleUpdateReport = async () => {
-    const updatedReport: ReportUpdateType = {
-      report: {
-        id: id,
-        createdDate: createdDate,
-        todaysGoal: todaysGoal,
-        studyTime: studyTime,
-        goalReview: goalReview,
-        challenges: challenges,
-        learnings: learnings,
-        thoughts: thoughts,
-        tomorrowsGoal: tomorrowsGoal,
-      },
-    };
-    await updateReport(id, updatedReport);
-    navigate("/log");
-  };
+  // const handleCreateComment = async () => {
+  //   if (comment) {
+  //     await createComment(id, comment);
+  //     setComment("");
+      
+  //   }
+  // };
 
-  const handleDeleteReport = async () => {
-    await deleteReport(id);
-    navigate("/log");
-  };
+  const handleCreateComment = async () => {
+  if (comment) {
+    const newComment = await createComment(id, comment);
+    setComments((prevComments) => [...prevComments, newComment]);
+    setComment("");
+  }
+};
 
   return (
     <Box p={4}>
-      <FormControl id="createdDate">
-        <FormLabel>日付</FormLabel>
-        <Input
-          type="date"
-          value={createdDate}
-          onChange={(e) => setCreatedDate(e.target.value)}
-        />
-      </FormControl>
-      <FormControl id="todaysGoal">
-        <FormLabel>本日の目標(TODO目標/できるようになりたいこと)</FormLabel>
-        <Textarea
-          value={todaysGoal}
-          onChange={(e) => setTodaysGoal(e.target.value)}
-        />
-      </FormControl>
-      <FormControl id="studyTime">
-        <FormLabel>学習時間(Hour)</FormLabel>
-        <NumberInput
-          value={studyTime}
-          onChange={(valueString) => setStudyTime(Number(valueString))}
-          precision={2}
-          min={0}
-        >
-          <NumberInputField />
-        </NumberInput>
-      </FormControl>
+      <Text>CurrentUserのidは{currentUser?.id}</Text>
+      <Text>id:{id}</Text>
+      <Text>日付:{createdDate}</Text>
+      <Text>本日の目標(TODO目標/できるようになりたいこと):{todaysGoal}</Text>
+      <Text>学習時間:{studyTime}</Text>
+      <Text>目標振り返り(TODO進捗/できるようになりたいこと振り返り):{goalReview}</Text>
+      <Text>詰まっていること:{challenges}</Text>
+      <Text>学んだこと(新しい気付き、学び):{learnings}</Text>
+      <Text>感想(一日の感想、雑談):{thoughts}</Text>
+      <Text>明日の目標(TODO目標/できるようになりたいこと):{tomorrowsGoal}</Text>
+      <Input
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
+        placeholder="コメントを入力"
+      />
+      <Button onClick={handleCreateComment}>送信</Button>
 
-      <FormControl id="goalReview">
-        <FormLabel>
-          目標振り返り(TODO進捗/できるようになりたいこと振り返り)
-        </FormLabel>
-        <Textarea
-          value={goalReview}
-          onChange={(e) => setGoalReview(e.target.value)}
-        />
-      </FormControl>
-
-      <FormControl id="challenges">
-        <FormLabel>
-          詰まっていること(実現したいこと/現状/行ったこと/仮説)
-        </FormLabel>
-        <Textarea
-          value={challenges}
-          onChange={(e) => setChallenges(e.target.value)}
-        />
-      </FormControl>
-
-      <FormControl id="learnings">
-        <FormLabel>学んだこと(新しい気付き、学び)</FormLabel>
-        <Textarea
-          value={learnings}
-          onChange={(e) => setLearnings(e.target.value)}
-        />
-      </FormControl>
-
-      <FormControl id="thoughts">
-        <FormLabel>感想(一日の感想、雑談)</FormLabel>
-        <Textarea
-          value={thoughts}
-          onChange={(e) => setThoughts(e.target.value)}
-        />
-      </FormControl>
-
-      <FormControl id="tomorrowsGoal">
-        <FormLabel>明日の目標(TODO目標/できるようになりたいこと)</FormLabel>
-        <Input
-          type="text"
-          value={tomorrowsGoal}
-          onChange={(e) => setTomorrowsGoal(e.target.value)}
-        />
-      </FormControl>
-      <PrimaryButton onClick={handleUpdateReport}>更新</PrimaryButton>
-      <PrimaryButton onClick={handleDeleteReport}>削除</PrimaryButton>
+      {comments.map((commentData, index) => (
+        <Box key={index}>
+          <Flex align="center">
+            <Image borderRadius="full" boxSize="50px" src={commentData.user.image.url} alt="User image" />
+            <Text fontWeight="bold" >{commentData.user.name}</Text>
+          <Text>コメント: {commentData.comment.content}</Text>
+          </Flex>
+        </Box>
+      ))}
     </Box>
   );
 };

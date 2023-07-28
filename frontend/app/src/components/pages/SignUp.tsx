@@ -28,7 +28,9 @@ export const SignUp: FC = () => {
 
   const { setIsSignedIn, setCurrentUser } = useContext(AuthContext);
 
+  const [nickname, setNickname] = useState<string>("");
   const [name, setName] = useState<string>("");
+  const [bio, setBio] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
   const [show, setShow] = useState<boolean>(false);
@@ -55,6 +57,8 @@ export const SignUp: FC = () => {
     const formData = new FormData();
 
     formData.append("name", name);
+    formData.append("nickname", nickname);
+    formData.append("bio", bio);
     formData.append("email", `${name}@temp.com`);
     formData.append("password", password);
     formData.append("passwordConfirmation", passwordConfirmation);
@@ -95,6 +99,10 @@ export const SignUp: FC = () => {
 
   const onChangeName = (e: ChangeEvent<HTMLInputElement>) =>
     setName(e.target.value);
+  const onChangeNickname = (e: ChangeEvent<HTMLInputElement>) =>
+    setNickname(e.target.value);
+  const onChangeBio = (e: ChangeEvent<HTMLInputElement>) =>
+    setBio(e.target.value);
   const onChangePassword = (e: ChangeEvent<HTMLInputElement>) =>
     setPassword(e.target.value);
   const onChangePasswordConfirmation = (e: ChangeEvent<HTMLInputElement>) =>
@@ -133,6 +141,16 @@ export const SignUp: FC = () => {
             placeholder="ユーザーID(半角英数字)"
             value={name}
             onChange={onChangeName}
+          />
+          <Input
+            placeholder="ニックネーム(表示名)"
+            value={nickname}
+            onChange={onChangeNickname}
+          />
+          <Input
+            placeholder="自己紹介文"
+            value={bio}
+            onChange={onChangeBio}
           />
           <InputGroup>
             <Input

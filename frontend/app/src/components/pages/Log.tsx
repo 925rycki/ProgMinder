@@ -28,7 +28,7 @@ export const Log: FC = () => {
             <Text>学んだこと：{data.report.learnings}</Text>
             <Text>感想：{data.report.thoughts}</Text>
             <Text>明日の目標：{data.report.tomorrowsGoal}</Text>
-            <Button onClick={() => navigate(`/reports/${data.report.id}`)}>
+            <Button onClick={() => navigate(`/logs/${data.report.id}`)}>
               編集
             </Button>
           </Box>

@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       resources :reports, only: [:index, :create, :update, :show, :destroy]
       resources :likes, only: [:create]
       delete '/likes/:id', to: 'likes#destroy'
+      resources :comments, only: [:create, :destroy]
 
       get '/user_reports', to: 'reports#user_reports'
     end

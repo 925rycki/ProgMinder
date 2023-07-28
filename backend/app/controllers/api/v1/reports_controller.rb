@@ -2,11 +2,12 @@ module Api
   module V1
     class ReportsController < ApplicationController
       def index
-        reports = Report.includes(:likes, :user).order(created_at: :desc).map do |report|
+        reports = Report.includes(:likes, :comments, :user).order(created_at: :desc).map do |report|
           {
             report: report,
             likes_count: report.likes.count,
             is_liked: report.likes.exists?(user_id: current_api_v1_user.id),
+            comments_count: report.comments.count,
             user: {
               name: report.user.name,
               image: report.user.image
@@ -30,9 +31,21 @@ module Api
       end
 
       def show
-        report = Report.find(params[:id])
-        render json: report
+        report = Report.includes(comments: :user).find(params[:id])
+        render json: {
+          report: report,
+          comments: report.comments.map { |comment| 
+            { 
+              comment: comment,
+              user: {
+                name: comment.user.name,
+                image: comment.user.image
+              }
+            }
+          }
+        }
       end
+      
 
       def update
         report = Report.find(params[:id])
