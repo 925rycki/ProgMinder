@@ -13,9 +13,11 @@ import {
   NumberInput,
   NumberInputField,
   Textarea,
+  VStack,
 } from "@chakra-ui/react";
 import { useNavigate, useParams } from "react-router-dom";
 import { PrimaryButton } from "../atoms/button/PrimaryButton";
+import { DangerButton } from "../atoms/button/DangerButton";
 
 export const LogDetail: FC = () => {
   // const [report, setReport] = useState<ReportType>();
@@ -44,14 +46,14 @@ export const LogDetail: FC = () => {
   useEffect(() => {
     getReportDetail(id).then((response) => {
       // setReport(response.data);
-      setCreatedDate(response.data.createdDate);
-      setTodaysGoal(response.data.todaysGoal);
-      setStudyTime(response.data.studyTime);
-      setGoalReview(response.data.goalReview);
-      setChallenges(response.data.challenges);
-      setLearnings(response.data.learnings);
-      setThoughts(response.data.thoughts);
-      setTomorrowsGoal(response.data.tomorrowsGoal);
+      setCreatedDate(response.data.report.createdDate);
+      setTodaysGoal(response.data.report.todaysGoal);
+      setStudyTime(response.data.report.studyTime);
+      setGoalReview(response.data.report.goalReview);
+      setChallenges(response.data.report.challenges);
+      setLearnings(response.data.report.learnings);
+      setThoughts(response.data.report.thoughts);
+      setTomorrowsGoal(response.data.report.tomorrowsGoal);
     });
   }, []);
 
@@ -73,9 +75,16 @@ export const LogDetail: FC = () => {
     navigate("/log");
   };
 
+  // const handleDeleteReport = async () => {
+  //   await deleteReport(id);
+  //   navigate("/log");
+  // };
+
   const handleDeleteReport = async () => {
-    await deleteReport(id);
-    navigate("/log");
+    if(window.confirm("本当に削除しますか？")) {
+      await deleteReport(id);
+      navigate("/log");
+    }
   };
 
   return (
@@ -151,8 +160,10 @@ export const LogDetail: FC = () => {
           onChange={(e) => setTomorrowsGoal(e.target.value)}
         />
       </FormControl>
-      <PrimaryButton onClick={handleUpdateReport}>更新</PrimaryButton>
-      <PrimaryButton onClick={handleDeleteReport}>削除</PrimaryButton>
+      <VStack mt={4}>
+        <PrimaryButton onClick={handleUpdateReport}>更新</PrimaryButton>
+        <DangerButton onClick={handleDeleteReport}>削除</DangerButton>
+      </VStack>
     </Box>
   );
 };
