@@ -5,6 +5,7 @@ import { PrimaryButton } from "../atoms/button/PrimaryButton";
 import { accountDelete, updateUserInfo } from "../../lib/api/auth";
 import { useMessage } from "../../hooks/useMessage";
 import { useNavigate } from "react-router-dom";
+import { DangerButton } from "../atoms/button/DangerButton";
 
 interface User {
   name: string;
@@ -74,12 +75,12 @@ const onClickAccountDelete = async () => {
             onChange={handleChange}
           />
           <Button type="submit" colorScheme="blue" size="lg">
-            Update
+            更新
           </Button>
+      <DangerButton onClick={onClickAccountDelete}>アカウントを削除</DangerButton>
         </VStack>
       </form>
 
-      <PrimaryButton onClick={onClickAccountDelete}>アカウントを削除</PrimaryButton>
 
 <AlertDialog
   isOpen={isOpen}

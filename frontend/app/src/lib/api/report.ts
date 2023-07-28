@@ -43,3 +43,7 @@ export const deleteLike = (reportId: number) => {
 export const createComment = (reportId: number, content: string) => {
   return client.post("/comments", { report_id: reportId, content: content });
 };
+
+export const deleteComment = (commentId: number) => {
+  return client.delete(`/comments/${commentId}`);
+};
