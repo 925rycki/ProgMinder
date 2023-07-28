@@ -64,6 +64,7 @@ export const Report: FC = () => {
     setTomorrowsGoal("");
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleTodaysGoalChange = (e: { target: { value: any; }; }) => {
     const value = e.target.value;
     if (value.length <= 255) {

@@ -1,7 +1,5 @@
-import { Box, Image, Text, AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay, Button, VStack, Input, Textarea } from "@chakra-ui/react";
-import { FC, useContext, useState, useRef } from "react";
-import { AuthContext } from "../../App";
-import { PrimaryButton } from "../atoms/button/PrimaryButton";
+import { Box, AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay, Button, VStack, Input, Textarea } from "@chakra-ui/react";
+import { FC, useState, useRef } from "react";
 import { accountDelete, updateUserInfo } from "../../lib/api/auth";
 import { useMessage } from "../../hooks/useMessage";
 import { useNavigate } from "react-router-dom";
@@ -39,11 +37,11 @@ export const Profile: FC = () => {
   };
 
   const onConfirmDelete = async () => {
-    const res = await accountDelete();
+    await accountDelete();
 
-      navigate("/signup");
+    navigate("/signup");
 
-      showMessage({ title: "アカウントを削除しました", status: "success" });
+    showMessage({ title: "アカウントを削除しました", status: "success" });
 };
 
 const onClickAccountDelete = async () => {
