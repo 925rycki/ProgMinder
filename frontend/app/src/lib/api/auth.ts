@@ -22,6 +22,12 @@ export const accountDelete = () => {
   return client.delete("auth");
 };
 
+// ユーザー情報更新
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const updateUserInfo = (data: any) => {
+  return client.put("auth", data);
+};
+
 // 認証中ユーザーの情報を取得
 export const getCurrentUser = () => {
   if (

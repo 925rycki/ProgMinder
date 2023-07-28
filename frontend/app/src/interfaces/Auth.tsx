@@ -1,6 +1,8 @@
 // サインアップ
 export interface SignUpData {
   name: string;
+  nickname: string;
+  bio: string;
   email: string;
   password: string;
   passwordConfirmation: string;
@@ -25,10 +27,11 @@ export interface User {
   provider: string;
   email: string;
   name: string;
+  nickname: string;
   image: {
     url: string;
   };
-  profile: string;
+  bio: string;
   allowPasswordChange: boolean;
   createdAt?: Date;
   updatedAt?: Date;
