@@ -151,7 +151,7 @@ export const Report: FC = () => {
           </FormControl>
 
           <FormControl id="studyTime">
-            <FormLabel>学習時間（時）</FormLabel>
+            <FormLabel>学習時間[h]</FormLabel>
             <NumberInput
               value={studyTime}
               onChange={(valueString) => setStudyTime(Number(valueString))}
@@ -208,7 +208,12 @@ export const Report: FC = () => {
             />
           </FormControl>
           <Center mt={5}>
-            <PrimaryButton onClick={handleCreateReport}>日報作成</PrimaryButton>
+            <PrimaryButton
+              onClick={handleCreateReport}
+              isDisabled={!goalReview}
+            >
+              日報作成
+            </PrimaryButton>
           </Center>
         </Stack>
       </Box>
