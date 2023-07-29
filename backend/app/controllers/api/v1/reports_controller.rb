@@ -2,28 +2,16 @@ module Api
   module V1
     class ReportsController < ApplicationController
       def index
-        reports = Report.includes(:likes, :comments, :user).order(created_at: :desc).map do |report|
-          {
-            report: report,
-            likes_count: report.likes.count,
-            is_liked: report.likes.exists?(user_id: current_api_v1_user.id),
-            comments_count: report.comments.count,
-            user: {
-              name: report.user.name,
-              image: report.user.image
-            }
-          }
-        end
-        render json: reports
+        @reports = Report.includes(:likes, :comments, :user).order(created_at: :desc)
       end
 
       def create
         if current_api_v1_user
-          report = current_api_v1_user.reports.build(report_params)
-          if report.save
-            render json: report, status: :created
+          @report = current_api_v1_user.reports.build(report_params)
+          if @report.save
+            render 'create', status: :created
           else
-            render json: report.errors, status: :unprocessable_entity
+            render json: @report.errors, status: :unprocessable_entity
           end
         else
           render json: { message: "ユーザーが存在しません" }
@@ -31,29 +19,16 @@ module Api
       end
 
       def show
-        report = Report.includes(comments: :user).find(params[:id])
-        render json: {
-          report: report,
-          comments: report.comments.map { |comment| 
-            { 
-              comment: comment,
-              user: {
-                name: comment.user.name,
-                image: comment.user.image
-              }
-            }
-          }
-        }
+        @report = Report.includes(comments: :user).find(params[:id])
       end
       
-
-      def update
-        report = Report.find(params[:id])
-        if current_api_v1_user&.id == report.user_id
-          if report.update(report_params)
-            render json: report
+      def edit
+        @report = Report.find(params[:id])
+        if current_api_v1_user&.id == @report.user_id
+          if @report.update(report_params)
+            render 'update'
           else
-            render json: report.errors, status: :unprocessable_entity
+            render json: @report.errors, status: :unprocessable_entity
           end
         else
           render json: { message: "このレポートの更新は許可されていません" }, status: :forbidden
@@ -61,23 +36,20 @@ module Api
       end
 
       def destroy
-        report = Report.find(params[:id])
-        if current_api_v1_user&.id == report.user_id
-          report.destroy
+        @report = Report.find(params[:id])
+        if current_api_v1_user&.id == @report.user_id
+          @report.destroy
           head :no_content
         else
           render json: { message: "このレポートの削除は許可されていません" }, status: :forbidden
         end
       end
 
-      def user_reports
+      # 認証ユーザーに紐づくレポートを取得する
+      def get_current_api_v1_user_reports
         if current_api_v1_user
-          user_reports = current_api_v1_user.reports.map do |report|
-            {
-              report: report
-            }
-          end
-          render json: user_reports
+          @user_reports = current_api_v1_user.reports
+          render 'get_current_api_v1_user_reports'
         else
           render json: { message: "ログインしてください" }, status: :unauthorized
         end

@@ -1,0 +1,12 @@
+{
+  report: @report,
+  comments: @report.comments.map { |comment|
+    {
+      comment: comment,
+      user: {
+        name: comment.user.name,
+        image: comment.user.image
+      }
+    }
+  }
+}

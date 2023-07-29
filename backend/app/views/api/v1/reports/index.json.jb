@@ -1,0 +1,11 @@
+@reports.map do |report|
+  {
+    report: report,
+    likes_count: report.likes.count,
+    comments_count: report.comments.count,
+    user: {
+      nickname: report.user.nickname,
+      image: report.user.image
+    }
+  }
+end
