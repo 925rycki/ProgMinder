@@ -1,15 +1,11 @@
-import { ReportType } from "../../types/report";
+import { ReportCreateType, ReportType } from "../../types/report";
 import client from "./client";
 
 export const getReports = () => {
   return client.get("/reports");
 };
 
-export type ReportWithoutId = Omit<ReportType['report'], 'id'>;
-
-export const createReport = (
-  data: { report: ReportWithoutId; } & Omit<ReportType, 'report' | 'likesCount' | 'isLiked' | 'commentsCount' | 'user'>
-) => {
+export const createReport = (data: { report: ReportCreateType }) => {
   return client.post("/reports", data);
 };
 
