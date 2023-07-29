@@ -1,4 +1,16 @@
-import { Box, AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay, Button, VStack, Input, Textarea } from "@chakra-ui/react";
+import {
+  Box,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  Button,
+  VStack,
+  Input,
+  Textarea,
+} from "@chakra-ui/react";
 import { FC, useState, useRef } from "react";
 import { accountDelete, updateUserInfo } from "../../lib/api/auth";
 import { useMessage } from "../../hooks/useMessage";
@@ -12,7 +24,7 @@ interface User {
 }
 
 export const Profile: FC = () => {
-  const [user, setUser] = useState<User>({ name: '', nickname: '', bio: '' });
+  const [user, setUser] = useState<User>({ name: "", nickname: "", bio: "" });
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
   const cancelRef = useRef(null);
@@ -25,14 +37,16 @@ export const Profile: FC = () => {
     e.preventDefault();
     try {
       await updateUserInfo(user);
-      alert('User information updated successfully');
+      alert("User information updated successfully");
     } catch (err) {
       console.error(err);
-      alert('An error occurred, please try again');
+      alert("An error occurred, please try again");
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
@@ -42,11 +56,11 @@ export const Profile: FC = () => {
     navigate("/signup");
 
     showMessage({ title: "アカウントを削除しました", status: "success" });
-};
+  };
 
-const onClickAccountDelete = async () => {
-  setIsOpen(true);
-};
+  const onClickAccountDelete = async () => {
+    setIsOpen(true);
+  };
 
   return (
     <Box maxW="md" mx="auto" mt="100px">
@@ -75,37 +89,38 @@ const onClickAccountDelete = async () => {
           <Button type="submit" colorScheme="blue" size="lg">
             更新
           </Button>
-      <DangerButton onClick={onClickAccountDelete}>アカウントを削除</DangerButton>
+          <DangerButton onClick={onClickAccountDelete}>
+            アカウントを削除
+          </DangerButton>
         </VStack>
       </form>
 
+      <AlertDialog
+        isOpen={isOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              アカウントを削除
+            </AlertDialogHeader>
 
-<AlertDialog
-  isOpen={isOpen}
-  leastDestructiveRef={cancelRef}
-  onClose={onClose}
->
-  <AlertDialogOverlay>
-    <AlertDialogContent>
-      <AlertDialogHeader fontSize="lg" fontWeight="bold">
-        アカウントを削除
-      </AlertDialogHeader>
+            <AlertDialogBody>
+              本当にアカウントを削除しますか？この操作は元に戻せません。
+            </AlertDialogBody>
 
-      <AlertDialogBody>
-        本当にアカウントを削除しますか？この操作は元に戻せません。
-      </AlertDialogBody>
-
-      <AlertDialogFooter>
-        <Button ref={cancelRef} onClick={onClose}>
-          キャンセル
-        </Button>
-        <Button colorScheme="red" onClick={onConfirmDelete} ml={3}>
-          削除
-        </Button>
-      </AlertDialogFooter>
-    </AlertDialogContent>
-  </AlertDialogOverlay>
-</AlertDialog>
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onClose}>
+                キャンセル
+              </Button>
+              <Button colorScheme="red" onClick={onConfirmDelete} ml={3}>
+                削除
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </Box>
   );
 };

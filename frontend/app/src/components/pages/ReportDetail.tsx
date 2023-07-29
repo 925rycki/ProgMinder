@@ -4,14 +4,7 @@ import {
   deleteComment,
   getReportDetail,
 } from "../../lib/api/report";
-import {
-  Box,
-  Button,
-  Flex,
-  Image,
-  Input,
-  Text
-} from "@chakra-ui/react";
+import { Box, Button, Flex, Image, Input, Text } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "../../App";
 
@@ -91,7 +84,9 @@ export const ReportDetail: FC = () => {
       <Text>日付:{createdDate}</Text>
       <Text>本日の目標(TODO目標/できるようになりたいこと):{todaysGoal}</Text>
       <Text>学習時間:{studyTime}</Text>
-      <Text>目標振り返り(TODO進捗/できるようになりたいこと振り返り):{goalReview}</Text>
+      <Text>
+        目標振り返り(TODO進捗/できるようになりたいこと振り返り):{goalReview}
+      </Text>
       <Text>詰まっていること:{challenges}</Text>
       <Text>学んだこと(新しい気付き、学び):{learnings}</Text>
       <Text>感想(一日の感想、雑談):{thoughts}</Text>
@@ -106,11 +101,24 @@ export const ReportDetail: FC = () => {
       {comments.map((commentData, index) => (
         <Box key={index}>
           <Flex align="center">
-            <Image borderRadius="full" boxSize="50px" src={commentData.user?.image?.url} alt="User image" />
-            <Text fontWeight="bold" >{commentData.user?.name}</Text>
-            <Text fontWeight="bold" >コメントのuser_id{commentData.comment?.userId}</Text>
+            <Image
+              borderRadius="full"
+              boxSize="50px"
+              src={commentData.user?.image?.url}
+              alt="User image"
+            />
+            <Text fontWeight="bold">{commentData.user?.name}</Text>
+            <Text fontWeight="bold">
+              コメントのuser_id{commentData.comment?.userId}
+            </Text>
             <Text>: {commentData.comment?.content}</Text>
-            {currentUser?.id === commentData.comment?.userId && <Button onClick={() => handleDeleteComment(commentData.comment?.id)}>削除</Button>}
+            {currentUser?.id === commentData.comment?.userId && (
+              <Button
+                onClick={() => handleDeleteComment(commentData.comment?.id)}
+              >
+                削除
+              </Button>
+            )}
           </Flex>
         </Box>
       ))}

@@ -57,23 +57,23 @@ export const LogDetail: FC = () => {
     });
   }, []);
 
-  const handleUpdateReport = async () => {
-    const updatedReport: ReportUpdateType = {
-      report: {
-        id: id,
-        createdDate: createdDate,
-        todaysGoal: todaysGoal,
-        studyTime: studyTime,
-        goalReview: goalReview,
-        challenges: challenges,
-        learnings: learnings,
-        thoughts: thoughts,
-        tomorrowsGoal: tomorrowsGoal,
-      },
-    };
-    await updateReport(id, updatedReport);
-    navigate("/log");
-  };
+  // const handleUpdateReport = async () => {
+  //   const updatedReport: ReportUpdateType = {
+  //     report: {
+  //       id: id,
+  //       createdDate: createdDate,
+  //       todaysGoal: todaysGoal,
+  //       studyTime: studyTime,
+  //       goalReview: goalReview,
+  //       challenges: challenges,
+  //       learnings: learnings,
+  //       thoughts: thoughts,
+  //       tomorrowsGoal: tomorrowsGoal,
+  //     },
+  //   };
+  //   await updateReport(id, updatedReport);
+  //   navigate("/log");
+  // };
 
   // const handleDeleteReport = async () => {
   //   await deleteReport(id);
@@ -81,7 +81,7 @@ export const LogDetail: FC = () => {
   // };
 
   const handleDeleteReport = async () => {
-    if(window.confirm("本当に削除しますか？")) {
+    if (window.confirm("本当に削除しますか？")) {
       await deleteReport(id);
       navigate("/log");
     }
@@ -161,7 +161,7 @@ export const LogDetail: FC = () => {
         />
       </FormControl>
       <VStack mt={4}>
-        <PrimaryButton onClick={handleUpdateReport}>更新</PrimaryButton>
+        {/* <PrimaryButton onClick={handleUpdateReport}>更新</PrimaryButton> */}
         <DangerButton onClick={handleDeleteReport}>削除</DangerButton>
       </VStack>
     </Box>

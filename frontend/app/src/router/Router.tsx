@@ -65,7 +65,7 @@ export const Router: FC = () => {
             <ReportDetail />
           </HeaderLayout>
         }
-       />
+      />
       <Route
         path="/logs/:id"
         element={
