@@ -1,0 +1,2 @@
+@comment.as_json(only: [:id, :content, :user_id, :report_id, :created_at, :updated_at])
+
