@@ -22,7 +22,7 @@ module Api
         @report = Report.includes(comments: :user).find(params[:id])
       end
       
-      def edit
+      def update
         @report = Report.find(params[:id])
         if current_api_v1_user&.id == @report.user_id
           if @report.update(report_params)
@@ -46,7 +46,7 @@ module Api
       end
 
       # 認証ユーザーに紐づくレポートを取得する
-      def get_current_api_v1_user_reports
+      def get_current_user_reports
         if current_api_v1_user
           @user_reports = current_api_v1_user.reports
           render 'get_current_api_v1_user_reports'
@@ -58,7 +58,15 @@ module Api
       private
 
       def report_params
-        params.require(:report).permit(:created_date, :todays_goal, :study_time, :goal_review, :challenges, :learnings, :thoughts, :tomorrows_goal)
+        params.require(:report).permit(
+          :created_date,
+          :todays_goal,
+          :study_time,
+          :goal_review,
+          :challenges,
+          :learnings,
+          :thoughts,
+          :tomorrows_goal)
       end
     end
   end
