@@ -1,4 +1,4 @@
-export type ReportType = {
+export type TimelineReportType = {
   report: {
     id: number;
     createdDate: string;
@@ -75,3 +75,15 @@ export type ReportDetailType = {
     };
   }>;
 };
+
+export type ReportType = {
+  id: number;
+  createdDate: string;
+  todaysGoal: string;
+  studyTime: number;
+  goalReview: string;
+  challenges: string;
+  learnings: string;
+  thoughts: string;
+  tomorrowsGoal: string;
+}

@@ -11,13 +11,13 @@ export const createReport = (data: { report: ReportCreateType }) => {
 
 export const updateReport = (
   id: number,
-  data: Omit<ReportType, "likesCount" | "isLiked" | "commentsCount" | "user">
+  data: ReportType
 ) => {
   return client.put(`/reports/${id}`, data);
 };
 
-export const getUserReports = () => {
-  return client.get("/get_current_api_v1_user_reports");
+export const getCurrentUserReports = () => {
+  return client.get("/get_current_user_reports");
 };
 
 export const getReportDetail = (id: number) => {
