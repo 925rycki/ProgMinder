@@ -129,7 +129,7 @@ export const ReportDetail: FC = () => {
       </Flex>
 
       {comments.map((commentData, index) => (
-        <Box key={index}>
+        <Box key={index} my={2}>
           <Flex align="center">
             <Image
               borderRadius="full"

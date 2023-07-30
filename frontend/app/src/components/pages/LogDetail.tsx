@@ -20,14 +20,6 @@ import { PrimaryButton } from "../atoms/button/PrimaryButton";
 import { DangerButton } from "../atoms/button/DangerButton";
 
 export const LogDetail: FC = () => {
-  // const [report, setReport] = useState<ReportType>();
-  type ReportUpdateType = Omit<ReportType, "likesCount" | "isLiked">;
-
-  const navigate = useNavigate();
-
-  const idString = useParams<{ id: string }>().id;
-  const id = Number(idString);
-
   const [createdDate, setCreatedDate] = useState<string>(
     new Date().toISOString().split("T")[0]
   );
@@ -39,46 +31,45 @@ export const LogDetail: FC = () => {
   const [thoughts, setThoughts] = useState<string>("");
   const [tomorrowsGoal, setTomorrowsGoal] = useState<string>("");
 
-  // useEffect(() => {
-  //   getReportDetail(id).then((response) => setReport(response.data));
-  // }, []);
+  const navigate = useNavigate();
+
+  const idString = useParams<{ id: string }>().id;
+  const id = Number(idString);
 
   useEffect(() => {
     getReportDetail(id).then((response) => {
-      // setReport(response.data);
-      setCreatedDate(response.data.report.createdDate);
-      setTodaysGoal(response.data.report.todaysGoal);
-      setStudyTime(response.data.report.studyTime);
-      setGoalReview(response.data.report.goalReview);
-      setChallenges(response.data.report.challenges);
-      setLearnings(response.data.report.learnings);
-      setThoughts(response.data.report.thoughts);
-      setTomorrowsGoal(response.data.report.tomorrowsGoal);
+      setCreatedDate(response.data.report.report.createdDate);
+      setTodaysGoal(response.data.report.report.todaysGoal);
+      setStudyTime(response.data.report.report.studyTime);
+      setGoalReview(response.data.report.report.goalReview);
+      setChallenges(response.data.report.report.challenges);
+      setLearnings(response.data.report.report.learnings);
+      setThoughts(response.data.report.report.thoughts);
+      setTomorrowsGoal(response.data.report.report.tomorrowsGoal);
     });
   }, []);
 
-  // const handleUpdateReport = async () => {
-  //   const updatedReport: ReportUpdateType = {
-  //     report: {
-  //       id: id,
-  //       createdDate: createdDate,
-  //       todaysGoal: todaysGoal,
-  //       studyTime: studyTime,
-  //       goalReview: goalReview,
-  //       challenges: challenges,
-  //       learnings: learnings,
-  //       thoughts: thoughts,
-  //       tomorrowsGoal: tomorrowsGoal,
-  //     },
-  //   };
-  //   await updateReport(id, updatedReport);
-  //   navigate("/log");
-  // };
-
-  // const handleDeleteReport = async () => {
-  //   await deleteReport(id);
-  //   navigate("/log");
-  // };
+  const handleUpdateReport = async () => {
+    const updatedReport: ReportType = {
+      id: id,
+      createdDate: createdDate,
+      todaysGoal: todaysGoal,
+      studyTime: studyTime,
+      goalReview: goalReview,
+      challenges: challenges,
+      learnings: learnings,
+      thoughts: thoughts,
+      tomorrowsGoal: tomorrowsGoal,
+    };
+  
+    try {
+      await updateReport(id, updatedReport);
+      navigate("/log");
+    } catch (error) {
+      console.error("Error updating the report: ", error);
+    }
+  };
+  
 
   const handleDeleteReport = async () => {
     if (window.confirm("本当に削除しますか？")) {
@@ -161,7 +152,7 @@ export const LogDetail: FC = () => {
         />
       </FormControl>
       <VStack mt={4}>
-        {/* <PrimaryButton onClick={handleUpdateReport}>更新</PrimaryButton> */}
+        <PrimaryButton onClick={handleUpdateReport}>更新</PrimaryButton>
         <DangerButton onClick={handleDeleteReport}>削除</DangerButton>
       </VStack>
     </Box>

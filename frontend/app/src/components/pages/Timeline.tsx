@@ -4,11 +4,11 @@ import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-import { ReportType } from "../../types/report";
 import { createLike, deleteLike, getReports } from "../../lib/api/report";
+import { TimelineReportType } from "../../types/report";
 
 export const Timeline: FC = () => {
-  const [reports, setReports] = useState<ReportType[]>([]);
+  const [reports, setReports] = useState<TimelineReportType[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
