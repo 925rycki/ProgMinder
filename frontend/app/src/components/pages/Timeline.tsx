@@ -57,7 +57,7 @@ export const Timeline: FC = () => {
       <Stack spacing={5}>
         {reports.map((data) => (
           <Box key={data.report.id} p={5} shadow="md" borderWidth="1px">
-            <Flex align="center">
+            <Flex align="center" onClick={() => navigate(`/user/${data.user.id}`)} cursor="pointer">
               <Image
                 borderRadius="full"
                 boxSize="50px"
