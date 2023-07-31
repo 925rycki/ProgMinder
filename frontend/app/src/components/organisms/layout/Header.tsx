@@ -26,7 +26,7 @@ export const Header: FC = () => {
           <Heading
             as="h1"
             fontSize={{ base: "md", md: "lg" }}
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/timeline")}
           >
             ProgMinder
           </Heading>

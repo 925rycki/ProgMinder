@@ -1,0 +1,13 @@
+@reports.map do |report|
+  {
+    report: report,
+    likes_count: report.likes.count,
+    is_liked: api_v1_user_signed_in? ? report.likes.exists?(user_id: current_api_v1_user.id) : false,
+    comments_count: report.comments.count,
+    user: {
+      id: report.user.id,
+      nickname: report.user.nickname,
+      image: report.user.image
+    }
+  }
+end

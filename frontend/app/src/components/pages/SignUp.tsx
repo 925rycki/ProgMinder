@@ -147,11 +147,7 @@ export const SignUp: FC = () => {
             value={nickname}
             onChange={onChangeNickname}
           />
-          <Input
-            placeholder="自己紹介文"
-            value={bio}
-            onChange={onChangeBio}
-          />
+          <Input placeholder="自己紹介文" value={bio} onChange={onChangeBio} />
           <InputGroup>
             <Input
               placeholder="パスワード"

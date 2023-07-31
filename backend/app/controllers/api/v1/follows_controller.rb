@@ -1,8 +1,8 @@
-class Api::V1::LikesController < ApplicationController
+class Api::V1::FollowsController < ApplicationController
   def create
     if current_api_v1_user
-      @like = current_api_v1_user.likes.build(report_id: params[:report_id])
-      if @like.save
+      @follow = current_api_v1_user.follower.build(followed_id: params[:followed_id])
+      if @follow.save
         render 'create', status: :created
       else
         render 'create', status: :unprocessable_entity
@@ -15,11 +15,11 @@ class Api::V1::LikesController < ApplicationController
 
   def destroy
     if current_api_v1_user
-      @like = Like.find_by(user_id: current_api_v1_user.id, report_id: params[:id])
-      if @like&.destroy
+      @follow = Follow.find_by(follower_id: current_api_v1_user.id, followed_id: params[:id])
+      if @follow&.destroy
         head :no_content
       else
-        @message = "Like削除失敗"
+        @message = "Follow削除失敗"
         render 'destroy', status: :not_found
       end
     else

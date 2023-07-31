@@ -12,11 +12,12 @@ Rails.application.routes.draw do
       end
 
       resources :reports, only: [:index, :create, :update, :show, :destroy]
-      resources :likes, only: [:create]
-      delete '/likes/:id', to: 'likes#destroy'
+      resources :likes, only: [:create, :destroy]
       resources :comments, only: [:create, :destroy]
+      resources :follows, only: [:create, :destroy]
 
-      get '/user_reports', to: 'reports#user_reports'
+      get '/get_current_user_reports', to: 'reports#get_current_user_reports'
+      get '/get_user_info/:id', to: 'reports#get_user_info'
     end
   end
 end
