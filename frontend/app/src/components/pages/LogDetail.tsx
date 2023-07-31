@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { ReportType } from "../../types/report";
+import { LogDetailType } from "../../types/report";
 import {
   deleteReport,
   getReportDetail,
@@ -50,7 +50,7 @@ export const LogDetail: FC = () => {
   }, []);
 
   const handleUpdateReport = async () => {
-    const updatedReport: ReportType = {
+    const updatedReport: LogDetailType = {
       id: id,
       createdDate: createdDate,
       todaysGoal: todaysGoal,
