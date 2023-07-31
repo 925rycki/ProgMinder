@@ -52,6 +52,7 @@ export type ReportDetailType = {
       updatedAt: string;
     };
     user: {
+      id: number;
       name: string;
       image: {
         url: string;
