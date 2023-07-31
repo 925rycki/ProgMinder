@@ -17,6 +17,7 @@ export type TimelineReportType = {
   isLiked: boolean;
   commentsCount: number;
   user: {
+    id: number;
     nickname: string;
     image: {
       url: string;
@@ -77,6 +78,18 @@ export type ReportDetailType = {
   }>;
 };
 
+export type LogDetailType = {
+  id: number;
+  createdDate: string;
+  todaysGoal: string;
+  studyTime: number;
+  goalReview: string;
+  challenges: string;
+  learnings: string;
+  thoughts: string;
+  tomorrowsGoal: string;
+}
+
 export type ReportType = {
   id: number;
   createdDate: string;
@@ -87,4 +100,18 @@ export type ReportType = {
   learnings: string;
   thoughts: string;
   tomorrowsGoal: string;
+  userId: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type UserInfoType = {
+  nickname: string;
+  image: {
+    url: string;
+  };
+  bio: string;
+  followingCount: number;
+  followersCount: number;
+  reports: ReportType[];
 }

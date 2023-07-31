@@ -12,6 +12,7 @@ import { Log } from "../components/pages/Log";
 import { Profile } from "../components/pages/Profile";
 import { LogDetail } from "../components/pages/LogDetail";
 import { ReportDetail } from "../components/pages/ReportDetail";
+import { UserInfo } from "../components/pages/UserInfo";
 
 export const Router: FC = () => {
   return (
@@ -71,6 +72,14 @@ export const Router: FC = () => {
         element={
           <HeaderLayout>
             <LogDetail />
+          </HeaderLayout>
+        }
+      />
+      <Route
+        path="/user/:id"
+        element={
+          <HeaderLayout>
+            <UserInfo />
           </HeaderLayout>
         }
       />

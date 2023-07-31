@@ -55,6 +55,29 @@ module Api
         end
       end
 
+      # 特定のユーザーに紐づく情報を取得する
+      def get_user_info
+        user = User.find(params[:id])
+        user_reports = user.reports.order(created_at: :desc)
+
+        is_followed = false
+        if current_api_v1_user.following?(user)
+          is_followed = true
+        end
+
+        user_data = {
+          nickname: user.nickname,
+          image: user.image,
+          bio: user.bio,
+          following_count: user.follower.count,
+          followers_count: user.followed.count,
+          reports: user_reports,
+          is_followed: is_followed
+        }
+        render json: user_data.to_json, status: :ok
+      end
+
+
       private
 
       def report_params
