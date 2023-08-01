@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import { UserInfoType } from "../../types/report";
 import { createFollow, deleteFollow, getUserInfo } from "../../lib/api/report";
 import { Box, Flex, Image, Text, VStack } from "@chakra-ui/react";
@@ -6,9 +6,14 @@ import { useParams } from "react-router-dom";
 import { PrimaryButton } from "../atoms/button/PrimaryButton";
 import { SmallAddIcon, SmallCloseIcon } from "@chakra-ui/icons";
 import { DangerButton } from "../atoms/button/DangerButton";
+import { AuthContext } from "../../App";
+import { useMessage } from "../../hooks/useMessage";
 
 export const UserInfo: FC = () => {
   const [userInfo, setUserInfo] = useState<UserInfoType | null>(null);
+  const { currentUser } = useContext(AuthContext);
+
+  const { showMessage } = useMessage();
 
   const idString = useParams<{ id: string }>().id;
   const id = Number(idString);
@@ -18,14 +23,41 @@ export const UserInfo: FC = () => {
   }, [id]);
 
   const onClickFollow = () => {
-    createFollow(id);
-    console.log("フォローしました。");
-  }
+    if (!currentUser) { 
+      showMessage({ title: "ログインしてください", status: "error" });
+      return;
+    }
+
+    createFollow(id)
+      .then(() => {
+        if (userInfo) {
+          setUserInfo({
+            ...userInfo,
+            isFollowed: true,
+            followersCount: userInfo.followersCount + 1,
+          });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   const onClickUnfollow = () => {
-    deleteFollow(id);
-    console.log("フォロー解除しました。");
-  }
+    deleteFollow(id)
+      .then(() => {
+        if (userInfo) {
+          setUserInfo({
+            ...userInfo,
+            isFollowed: false,
+            followersCount: userInfo.followersCount - 1,
+          });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   if (!userInfo) {
     return null;
@@ -33,15 +65,37 @@ export const UserInfo: FC = () => {
 
   return (
     <VStack spacing={4} my={4}>
-      <Image src={userInfo.image.url} alt="Profile Image" boxSize="200px" borderRadius="full" />
-      <Text fontSize="xl" fontWeight="bold">{userInfo.nickname}</Text>
+      <Image
+        src={userInfo.image.url}
+        alt="Profile Image"
+        boxSize="200px"
+        borderRadius="full"
+      />
+      <Text fontSize="xl" fontWeight="bold">
+        {userInfo.nickname}
+      </Text>
       <Text>{userInfo.bio}</Text>
       <Flex>
-        <Text fontWeight="bold" mr={2}>フォロー: {userInfo.followingCount}</Text>
+        <Text fontWeight="bold" mr={2}>
+          フォロー: {userInfo.followingCount}
+        </Text>
         <Text fontWeight="bold">フォロワー: {userInfo.followersCount}</Text>
       </Flex>
-      <PrimaryButton onClick={onClickFollow}><SmallAddIcon />フォローする</PrimaryButton>
-      <DangerButton onClick={onClickUnfollow}><SmallCloseIcon />フォロー解除</DangerButton>
+      {currentUser?.id !== id && (
+        <>
+          {userInfo.isFollowed ? (
+            <DangerButton onClick={onClickUnfollow}>
+              <SmallCloseIcon />
+              フォロー解除
+            </DangerButton>
+          ) : (
+            <PrimaryButton onClick={onClickFollow}>
+              <SmallAddIcon />
+              フォローする
+            </PrimaryButton>
+          )}
+        </>
+      )}
       <Box>
         {userInfo.reports.map((report) => (
           <Box key={report.id} p={4} borderWidth="1px" borderRadius="md">

@@ -16,12 +16,14 @@ export const Log: FC = () => {
     });
   }, []);
 
-    const formatDate = (dateString: string) => {
+  const formatDate = (dateString: string) => {
     const options = { year: "numeric", month: "long", day: "numeric" } as const;
     return new Date(dateString).toLocaleDateString("ja-JP", options);
   };
 
   return (
+    <>
+    {reports.length === 0 && <Text>学習記録を作成するとここに表示されます。</Text>}
     <Box m={2}>
       <Stack spacing={5}>
         {reports.map((data) => (
@@ -33,7 +35,9 @@ export const Log: FC = () => {
             onClick={() => navigate(`/logs/${data.id}`)}
             cursor="pointer"
           >
-            <Heading fontSize="xl">日付：{formatDate(data.createdDate)}</Heading>
+            <Heading fontSize="xl">
+              日付：{formatDate(data.createdDate)}
+            </Heading>
             <Text>本日の目標：{data.todaysGoal}</Text>
             <Text>学習時間：{data.studyTime}時間</Text>
             <Text>達成度：{data.goalReview}</Text>
@@ -45,5 +49,6 @@ export const Log: FC = () => {
         ))}
       </Stack>
     </Box>
+    </>
   );
 };

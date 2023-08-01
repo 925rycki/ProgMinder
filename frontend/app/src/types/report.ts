@@ -54,7 +54,7 @@ export type ReportDetailType = {
     };
     user: {
       id: number;
-      name: string;
+      nickname: string;
       image: {
         url: string;
       };
@@ -70,7 +70,7 @@ export type ReportDetailType = {
       updatedAt: string;
     };
     user: {
-      name: string;
+      nickname: string;
       image: {
         url: string;
       };
@@ -88,7 +88,7 @@ export type LogDetailType = {
   learnings: string;
   thoughts: string;
   tomorrowsGoal: string;
-}
+};
 
 export type ReportType = {
   id: number;
@@ -103,7 +103,7 @@ export type ReportType = {
   userId: number;
   createdAt: string;
   updatedAt: string;
-}
+};
 
 export type UserInfoType = {
   nickname: string;
@@ -114,4 +114,5 @@ export type UserInfoType = {
   followingCount: number;
   followersCount: number;
   reports: ReportType[];
-}
+  isFollowed: boolean;
+};

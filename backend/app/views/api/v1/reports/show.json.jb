@@ -2,7 +2,7 @@
   report: {
     report: @report,
     user: {
-      name: @report.user.name,
+      nickname: @report.user.nickname,
       image: @report.user.image
     }
   },
@@ -10,7 +10,7 @@
     {
       comment: comment,
       user: {
-        name: comment.user.name,
+        nickname: comment.user.nickname,
         image: comment.user.image
       }
     }
