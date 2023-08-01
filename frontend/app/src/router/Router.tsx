@@ -4,7 +4,6 @@ import { Route, Routes } from "react-router-dom";
 import { SignUp } from "../components/pages/SignUp";
 import { SignIn } from "../components/pages/SignIn";
 import { Home } from "../components/pages/Home";
-import { Page404 } from "../components/pages/Page404";
 import { HeaderLayout } from "../components/templates/HeaderLayout";
 import { Timeline } from "../components/pages/Timeline";
 import { Report } from "../components/pages/Report";
@@ -13,6 +12,7 @@ import { Profile } from "../components/pages/Profile";
 import { LogDetail } from "../components/pages/LogDetail";
 import { ReportDetail } from "../components/pages/ReportDetail";
 import { UserInfo } from "../components/pages/UserInfo";
+import { NotFound } from "../components/pages/NotFound";
 
 export const Router: FC = () => {
   return (
@@ -83,8 +83,7 @@ export const Router: FC = () => {
           </HeaderLayout>
         }
       />
-      <Route path="*" element={<Page404 />} />
-      {/* <Route path="/" element={<Private><Home/></Private>} /> */}
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };
