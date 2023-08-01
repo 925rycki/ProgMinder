@@ -3,7 +3,6 @@ import { Route, Routes } from "react-router-dom";
 
 import { SignUp } from "../components/pages/SignUp";
 import { SignIn } from "../components/pages/SignIn";
-import { Home } from "../components/pages/Home";
 import { HeaderLayout } from "../components/templates/HeaderLayout";
 import { Timeline } from "../components/pages/Timeline";
 import { Report } from "../components/pages/Report";
@@ -23,7 +22,7 @@ export const Router: FC = () => {
         path="/"
         element={
           <HeaderLayout>
-            <Home />
+            <Timeline />
           </HeaderLayout>
         }
       />

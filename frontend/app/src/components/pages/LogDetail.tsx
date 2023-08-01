@@ -61,7 +61,7 @@ export const LogDetail: FC = () => {
       thoughts: thoughts,
       tomorrowsGoal: tomorrowsGoal,
     };
-  
+
     try {
       await updateReport(id, updatedReport);
       navigate("/log");
@@ -69,7 +69,6 @@ export const LogDetail: FC = () => {
       console.error("Error updating the report: ", error);
     }
   };
-  
 
   const handleDeleteReport = async () => {
     if (window.confirm("本当に削除しますか？")) {
