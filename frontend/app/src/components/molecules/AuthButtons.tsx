@@ -21,13 +21,12 @@ export const AuthButtons: FC<Props> = (props) => {
 
   const navigate = useNavigate();
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const onClickSignOut = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSignOut = async () => {
     try {
       const res = await signOut();
 
       if (res.data.success === true) {
-        // サインアウト時には各Cookieを削除
+
         Cookies.remove("_access_token");
         Cookies.remove("_client");
         Cookies.remove("_uid");
@@ -51,6 +50,9 @@ export const AuthButtons: FC<Props> = (props) => {
           <PrimaryButton onClick={() => navigate("/timeline")}>
             タイムライン
           </PrimaryButton>
+          <PrimaryButton onClick={() => navigate("/follow")}>
+            フォロー
+          </PrimaryButton>
           <PrimaryButton onClick={() => navigate("/report")}>
             レポート
           </PrimaryButton>
@@ -58,7 +60,7 @@ export const AuthButtons: FC<Props> = (props) => {
           <PrimaryButton onClick={() => navigate("/profile")}>
             プロフィール
           </PrimaryButton>
-          <PrimaryButton onClick={onClickSignOut}>サインアウト</PrimaryButton>
+          <PrimaryButton onClick={handleSignOut}>サインアウト</PrimaryButton>
         </>
       );
     } else {

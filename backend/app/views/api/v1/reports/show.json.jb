@@ -2,6 +2,7 @@
   report: {
     report: @report,
     user: {
+      id: @report.user.id,
       nickname: @report.user.nickname,
       image: @report.user.image
     }
