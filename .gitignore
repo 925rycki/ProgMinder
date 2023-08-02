@@ -29,7 +29,7 @@ backend/tmp/storage/*
 backend/config/master.key
 
 backend/.env
-backend/public/uploads/user
+backend/public/uploads
 
 # dependencies
 frontend/app/node_modules
