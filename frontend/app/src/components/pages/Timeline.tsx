@@ -27,7 +27,7 @@ export const Timeline: FC = () => {
 
   const handleCreateLike = (id: number) => {
     if(!currentUser) {
-      showMessage({ title: "ログインしてください", status: "error" });
+      showMessage({ title: "サインインしてください", status: "error" });
       return;
     }
 
@@ -76,6 +76,7 @@ export const Timeline: FC = () => {
                   cursor="pointer"
                 >
                   <Image
+                    mr={2}
                     borderRadius="full"
                     boxSize="50px"
                     src={data.user?.image.url}

@@ -22,9 +22,9 @@ export const UserInfo: FC = () => {
     getUserInfo(id).then((res) => setUserInfo(res.data));
   }, [id]);
 
-  const onClickFollow = () => {
+  const handleFollow = () => {
     if (!currentUser) { 
-      showMessage({ title: "ログインしてください", status: "error" });
+      showMessage({ title: "サインインしてください", status: "error" });
       return;
     }
 
@@ -43,7 +43,7 @@ export const UserInfo: FC = () => {
       });
   };
 
-  const onClickUnfollow = () => {
+  const handleUnfollow = () => {
     deleteFollow(id)
       .then(() => {
         if (userInfo) {
@@ -84,12 +84,12 @@ export const UserInfo: FC = () => {
       {currentUser?.id !== id && (
         <>
           {userInfo.isFollowed ? (
-            <DangerButton onClick={onClickUnfollow}>
+            <DangerButton onClick={handleUnfollow}>
               <SmallCloseIcon />
               フォロー解除
             </DangerButton>
           ) : (
-            <PrimaryButton onClick={onClickFollow}>
+            <PrimaryButton onClick={handleFollow}>
               <SmallAddIcon />
               フォローする
             </PrimaryButton>

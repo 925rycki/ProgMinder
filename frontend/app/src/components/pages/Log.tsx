@@ -35,9 +35,7 @@ export const Log: FC = () => {
             onClick={() => navigate(`/logs/${data.id}`)}
             cursor="pointer"
           >
-            <Heading fontSize="xl">
-              日付：{formatDate(data.createdDate)}
-            </Heading>
+            <Heading fontSize="xl">{formatDate(data.createdDate)}</Heading>
             <Text>本日の目標：{data.todaysGoal}</Text>
             <Text>学習時間：{data.studyTime}時間</Text>
             <Text>達成度：{data.goalReview}</Text>

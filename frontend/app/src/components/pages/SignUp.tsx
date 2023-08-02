@@ -2,14 +2,18 @@ import { ChangeEvent, FC, useCallback, useContext, useState } from "react";
 import {
   Box,
   Button,
+  Center,
   Divider,
   Flex,
   Heading,
   IconButton,
+  Image,
   Input,
   InputGroup,
   InputRightElement,
   Stack,
+  Text,
+  VStack,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -39,14 +43,12 @@ export const SignUp: FC = () => {
 
   const handleClick = () => setShow(!show);
 
-  // アップロードした画像のデータを取得
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const uploadImage = useCallback((e: any) => {
     const file = e.target.files[0];
     setImage(file);
   }, []);
 
-  // 画像プレビューを表示
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const previewImage = useCallback((e: any) => {
     const file = e.target.files[0];
@@ -67,7 +69,7 @@ export const SignUp: FC = () => {
     return formData;
   };
 
-  const onClickSignUp = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSignUp = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     const data = createFormData();
@@ -116,8 +118,12 @@ export const SignUp: FC = () => {
         </Heading>
         <Divider my={4} />
         <Stack spacing={4} py={4} px={10}>
+          <VStack>
           <label htmlFor="icon-button-file">
+            <Text fontSize="sm">プロフィール画像を選択してください。</Text>
+            <Center>
             <IconButton
+            my={2}
               colorScheme="blue"
               aria-label="upload picture"
               icon={<AttachmentIcon />}
@@ -125,6 +131,7 @@ export const SignUp: FC = () => {
                 document.getElementById("icon-button-file")?.click();
               }}
             />
+            </Center>
             <input
               accept="image/*"
               id="icon-button-file"
@@ -136,7 +143,8 @@ export const SignUp: FC = () => {
               style={{ display: "none" }}
             />
           </label>
-          <img src={preview} alt="preview img" />
+          { preview && <Image src={preview} alt="preview img" boxSize="200px" borderRadius="full" /> }
+          </VStack>
           <Input
             placeholder="ユーザーID(半角英数字)"
             value={name}
@@ -172,9 +180,9 @@ export const SignUp: FC = () => {
             type="password"
           />
           <PrimaryButton
-            onClick={onClickSignUp}
+            onClick={handleSignUp}
             isDisabled={
-              !name || !password || !passwordConfirmation ? true : false
+              !image || !name || !password || !passwordConfirmation ? true : false
             }
           >
             サインアップ

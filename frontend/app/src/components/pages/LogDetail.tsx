@@ -12,12 +12,14 @@ import {
   Input,
   NumberInput,
   NumberInputField,
+  Stack,
   Textarea,
   VStack,
 } from "@chakra-ui/react";
 import { useNavigate, useParams } from "react-router-dom";
 import { PrimaryButton } from "../atoms/button/PrimaryButton";
 import { DangerButton } from "../atoms/button/DangerButton";
+import { useMessage } from "../../hooks/useMessage";
 
 export const LogDetail: FC = () => {
   const [createdDate, setCreatedDate] = useState<string>(
@@ -35,6 +37,8 @@ export const LogDetail: FC = () => {
 
   const idString = useParams<{ id: string }>().id;
   const id = Number(idString);
+
+  const { showMessage } = useMessage();
 
   useEffect(() => {
     getReportDetail(id).then((response) => {
@@ -64,8 +68,10 @@ export const LogDetail: FC = () => {
 
     try {
       await updateReport(id, updatedReport);
+      showMessage({ title: "更新しました", status: "success" });
       navigate("/log");
     } catch (error) {
+      showMessage({ title: "更新に失敗しました", status: "error" });
       console.error("Error updating the report: ", error);
     }
   };
@@ -79,6 +85,8 @@ export const LogDetail: FC = () => {
 
   return (
     <Box p={4}>
+        <Stack spacing={4} py={4} px={10}>
+
       <FormControl id="createdDate">
         <FormLabel>日付</FormLabel>
         <Input
@@ -88,7 +96,7 @@ export const LogDetail: FC = () => {
         />
       </FormControl>
       <FormControl id="todaysGoal">
-        <FormLabel>本日の目標(TODO目標/できるようになりたいこと)</FormLabel>
+        <FormLabel>本日の目標</FormLabel>
         <Textarea
           value={todaysGoal}
           onChange={(e) => setTodaysGoal(e.target.value)}
@@ -144,8 +152,7 @@ export const LogDetail: FC = () => {
 
       <FormControl id="tomorrowsGoal">
         <FormLabel>明日の目標(TODO目標/できるようになりたいこと)</FormLabel>
-        <Input
-          type="text"
+        <Textarea
           value={tomorrowsGoal}
           onChange={(e) => setTomorrowsGoal(e.target.value)}
         />
@@ -154,6 +161,7 @@ export const LogDetail: FC = () => {
         <PrimaryButton onClick={handleUpdateReport}>更新</PrimaryButton>
         <DangerButton onClick={handleDeleteReport}>削除</DangerButton>
       </VStack>
+      </Stack>
     </Box>
   );
 };
