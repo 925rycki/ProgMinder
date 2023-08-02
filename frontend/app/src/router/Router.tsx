@@ -12,6 +12,7 @@ import { LogDetail } from "../components/pages/LogDetail";
 import { ReportDetail } from "../components/pages/ReportDetail";
 import { UserInfo } from "../components/pages/UserInfo";
 import { NotFound } from "../components/pages/NotFound";
+import { Follow } from "../components/pages/Follow";
 
 export const Router: FC = () => {
   return (
@@ -31,6 +32,14 @@ export const Router: FC = () => {
         element={
           <HeaderLayout>
             <Timeline />
+          </HeaderLayout>
+        }
+      />
+      <Route
+        path="/follow"
+        element={
+          <HeaderLayout>
+            <Follow />
           </HeaderLayout>
         }
       />
