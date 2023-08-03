@@ -106,6 +106,7 @@ export type ReportType = {
 };
 
 export type UserInfoType = {
+  id: number;
   nickname: string;
   image: {
     url: string;
@@ -115,4 +116,14 @@ export type UserInfoType = {
   followersCount: number;
   reports: ReportType[];
   isFollowed: boolean;
+};
+
+export type FollowUserType = {
+  id: number;
+  name: string;
+  nickname: string;
+  image: {
+    url: string;
+  },
+  bio: string;
 };

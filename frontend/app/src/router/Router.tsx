@@ -12,7 +12,9 @@ import { LogDetail } from "../components/pages/LogDetail";
 import { ReportDetail } from "../components/pages/ReportDetail";
 import { UserInfo } from "../components/pages/UserInfo";
 import { NotFound } from "../components/pages/NotFound";
-import { Follow } from "../components/pages/Follow";
+import { Follow } from "../components/pages/FollowTimeline";
+import { FollowingUsers } from "../components/pages/FollowingUsers";
+import { FollowedUsers } from "../components/pages/FollowedUsers";
 
 export const Router: FC = () => {
   return (
@@ -88,6 +90,22 @@ export const Router: FC = () => {
         element={
           <HeaderLayout>
             <UserInfo />
+          </HeaderLayout>
+        }
+      />
+      <Route
+        path="/following/:id"
+        element={
+          <HeaderLayout>
+            <FollowingUsers />
+          </HeaderLayout>
+        }
+      />
+      <Route
+        path="/followed/:id"
+        element={
+          <HeaderLayout>
+            <FollowedUsers />
           </HeaderLayout>
         }
       />
