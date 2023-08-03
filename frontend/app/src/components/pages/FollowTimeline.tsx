@@ -4,12 +4,12 @@ import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-import { createLike, deleteLike, getReports } from "../../lib/api/report";
+import { createLike, deleteLike, getFollowingUserReports } from "../../lib/api/report";
 import { TimelineReportType } from "../../types/report";
 import { useMessage } from "../../hooks/useMessage";
 import { AuthContext } from "../../App";
 
-export const Timeline: FC = () => {
+export const Follow: FC = () => {
   const [reports, setReports] = useState<TimelineReportType[]>([]);
   const navigate = useNavigate();
   const { currentUser } = useContext(AuthContext);
@@ -17,7 +17,7 @@ export const Timeline: FC = () => {
   const { showMessage } = useMessage();
 
   useEffect(() => {
-    getReports().then((res) => setReports(res.data));
+    getFollowingUserReports().then((res) => setReports(res.data));
   }, []);
 
   const formatDate = (dateString: string) => {
@@ -64,7 +64,7 @@ export const Timeline: FC = () => {
 
   return (
     <>
-      {reports.length === 0 && <Text>まだ投稿がありません。</Text>}
+      {reports.length === 0 && <Text>まだフォローしているユーザーの投稿がありません。</Text>}
       <Box m={2} mx={{ base: 2, md: 32 }}>
         <Stack spacing={5}>
           {reports.map((data) => (

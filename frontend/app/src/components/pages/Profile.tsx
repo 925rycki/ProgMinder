@@ -11,7 +11,8 @@ import {
   Input,
   Textarea,
   Text,
-  IconButton,
+  Image,
+  Flex,
 } from "@chakra-ui/react";
 import { FC, useState, useRef, useEffect, useContext } from "react";
 import { accountDelete, updateUserInfo } from "../../lib/api/auth";
@@ -20,7 +21,7 @@ import { useNavigate } from "react-router-dom";
 import { DangerButton } from "../atoms/button/DangerButton";
 import { AuthContext } from "../../App";
 import { PrimaryButton } from "../atoms/button/PrimaryButton";
-import { AttachmentIcon } from "@chakra-ui/icons";
+import { getCurrentUserFollowInfo } from "../../lib/api/report";
 
 export const Profile: FC = () => {
   const { currentUser } = useContext(AuthContext);
@@ -32,6 +33,8 @@ export const Profile: FC = () => {
   );
   const [bio, setBio] = useState<string | undefined>(currentUser?.bio);
   const [password, setPassword] = useState<string>();
+  const [followingCount, setFollowingCount] = useState<number>(0);
+  const [followersCount, setFollowersCount] = useState<number>(0);
 
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
@@ -49,7 +52,7 @@ export const Profile: FC = () => {
     showMessage({ title: "アカウントを削除しました", status: "success" });
   };
 
-  const onClickAccountDelete = async () => {
+  const handleAccountDelete = async () => {
     setIsOpen(true);
   };
 
@@ -57,6 +60,10 @@ export const Profile: FC = () => {
     setPreview(currentUser?.image?.url || "");
     setNickname(currentUser?.nickname);
     setBio(currentUser?.bio);
+    getCurrentUserFollowInfo().then((res) => {
+      setFollowingCount(res.data.followingCount);
+      setFollowersCount(res.data.followersCount);
+    });
   }, [currentUser]);
 
   const onChangeNickname = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -66,12 +73,10 @@ export const Profile: FC = () => {
   const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) =>
     setPassword(e.target.value);
 
-  const onClickUpdate = async () => {
+  const handleUpdate = async () => {
     try {
-      // FormDataインスタンスを作成
       const formData = new FormData();
 
-      // FormDataにユーザー情報を追加（undefinedでないことを確認）
       if (currentUser?.name) {
         formData.append("name", currentUser?.name);
       }
@@ -82,34 +87,27 @@ export const Profile: FC = () => {
         formData.append("bio", bio);
       }
 
-      // パスワードが入力されている場合だけ、パスワードも追加
       if (password) {
         formData.append("password", password);
       }
 
-      // 画像ファイルが選択されている場合だけ、画像も追加
       if (image) {
-        formData.append("image", image, image.name); // 画像名も送信
+        formData.append("image", image, image.name);
       }
 
-      // 更新処理を行う
       await updateUserInfo(formData);
 
-      // 更新が完了したらメッセージを表示する
       showMessage({
         title: "プロフィール情報が更新されました",
         status: "success",
       });
     } catch (err) {
-      // エラーが発生した場合はエラーメッセージを表示する
       showMessage({
         title: "プロフィール情報の更新に失敗しました",
         status: "error",
       });
     }
   };
-
-  // 画像のアップロードとプレビューのための関数
   const uploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.item(0);
     if (file) {
@@ -135,14 +133,9 @@ export const Profile: FC = () => {
       <form>
         <VStack spacing="24px">
           <label htmlFor="icon-button-file">
-            <IconButton
-              colorScheme="blue"
-              aria-label="upload picture"
-              icon={<AttachmentIcon />}
-              onClick={() => {
+            <Button              onClick={() => {
                 document.getElementById("icon-button-file")?.click();
-              }}
-            />
+              }}>画像を変更</Button>
             <input
               accept="image/*"
               id="icon-button-file"
@@ -154,7 +147,18 @@ export const Profile: FC = () => {
               style={{ display: "none" }}
             />
           </label>
-          <img src={preview} alt="preview img" />
+          <Image
+            src={preview}
+            alt="preview img"
+            boxSize="200px"
+            borderRadius="full"
+          />
+                <Flex>
+        <Text fontWeight="bold" mr={2} cursor="pointer" onClick={() => navigate(`/following/${currentUser?.id}`)}>
+          フォロー: {followingCount}
+        </Text>
+        <Text fontWeight="bold" cursor="pointer" onClick={() => navigate(`/followed/${currentUser?.id}`)}>フォロワー: {followersCount}</Text>
+      </Flex>
           <Text>ユーザー名（変更できません）</Text>
           <Input type="text" value={currentUser?.name} isReadOnly />
           <Text>ニックネーム</Text>
@@ -174,8 +178,8 @@ export const Profile: FC = () => {
             placeholder="新しいパスワードを入力"
             onChange={onChangePassword}
           />
-          <PrimaryButton onClick={onClickUpdate}>更新</PrimaryButton>
-          <DangerButton onClick={onClickAccountDelete}>
+          <PrimaryButton onClick={handleUpdate}>更新</PrimaryButton>
+          <DangerButton onClick={handleAccountDelete}>
             アカウントを削除
           </DangerButton>
         </VStack>

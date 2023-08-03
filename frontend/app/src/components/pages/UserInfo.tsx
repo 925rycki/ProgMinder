@@ -2,7 +2,7 @@ import { FC, useContext, useEffect, useState } from "react";
 import { UserInfoType } from "../../types/report";
 import { createFollow, deleteFollow, getUserInfo } from "../../lib/api/report";
 import { Box, Flex, Image, Text, VStack } from "@chakra-ui/react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { PrimaryButton } from "../atoms/button/PrimaryButton";
 import { SmallAddIcon, SmallCloseIcon } from "@chakra-ui/icons";
 import { DangerButton } from "../atoms/button/DangerButton";
@@ -18,13 +18,15 @@ export const UserInfo: FC = () => {
   const idString = useParams<{ id: string }>().id;
   const id = Number(idString);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     getUserInfo(id).then((res) => setUserInfo(res.data));
   }, [id]);
 
-  const onClickFollow = () => {
+  const handleFollow = () => {
     if (!currentUser) { 
-      showMessage({ title: "ログインしてください", status: "error" });
+      showMessage({ title: "サインインしてください", status: "error" });
       return;
     }
 
@@ -43,7 +45,7 @@ export const UserInfo: FC = () => {
       });
   };
 
-  const onClickUnfollow = () => {
+  const handleUnfollow = () => {
     deleteFollow(id)
       .then(() => {
         if (userInfo) {
@@ -76,20 +78,20 @@ export const UserInfo: FC = () => {
       </Text>
       <Text>{userInfo.bio}</Text>
       <Flex>
-        <Text fontWeight="bold" mr={2}>
+        <Text fontWeight="bold" mr={2} cursor="pointer" onClick={() => navigate(`/following/${id}`)}>
           フォロー: {userInfo.followingCount}
         </Text>
-        <Text fontWeight="bold">フォロワー: {userInfo.followersCount}</Text>
+        <Text fontWeight="bold" cursor="pointer" onClick={() => navigate(`/followed/${id}`)}>フォロワー: {userInfo.followersCount}</Text>
       </Flex>
       {currentUser?.id !== id && (
         <>
           {userInfo.isFollowed ? (
-            <DangerButton onClick={onClickUnfollow}>
+            <DangerButton onClick={handleUnfollow}>
               <SmallCloseIcon />
               フォロー解除
             </DangerButton>
           ) : (
-            <PrimaryButton onClick={onClickFollow}>
+            <PrimaryButton onClick={handleFollow}>
               <SmallAddIcon />
               フォローする
             </PrimaryButton>
@@ -98,7 +100,7 @@ export const UserInfo: FC = () => {
       )}
       <Box>
         {userInfo.reports.map((report) => (
-          <Box key={report.id} p={4} borderWidth="1px" borderRadius="md">
+          <Box key={report.id} p={4} borderWidth="1px" borderRadius="md" my={2}>
             <Text fontSize="xl">{report.createdDate}</Text>
             <Text>本日の目標: {report.todaysGoal}</Text>
             <Text>学習時間: {report.studyTime} [h]</Text>

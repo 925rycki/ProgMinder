@@ -29,6 +29,22 @@ export const getUserInfo = (id: number) => {
   return client.get(`/get_user_info/${id}`);
 };
 
+export const getCurrentUserFollowInfo = () => {
+  return client.get("/get_current_user_follow_info");
+}
+
+export const getFollowingUserReports = () => {
+  return client.get(`/get_following_user_reports`);
+}
+
+export const getFollowingUsers = (id: number) => {
+  return client.get(`/get_following_users/${id}`);
+};
+
+export const getFollowedUsers = (id: number) => {
+  return client.get(`/get_followed_users/${id}`);
+};
+
 export const createLike = (reportId: number) => {
   return client.post("/likes", { report_id: reportId });
 };

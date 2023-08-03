@@ -164,7 +164,7 @@ export const Report: FC = () => {
           </FormControl>
 
           <FormControl id="goalReview">
-            <FormLabel>目標振り返り({goalReviewCount}/255)</FormLabel>
+            <FormLabel>目標振り返り<span style={{ color: 'red' }}>*</span>({goalReviewCount}/255)</FormLabel>
             <Textarea
               value={goalReview}
               onChange={handleGoalReviewChange}

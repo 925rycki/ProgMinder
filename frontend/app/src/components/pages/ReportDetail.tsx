@@ -1,6 +1,6 @@
 import { FC, useContext, useEffect, useState } from "react";
 import { Box, Flex, Image, Input, Stack, Text } from "@chakra-ui/react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../App";
 import {
   createComment,
@@ -21,6 +21,8 @@ export const ReportDetail: FC = () => {
 
   const { showMessage } = useMessage();
 
+  const navigate = useNavigate();
+
   const idString = useParams<{ id: string }>().id;
   const id = Number(idString);
 
@@ -34,7 +36,7 @@ export const ReportDetail: FC = () => {
 
   const handleCreateComment = async () => {
     if (!currentUser) {
-      showMessage({ title: "ログインしてください", status: "error" });
+      showMessage({ title: "サインインしてください", status: "error" });
       return;
     }
 
@@ -82,15 +84,16 @@ export const ReportDetail: FC = () => {
         <>
           <Box bg="white" p={4} borderRadius="md" shadow="md">
             <Stack spacing={4} py={4} px={10}>
-              <Flex align="center">
+              <Flex align="center" onClick={() => navigate(`/user/${report.report.user.id}`)}
+                  cursor="pointer">
                 <Image
                   borderRadius="full"
                   boxSize="50px"
-                  src={report.report.user?.image?.url}
+                  src={report.report.user.image.url}
                   alt="User image"
                 />
                 <Text ml={4} fontWeight="bold">
-                  {report.report.user?.nickname}
+                  {report.report.user.nickname}
                 </Text>
               </Flex>
               <Text>
@@ -109,7 +112,7 @@ export const ReportDetail: FC = () => {
                 <br />
                 {report.report.report.todaysGoal}
               </Text>
-              <Text>学習時間:{report.report.report.studyTime}</Text>
+              <Text>学習時間[h]:{report.report.report.studyTime}</Text>
               <Text>
                 目標振り返り(TODO進捗/できるようになりたいこと振り返り):
                 <br />
@@ -153,6 +156,7 @@ export const ReportDetail: FC = () => {
         <Box key={index} my={2}>
           <Flex align="center">
             <Image
+            mr={2}
               borderRadius="full"
               boxSize="50px"
               src={commentData.user?.image?.url}

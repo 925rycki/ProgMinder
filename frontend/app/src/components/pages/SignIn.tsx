@@ -34,7 +34,7 @@ export const SignIn: FC = () => {
 
   const handleClick = () => setShow(!show);
 
-  const onClickSignIn = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSignIn = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     const params: SignInData = {
@@ -99,7 +99,7 @@ export const SignIn: FC = () => {
             </InputRightElement>
           </InputGroup>
           <PrimaryButton
-            onClick={onClickSignIn}
+            onClick={handleSignIn}
             isDisabled={!name || !password ? true : false}
           >
             サインイン
