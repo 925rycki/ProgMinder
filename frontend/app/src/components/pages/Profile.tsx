@@ -11,8 +11,8 @@ import {
   Input,
   Textarea,
   Text,
-  IconButton,
   Image,
+  Flex,
 } from "@chakra-ui/react";
 import { FC, useState, useRef, useEffect, useContext } from "react";
 import { accountDelete, updateUserInfo } from "../../lib/api/auth";
@@ -21,7 +21,7 @@ import { useNavigate } from "react-router-dom";
 import { DangerButton } from "../atoms/button/DangerButton";
 import { AuthContext } from "../../App";
 import { PrimaryButton } from "../atoms/button/PrimaryButton";
-import { AttachmentIcon } from "@chakra-ui/icons";
+import { getCurrentUserFollowInfo } from "../../lib/api/report";
 
 export const Profile: FC = () => {
   const { currentUser } = useContext(AuthContext);
@@ -33,6 +33,8 @@ export const Profile: FC = () => {
   );
   const [bio, setBio] = useState<string | undefined>(currentUser?.bio);
   const [password, setPassword] = useState<string>();
+  const [followingCount, setFollowingCount] = useState<number>(0);
+  const [followersCount, setFollowersCount] = useState<number>(0);
 
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
@@ -58,6 +60,10 @@ export const Profile: FC = () => {
     setPreview(currentUser?.image?.url || "");
     setNickname(currentUser?.nickname);
     setBio(currentUser?.bio);
+    getCurrentUserFollowInfo().then((res) => {
+      setFollowingCount(res.data.followingCount);
+      setFollowersCount(res.data.followersCount);
+    });
   }, [currentUser]);
 
   const onChangeNickname = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -127,14 +133,9 @@ export const Profile: FC = () => {
       <form>
         <VStack spacing="24px">
           <label htmlFor="icon-button-file">
-            <IconButton
-              colorScheme="blue"
-              aria-label="upload picture"
-              icon={<AttachmentIcon />}
-              onClick={() => {
+            <Button              onClick={() => {
                 document.getElementById("icon-button-file")?.click();
-              }}
-            />
+              }}>画像を変更</Button>
             <input
               accept="image/*"
               id="icon-button-file"
@@ -152,6 +153,12 @@ export const Profile: FC = () => {
             boxSize="200px"
             borderRadius="full"
           />
+                <Flex>
+        <Text fontWeight="bold" mr={2} cursor="pointer" onClick={() => navigate(`/following/${currentUser?.id}`)}>
+          フォロー: {followingCount}
+        </Text>
+        <Text fontWeight="bold" cursor="pointer" onClick={() => navigate(`/followed/${currentUser?.id}`)}>フォロワー: {followersCount}</Text>
+      </Flex>
           <Text>ユーザー名（変更できません）</Text>
           <Input type="text" value={currentUser?.name} isReadOnly />
           <Text>ニックネーム</Text>

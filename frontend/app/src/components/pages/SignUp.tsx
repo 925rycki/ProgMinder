@@ -13,11 +13,12 @@ import {
   InputRightElement,
   Stack,
   Text,
+  Textarea,
   VStack,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import { AttachmentIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 import { PrimaryButton } from "../atoms/button/PrimaryButton";
 import { AuthContext } from "../../App";
@@ -40,6 +41,11 @@ export const SignUp: FC = () => {
   const [show, setShow] = useState<boolean>(false);
   const [image, setImage] = useState<string>("");
   const [preview, setPreview] = useState<string>("");
+
+  const [nicknameCount, setNicknameCount] = useState<number>(0);
+  const [nameCount, setNameCount] = useState<number>(0);
+  const [bioCount, setBioCount] = useState<number>(0);
+  const [passwordCount, setPasswordCount] = useState<number>(0);
 
   const handleClick = () => setShow(!show);
 
@@ -99,16 +105,42 @@ export const SignUp: FC = () => {
     }
   };
 
-  const onChangeName = (e: ChangeEvent<HTMLInputElement>) =>
-    setName(e.target.value);
-  const onChangeNickname = (e: ChangeEvent<HTMLInputElement>) =>
-    setNickname(e.target.value);
-  const onChangeBio = (e: ChangeEvent<HTMLInputElement>) =>
-    setBio(e.target.value);
-  const onChangePassword = (e: ChangeEvent<HTMLInputElement>) =>
-    setPassword(e.target.value);
   const onChangePasswordConfirmation = (e: ChangeEvent<HTMLInputElement>) =>
     setPasswordConfirmation(e.target.value);
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value.length <= 16) {
+      setName(value);
+      setNameCount(value.length);
+    }
+  };
+
+  const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value.length <= 16) {
+      setNickname(value);
+      setNicknameCount(value.length);
+    }
+  };
+
+  const handleBioChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    if (value.length <= 255) {
+      setBio(value);
+      setBioCount(value.length);
+    }
+  };
+
+    const handlPasswordChange = (
+      e: React.ChangeEvent<HTMLInputElement>
+    ) => {
+      const value = e.target.value;
+      if (value.length <= 128) {
+        setPassword(value);
+        setPasswordCount(value.length);
+      }
+    };
 
   return (
     <Flex align="center" justify="center" height="100vh">
@@ -120,17 +152,10 @@ export const SignUp: FC = () => {
         <Stack spacing={4} py={4} px={10}>
           <VStack>
           <label htmlFor="icon-button-file">
-            <Text fontSize="sm">プロフィール画像を選択してください。</Text>
             <Center>
-            <IconButton
-            my={2}
-              colorScheme="blue"
-              aria-label="upload picture"
-              icon={<AttachmentIcon />}
-              onClick={() => {
+            <Button mr={2} onClick={() => {
                 document.getElementById("icon-button-file")?.click();
-              }}
-            />
+              }} fontSize="sm">プロフィール画像をアップロード</Button><span style={{ color: 'red' }}>*</span>
             </Center>
             <input
               accept="image/*"
@@ -145,22 +170,26 @@ export const SignUp: FC = () => {
           </label>
           { preview && <Image src={preview} alt="preview img" boxSize="200px" borderRadius="full" /> }
           </VStack>
+          <Text>ユーザーID<span style={{ color: 'red' }}>*</span>({nameCount}/16)</Text>
           <Input
             placeholder="ユーザーID(半角英数字)"
             value={name}
-            onChange={onChangeName}
+            onChange={handleNameChange}
           />
+          <Text>ニックネーム<span style={{ color: 'red' }}>*</span>({nicknameCount}/16)</Text>
           <Input
             placeholder="ニックネーム(表示名)"
             value={nickname}
-            onChange={onChangeNickname}
+            onChange={handleNicknameChange}
           />
-          <Input placeholder="自己紹介文" value={bio} onChange={onChangeBio} />
+          <Text>自己紹介文({bioCount}/255)</Text>
+          <Textarea placeholder="自己紹介文" value={bio} onChange={handleBioChange} />
+          <Text>パスワード<span style={{ color: 'red' }}>*</span>({passwordCount}/6~128)</Text>
           <InputGroup>
             <Input
               placeholder="パスワード"
               value={password}
-              onChange={onChangePassword}
+              onChange={handlPasswordChange}
               type={show ? "text" : "password"}
             />
             <InputRightElement>

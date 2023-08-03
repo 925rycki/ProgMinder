@@ -112,7 +112,7 @@ export const ReportDetail: FC = () => {
                 <br />
                 {report.report.report.todaysGoal}
               </Text>
-              <Text>学習時間:{report.report.report.studyTime}</Text>
+              <Text>学習時間[h]:{report.report.report.studyTime}</Text>
               <Text>
                 目標振り返り(TODO進捗/できるようになりたいこと振り返り):
                 <br />

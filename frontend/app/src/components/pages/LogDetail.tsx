@@ -103,7 +103,7 @@ export const LogDetail: FC = () => {
         />
       </FormControl>
       <FormControl id="studyTime">
-        <FormLabel>学習時間(Hour)</FormLabel>
+        <FormLabel>学習時間[h]</FormLabel>
         <NumberInput
           value={studyTime}
           onChange={(valueString) => setStudyTime(Number(valueString))}
