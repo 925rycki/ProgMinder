@@ -95,9 +95,7 @@ export const ReportDetail: FC = () => {
                 <Text ml={4} fontWeight="bold">
                   {report.report.user.nickname}
                 </Text>
-              </Flex>
-              <Text>
-                日付:
+              <Text fontWeight="bold" ml={4}>
                 {new Date(report.report.report.createdDate).toLocaleDateString(
                   "ja-JP",
                   {
@@ -107,35 +105,43 @@ export const ReportDetail: FC = () => {
                   }
                 )}
               </Text>
+              </Flex>
+              <Text fontWeight="bold">
+                本日の目標(TODO目標/できるようになりたいこと)
+              </Text>
               <Text>
-                本日の目標(TODO目標/できるようになりたいこと):
-                <br />
                 {report.report.report.todaysGoal}
               </Text>
-              <Text>学習時間[h]:{report.report.report.studyTime}</Text>
+              <Text fontWeight="bold">学習時間[h]</Text>
+              <Text>{report.report.report.studyTime}</Text>
+              <Text fontWeight="bold">
+                目標振り返り(TODO進捗/できるようになりたいこと振り返り)
+              </Text>
               <Text>
-                目標振り返り(TODO進捗/できるようになりたいこと振り返り):
-                <br />
                 {report.report.report.goalReview}
               </Text>
+              <Text fontWeight="bold">
+                詰まっていること
+              </Text>
               <Text>
-                詰まっていること:
-                <br />
                 {report.report.report.challenges}
               </Text>
+              <Text fontWeight="bold">
+                学んだこと(新しい気付き、学び)
+              </Text>
               <Text>
-                学んだこと(新しい気付き、学び):
-                <br />
                 {report.report.report.learnings}
               </Text>
-              <Text>
-                感想(一日の感想、雑談):
-                <br />
-                {report.report.report.thoughts}
+              <Text fontWeight="bold">
+                感想(一日の感想、雑談)
               </Text>
               <Text>
-                明日の目標(TODO目標/できるようになりたいこと):
-                <br />
+                {report.report.report.thoughts}
+              </Text>
+              <Text fontWeight="bold">
+                明日の目標(TODO目標/できるようになりたいこと)
+              </Text>
+              <Text>
                 {report.report.report.tomorrowsGoal}
               </Text>
             </Stack>

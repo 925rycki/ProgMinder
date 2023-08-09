@@ -1,5 +1,5 @@
 import { FC, useContext, useEffect, useState } from "react";
-import { Box, Flex, Heading, Image, Stack, Text } from "@chakra-ui/react";
+import { Box, Flex, Image, Stack, Text } from "@chakra-ui/react";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -83,17 +83,24 @@ export const Timeline: FC = () => {
                     alt="User image"
                   />
                   <Text fontWeight="bold">{data.user?.nickname}</Text>
+                  <Text fontWeight="bold" ml={4}>
+                    {formatDate(data.report.createdDate)}
+                  </Text>
                 </Flex>
-                <Heading fontSize="xl">
-                  {formatDate(data.report.createdDate)}
-                </Heading>
-                <Text>本日の目標：{data.report.todaysGoal}</Text>
-                <Text>学習時間[h]:{data.report.studyTime}</Text>
-                <Text>目標振り返り:{data.report.goalReview}</Text>
-                <Text>詰まっていること：{data.report.challenges}</Text>
-                <Text>学んだこと：{data.report.learnings}</Text>
-                <Text>感想：{data.report.thoughts}</Text>
-                <Text>明日の目標：{data.report.tomorrowsGoal}</Text>
+                <Text fontWeight="bold">本日の目標</Text>
+                <Text style={{ whiteSpace: 'pre-line'}}>{data.report.todaysGoal}</Text>
+                <Text fontWeight="bold">学習時間[h]</Text>
+                <Text style={{ whiteSpace: 'pre-line'}}>{data.report.studyTime}</Text>
+                <Text fontWeight="bold">目標振り返り</Text>
+                <Text style={{ whiteSpace: 'pre-line'}}>{data.report.goalReview}</Text>
+                <Text fontWeight="bold">詰まっていること</Text>
+                <Text style={{ whiteSpace: 'pre-line'}}>{data.report.challenges}</Text>
+                <Text fontWeight="bold">学んだこと</Text>
+                <Text style={{ whiteSpace: 'pre-line'}}>{data.report.learnings}</Text>
+                <Text fontWeight="bold">感想</Text>
+                <Text style={{ whiteSpace: 'pre-line'}}>{data.report.thoughts}</Text>
+                <Text fontWeight="bold">明日の目標</Text>
+                <Text style={{ whiteSpace: 'pre-line'}}>{data.report.tomorrowsGoal}</Text>
                 <Flex>
                   <Flex align="center" mr={4}>
                     {data.isLiked ? (
