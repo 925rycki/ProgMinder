@@ -56,19 +56,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+      - uses: actions/checkout@v2
+      - uses: actions/setup-ruby@v1
         with:
-          ruby-version: 3.2.2
-
-      - name: Bundler and gem install
-        run: |
+          ruby-version: 2.6
+      - run: |
           gem install bundler
-          bundle config set --local path 'vendor/bundle'
-          bundle install --jobs 4 --retry 3
-
+          bundle install
       - name: Run rubocop
         run: bundle exec rubocop
