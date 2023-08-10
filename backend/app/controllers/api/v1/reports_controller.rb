@@ -67,14 +67,14 @@ module Api
       end
 
       # 特定のユーザーに紐づく情報を取得する
-      def get_user_info
+      def user_info
         @user = User.find(params[:id])
         @user_reports = @user.reports.order(created_at: :desc)
         @is_followed = current_api_v1_user&.following?(@user)
       end
 
       # 認証ユーザーがフォローしているユーザーのレポートを取得する
-      def get_following_user_reports
+      def following_user_reports
         if current_api_v1_user
           following_users_ids = current_api_v1_user.follower.map(&:followed_id)
           @reports = Report.includes(:likes, :comments, :user)
