@@ -5,8 +5,40 @@ on:
     branches:
       - main
 
+defaults:
+  run:
+    working-directory: backend
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0.33
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: rails_test
+        ports:
+        - 3306:3306
+
     steps:
-      - run: echo "Hello, world!"
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.2.2
+        bundler-cache: true
+
+    - name: Set up database
+      run: |
+        sudo apt-get install libmysqlclient-dev
+        cp config/database.ci.yml config/database.yml
+        bundle exec rake db:create
+        bundle exec rake db:schema:load
+
+    - name: Run RSpec
+      run: bundle exec rspec
+
