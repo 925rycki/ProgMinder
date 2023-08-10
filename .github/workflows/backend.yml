@@ -54,7 +54,6 @@ jobs:
         run: bundle exec rspec
 
   rubocop:
-    name: runner / rubocop
     runs-on: ubuntu-latest
     steps:
       - name: Check out code

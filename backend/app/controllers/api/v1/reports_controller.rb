@@ -74,7 +74,7 @@ module Api
       end
 
       # 認証ユーザーがフォローしているユーザーのレポートを取得する
-      def following_user_reports
+      def get_following_user_reports
         if current_api_v1_user
           following_users_ids = current_api_v1_user.follower.map(&:followed_id)
           @reports = Report.includes(:likes, :comments, :user)
