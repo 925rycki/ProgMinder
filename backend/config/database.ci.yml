@@ -9,4 +9,4 @@ default: &default
 
 test:
   <<: *default
-  database: rails_test
+  database: db
