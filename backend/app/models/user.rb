@@ -10,9 +10,9 @@ class User < ApplicationRecord
   has_many :reports, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :comments, dependent: :destroy
-  has_many :follower, class_name: 'Follow', foreign_key: 'follower_id', dependent: :destroy
-  has_many :followed, class_name: 'Follow', foreign_key: 'followed_id', dependent: :destroy
-  
+  has_many :follower, class_name: 'Follow', foreign_key: 'follower_id', dependent: :destroy, inverse_of: 'follower'
+  has_many :followed, class_name: 'Follow', foreign_key: 'followed_id', dependent: :destroy, inverse_of: 'followed'
+
   validates :name, presence: true, uniqueness: true
   validates :nickname, length: { maximum: 255 }
   validates :bio, length: { maximum: 255 }

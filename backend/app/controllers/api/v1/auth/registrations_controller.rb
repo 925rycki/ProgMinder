@@ -9,5 +9,5 @@ class Api::V1::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsCon
 
     def configure_permitted_parameters
       devise_parameter_sanitizer.permit(:account_update, keys: [:nickname, :image, :bio])
-    end 
+    end
 end

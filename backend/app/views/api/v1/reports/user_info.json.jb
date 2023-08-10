@@ -1,0 +1,21 @@
+{
+  id: @user.id,
+  nickname: @user.nickname,
+  image: @user.image,
+  bio: @user.bio,
+  following_count: @user.follower.count,
+  followers_count: @user.followed.count,
+  reports: @user_reports.map do |report|
+    {
+      id: report.id,
+      todays_goal: report.todays_goal,
+      study_time: report.study_time,
+      goal_review: report.goal_review,
+      challenges: report.challenges,
+      learnings: report.learnings,
+      thoughts: report.thoughts,
+      tomorrows_goal: report.tomorrows_goal
+    }
+  end,
+  is_followed: @is_followed
+}

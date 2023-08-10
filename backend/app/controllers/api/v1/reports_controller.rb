@@ -5,6 +5,10 @@ module Api
         @reports = Report.includes(:likes, :comments, :user).order(created_at: :desc)
       end
 
+      def show
+        @report = Report.includes(comments: :user).find(params[:id])
+      end
+
       def create
         if current_api_v1_user
           @report = current_api_v1_user.reports.build(report_params)
@@ -18,10 +22,6 @@ module Api
         end
       end
 
-      def show
-        @report = Report.includes(comments: :user).find(params[:id])
-      end
-      
       def update
         @report = Report.find(params[:id])
         if current_api_v1_user&.id == @report.user_id
@@ -45,117 +45,58 @@ module Api
         end
       end
 
-      def get_current_user_follow_info
+      def current_user_follow_info
         if current_api_v1_user
           user_follow_info = {
             following_count: current_api_v1_user.follower.count,
-            followers_count: current_api_v1_user.followed.count,
+            followers_count: current_api_v1_user.followed.count
           }
-      
           render json: user_follow_info.to_json, status: :ok
         else
           render json: { message: "サインインしてください" }, status: :unauthorized
         end
-      end      
+      end
 
       # 認証ユーザーに紐づくレポートを取得する
-      def get_current_user_reports
+      def current_user_reports
         if current_api_v1_user
-          @user_reports = current_api_v1_user.reports
-          render 'get_current_api_v1_user_reports'
+          @user_reports = current_api_v1_user.reports.order(created_at: :desc)
         else
           render json: { message: "サインインしてください" }, status: :unauthorized
         end
       end
 
       # 特定のユーザーに紐づく情報を取得する
-      def get_user_info
-        user = User.find(params[:id])
-        user_reports = user.reports.order(created_at: :desc)
-      
-        is_followed = false
-        if current_api_v1_user && current_api_v1_user.following?(user)
-          is_followed = true
-        end
-      
-        user_data = {
-          id: user.id,
-          nickname: user.nickname,
-          image: user.image,
-          bio: user.bio,
-          following_count: user.follower.count,
-          followers_count: user.followed.count,
-          reports: user_reports,
-          is_followed: is_followed
-        }
-        render json: user_data.to_json, status: :ok
+      def user_info
+        @user = User.find(params[:id])
+        @user_reports = @user.reports.order(created_at: :desc)
+        @is_followed = current_api_v1_user&.following?(@user)
       end
-      
+
       # 認証ユーザーがフォローしているユーザーのレポートを取得する
-      def get_following_user_reports
+      def following_user_reports
         if current_api_v1_user
           following_users_ids = current_api_v1_user.follower.map(&:followed_id)
           @reports = Report.includes(:likes, :comments, :user)
                            .where(user_id: following_users_ids)
                            .order(created_at: :desc)
-          
-          data = @reports.map do |report|
-            {
-              report: report,
-              likes_count: report.likes.count,
-              is_liked: report.likes.exists?(user_id: current_api_v1_user.id),
-              comments_count: report.comments.count,
-              user: {
-                id: report.user.id,
-                nickname: report.user.nickname,
-                image: report.user.image
-              }
-            }
-          end
-          render json: data.to_json, status: :ok
         else
           render json: { message: "サインインしてください" }, status: :unauthorized
         end
       end
 
       # フォローしているユーザーを取得する
-      def get_following_users
+      def following_users
         user = User.find(params[:id])
-      
-        following_users = user.follower.map(&:followed)
-      
-        data = following_users.map do |following_user|
-          {
-            id: following_user.id,
-            name: following_user.name,
-            nickname: following_user.nickname,
-            image: following_user.image,
-            bio: following_user.bio
-          }
-        end
-      
-        render json: data.to_json, status: :ok
+        @following_users = user.follower.map(&:followed)
       rescue ActiveRecord::RecordNotFound
         render json: { message: "ユーザーが存在しません" }, status: :not_found
       end
 
       # フォローされているユーザーを取得する
-      def get_followed_users
+      def followed_users
         user = User.find(params[:id])
-
-        followed_users = user.followed.map(&:follower)
-
-        data = followed_users.map do |followed_user|
-          {
-            id: followed_user.id,
-            name: followed_user.name,
-            nickname: followed_user.nickname,
-            image: followed_user.image,
-            bio: followed_user.bio
-          }
-        end
-
-        render json: data.to_json, status: :ok
+        @followed_users = user.followed.map(&:follower)
       rescue ActiveRecord::RecordNotFound
         render json: { message: "ユーザーが存在しません" }, status: :not_found
       end
@@ -171,7 +112,8 @@ module Api
           :challenges,
           :learnings,
           :thoughts,
-          :tomorrows_goal)
+          :tomorrows_goal
+        )
       end
     end
   end

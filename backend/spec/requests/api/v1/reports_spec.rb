@@ -1,10 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe "Api::V1::Reports", type: :request do
+RSpec.describe "Api::V1::Reports" do
   describe "GET /api/v1/reports" do
+    let(:user) { create(:user) }
+
     before do
-      @user = create(:user)
-      3.times { create(:report, user: @user) }
+      create_list(:report, 3, user:)
+
       get api_v1_reports_path, as: :json
     end
 
@@ -13,8 +15,8 @@ RSpec.describe "Api::V1::Reports", type: :request do
     end
 
     it 'returns all reports' do
-      reports = JSON.parse(response.body)
-      expect(reports.size).to eq(3)
+      reports_data = response.parsed_body
+      expect(reports_data.size).to eq(3)
     end
   end
 end

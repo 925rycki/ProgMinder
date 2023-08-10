@@ -2,7 +2,7 @@
   {
     report:,
     likes_count: report.likes.count,
-    is_liked: api_v1_user_signed_in? ? report.likes.exists?(user_id: current_api_v1_user.id) : false,
+    is_liked: report.likes.exists?(user_id: current_api_v1_user.id),
     comments_count: report.comments.count,
     user: {
       id: report.user.id,

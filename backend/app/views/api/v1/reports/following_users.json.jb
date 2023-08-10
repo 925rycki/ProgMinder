@@ -1,0 +1,9 @@
+@following_users.map do |following_user|
+  {
+    id: following_user.id,
+    name: following_user.name,
+    nickname: following_user.nickname,
+    image: following_user.image,
+    bio: following_user.bio
+  }
+end

@@ -7,13 +7,13 @@
       image: @report.user.image
     }
   },
-  comments: @report.comments.map { |comment|
+  comments: @report.comments.map do |comment|
     {
-      comment: comment,
+      comment:,
       user: {
         nickname: comment.user.nickname,
         image: comment.user.image
       }
     }
-  }
+  end
 }

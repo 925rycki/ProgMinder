@@ -11,5 +11,4 @@ class Report < ApplicationRecord
   validates :learnings, length: { maximum: 255 }
   validates :thoughts, length: { maximum: 255 }
   validates :tomorrows_goal, length: { maximum: 255 }
-  validates :user_id, presence: true
 end

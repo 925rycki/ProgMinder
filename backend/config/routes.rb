@@ -16,12 +16,12 @@ Rails.application.routes.draw do
       resources :comments, only: [:create, :destroy]
       resources :follows, only: [:create, :destroy]
 
-      get '/get_current_user_follow_info', to: 'reports#get_current_user_follow_info'
-      get '/get_current_user_reports', to: 'reports#get_current_user_reports'
-      get '/get_user_info/:id', to: 'reports#get_user_info'
-      get '/get_following_user_reports', to: 'reports#get_following_user_reports'
-      get '/get_following_users/:id', to: 'reports#get_following_users'
-      get '/get_followed_users/:id', to: 'reports#get_followed_users'
+      get '/get_current_user_follow_info', to: 'reports#current_user_follow_info'
+      get '/get_current_user_reports', to: 'reports#current_user_reports'
+      get '/get_user_info/:id', to: 'reports#user_info'
+      get '/get_following_user_reports', to: 'reports#following_user_reports'
+      get '/get_following_users/:id', to: 'reports#following_users'
+      get '/get_followed_users/:id', to: 'reports#followed_users'
     end
   end
 end
