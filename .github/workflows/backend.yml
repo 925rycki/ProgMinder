@@ -4,6 +4,10 @@ on:
   push:
   pull_request:
 
+defaults:
+  run:
+    working-directory: backend
+
 jobs:
   rspec:
     runs-on: ubuntu-latest
@@ -37,7 +41,8 @@ jobs:
       - name: Bundler and gem install
         run: |
           gem install bundler
-          bundle install --jobs 4 --retry 3 --path vendor/bundle
+          bundle config set --local path 'vendor/bundle'
+          bundle install --jobs 4 --retry 3
 
       - name: Yarn install
         run: yarn install --check-files
