@@ -1,6 +1,6 @@
 import { FC, ReactNode } from "react";
 
-import { Header } from "../organisms/layout/Header";
+import { Header } from "../organisms/layouts/Header";
 
 type Props = {
   children: ReactNode;
