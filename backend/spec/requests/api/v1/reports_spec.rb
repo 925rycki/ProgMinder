@@ -14,7 +14,7 @@ RSpec.describe "Api::V1::Reports", type: :request do
 
     it 'returns all reports' do
       reports = JSON.parse(response.body)
-      expect(reports.size).to eq(2)
+      expect(reports.size).to eq(3)
     end
   end
 end
