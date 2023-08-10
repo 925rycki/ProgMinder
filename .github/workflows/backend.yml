@@ -2,7 +2,6 @@ name: backend
 
 on:
   push:
-  pull_request:
 
 defaults:
   run:
@@ -55,16 +54,25 @@ jobs:
 
   rubocop:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: backend
+
     steps:
-      - name: Check out code
-        uses: actions/checkout@v1
-      - uses: ruby/setup-ruby@v1
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.2.2
-      - name: rubocop
-        uses: reviewdog/action-rubocop@v1
-        with:
-          rubocop_version: gemfile
-          rubocop_extensions: rubocop-rails:gemfile rubocop-rspec:gemfile
-          github_token: ${{ secrets.github_token }}
-          reporter: github-pr-review
+
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle config set --local path 'vendor/bundle'
+          bundle install --jobs 4 --retry 3
+
+      - name: Run rubocop
+        run: bundle exec rubocop
