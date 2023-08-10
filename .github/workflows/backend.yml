@@ -54,30 +54,18 @@ jobs:
         run: bundle exec rspec
 
   rubocop:
+    name: runner / rubocop
     runs-on: ubuntu-latest
-    timeout-minutes: 10
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+      - name: Check out code
+        uses: actions/checkout@v1
+      - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.2.2
-
-      - name: Cache node modules
-        uses: actions/cache@v2
+      - name: rubocop
+        uses: reviewdog/action-rubocop@v1
         with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Bundler and gem install
-        run: |
-          gem install bundler
-          bundle config set --local path 'vendor/bundle'
-          bundle install --jobs 4 --retry 3
-
-      - name: Run rubocop
-        run: bundle exec rubocop
+          rubocop_version: gemfile
+          rubocop_extensions: rubocop-rails:gemfile rubocop-rspec:gemfile
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review
