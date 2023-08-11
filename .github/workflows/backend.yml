@@ -3,10 +3,6 @@ name: backend
 on:
   push:
 
-defaults:
-  run:
-    working-directory: backend
-
 jobs:
   rspec:
     runs-on: ubuntu-latest
