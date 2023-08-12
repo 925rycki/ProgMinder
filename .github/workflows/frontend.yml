@@ -11,4 +11,5 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - run: aws s3 sync . s3://myapp-s3-925rycki --exact-timestamps --region ap-northeast-1 --profile admin
