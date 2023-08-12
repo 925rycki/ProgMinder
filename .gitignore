@@ -40,7 +40,7 @@ frontend/app.pnp.js
 frontend/app/coverage
 
 # production
-frontend/app/build
+# frontend/app/build
 
 # misc
 frontend/app.DS_Store
