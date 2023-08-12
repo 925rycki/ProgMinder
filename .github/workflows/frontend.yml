@@ -5,7 +5,7 @@ on:
 
 defaults:
   run:
-    working-directory: ProgMinder/frontend/app/build
+    working-directory: frontend/app/build
 
 jobs:
   deploy:
