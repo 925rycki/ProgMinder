@@ -10,6 +10,7 @@ import {
   InputGroup,
   InputRightElement,
   Stack,
+  Text,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -71,6 +72,7 @@ export const SignIn: FC = () => {
   return (
     <Flex align="center" justify="center" height="100vh">
       <Box bg="white" w="sm" p={4} borderRadius="md" shadow="md">
+        <Text>hello</Text>
         <Heading as="h1" size="lg" textAlign="center">
           ProgMinder
         </Heading>
