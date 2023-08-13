@@ -111,7 +111,7 @@ erDiagram
 ```
 
 # インフラ構成図
-![インフラ構成図](intro_pics/infra.png "intro_pics/infra.png")
+![インフラ構成図](infra.png "infra.png")
 
 # 機能一覧
 - ユーザー新規登録
