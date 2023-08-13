@@ -6,6 +6,22 @@
 ## オリジナルプロダクトのURL
 [ProgMinder](http://progminder.com "Progminder timeline")
 
+## 画面キャプチャ
+タイムライン
+<img width="1792" alt="timeline" src="https://github.com/925rycki/ProgMinder/assets/115384725/d4878239-757c-46bc-ab8f-4c7130a74e19">
+サインイン
+<img width="1792" alt="signin" src="https://github.com/925rycki/ProgMinder/assets/115384725/59501717-1d15-48c1-bb39-7ecad160211a">
+サインアップ
+<img width="1792" alt="signup" src="https://github.com/925rycki/ProgMinder/assets/115384725/e806c6f3-b732-4ba4-a6fb-431a6e47b0b9">
+フォロー
+<img width="1792" alt="follow" src="https://github.com/925rycki/ProgMinder/assets/115384725/2e3a86c4-b4af-4e0e-b394-6edce274f877">
+レポート
+<img width="1792" alt="report" src="https://github.com/925rycki/ProgMinder/assets/115384725/0c73211a-8ae1-4e7f-ba89-49ff23860775">
+ログ
+<img width="1792" alt="log" src="https://github.com/925rycki/ProgMinder/assets/115384725/80df6093-944f-4cac-9558-31a7c98b90e6">
+プロフィール
+<img width="1792" alt="profile" src="https://github.com/925rycki/ProgMinder/assets/115384725/4358410c-b38b-4dae-8c7e-8822738cfb1e">
+
 ## 概要
 プログラミング学習の記録サービス『ProgMinder』  
 手軽にプログラミング学習の記録を作成できるサービスです。  
