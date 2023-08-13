@@ -134,8 +134,8 @@ erDiagram
 ```
 
 # インフラ構成図
-![インフラ構成図](infra.png "infra.png")
-上記は最終的に目指している構成です。現状とは異なります。
+![infra](https://github.com/925rycki/ProgMinder/assets/115384725/8778c12e-baaa-405a-8fe3-f990d3f5d8b9)
+(上記は最終的に目指している構成です。現状とは異なります。)
 
 # 機能一覧
 - ユーザー新規登録
