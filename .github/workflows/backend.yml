@@ -77,7 +77,7 @@ jobs:
           known_hosts: ${{ secrets.BACKEND_SERVER_KNOWN_HOSTS }}
         
       - name: Deploy code
-        run: rsync -auz ./backend/ ${SERVER_USER}@${SERVER_IP}:~/srv/
+        run: rsync -auz backend ${SERVER_USER}@${SERVER_IP}:/srv
         env:
           SERVER_USER: ${{ secrets.BACKEND_SERVER_USER }}
           SERVER_IP: ${{ secrets.BACKEND_SERVER_IP }}
