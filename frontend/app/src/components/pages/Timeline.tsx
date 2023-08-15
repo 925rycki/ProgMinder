@@ -1,5 +1,13 @@
 import { FC, useContext, useEffect, useState } from "react";
-import { Box, Flex, Image, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Image,
+  List,
+  ListItem,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -26,7 +34,7 @@ export const Timeline: FC = () => {
   };
 
   const handleCreateLike = (id: number) => {
-    if(!currentUser) {
+    if (!currentUser) {
       showMessage({ title: "サインインしてください", status: "error" });
       return;
     }
@@ -64,74 +72,100 @@ export const Timeline: FC = () => {
 
   return (
     <>
-      {reports.length === 0 && <Text>まだ投稿がありません。</Text>}
-      <Box m={2} mx={{ base: 2, md: 32 }}>
-        <Stack spacing={5}>
-          {reports.map((data) => (
-            <Box key={data.report.id} p={5} shadow="md" borderWidth="1px">
-              <Stack spacing={2}>
-                <Flex
-                  align="center"
-                  onClick={() => navigate(`/user/${data.user.id}`)}
-                  cursor="pointer"
-                >
-                  <Image
-                    mr={2}
-                    borderRadius="full"
-                    boxSize="50px"
-                    src={data.user?.image.url}
-                    alt="User image"
-                  />
-                  <Text fontWeight="bold">{data.user?.nickname}</Text>
-                  <Text fontWeight="bold" ml={4}>
-                    {formatDate(data.report.createdDate)}
-                  </Text>
-                </Flex>
-                <Text fontWeight="bold">本日の目標</Text>
-                <Text style={{ whiteSpace: 'pre-line'}}>{data.report.todaysGoal}</Text>
-                <Text fontWeight="bold">学習時間[h]</Text>
-                <Text style={{ whiteSpace: 'pre-line'}}>{data.report.studyTime}</Text>
-                <Text fontWeight="bold">目標振り返り</Text>
-                <Text style={{ whiteSpace: 'pre-line'}}>{data.report.goalReview}</Text>
-                <Text fontWeight="bold">詰まっていること</Text>
-                <Text style={{ whiteSpace: 'pre-line'}}>{data.report.challenges}</Text>
-                <Text fontWeight="bold">学んだこと</Text>
-                <Text style={{ whiteSpace: 'pre-line'}}>{data.report.learnings}</Text>
-                <Text fontWeight="bold">感想</Text>
-                <Text style={{ whiteSpace: 'pre-line'}}>{data.report.thoughts}</Text>
-                <Text fontWeight="bold">明日の目標</Text>
-                <Text style={{ whiteSpace: 'pre-line'}}>{data.report.tomorrowsGoal}</Text>
-                <Flex>
-                  <Flex align="center" mr={4}>
-                    {data.isLiked ? (
-                      <AiFillLike
-                        size="24px"
-                        onClick={() => handleDeleteLike(data.report.id)}
-                        cursor="pointer"
-                      />
-                    ) : (
-                      <AiOutlineLike
-                        size="24px"
-                        onClick={() => handleCreateLike(data.report.id)}
-                        cursor="pointer"
-                      />
-                    )}
-                    <Text mx={1}>{data.likesCount}</Text>
-                  </Flex>
-                  <Flex align="center">
-                    <FaRegComment
-                      size="20px"
-                      onClick={() => navigate(`/reports/${data.report.id}`)}
-                      cursor="pointer"
+      {reports.length === 0 ? (
+        <Text>まだ投稿がありません。</Text>
+      ) : (
+        <Box m={2} mx={{ base: 2, md: 32 }}>
+          <List spacing={5}>
+            {reports.map((data) => (
+              <ListItem
+                key={data.report.id}
+                p={5}
+                shadow="md"
+                borderWidth="1px"
+              >
+                <Stack spacing={2}>
+                  <Flex
+                    align="center"
+                    onClick={() => navigate(`/user/${data.user.id}`)}
+                    cursor="pointer"
+                  >
+                    <Image
+                      mr={2}
+                      borderRadius="full"
+                      boxSize="50px"
+                      src={data.user?.image.url}
+                      alt="User image"
                     />
-                    <Text mx={1}>{data.commentsCount}</Text>
+                    <Text fontWeight="bold">{data.user?.nickname}</Text>
+                    <Text fontWeight="bold" ml={4}>
+                      {formatDate(data.report.createdDate)}
+                    </Text>
                   </Flex>
-                </Flex>
-              </Stack>
-            </Box>
-          ))}
-        </Stack>
-      </Box>
+
+                  <ListItem>
+                    <Text fontWeight="bold">本日の目標</Text>
+                    <Text style={{ whiteSpace: "pre-line" }}>
+                      {data.report.todaysGoal}
+                    </Text>
+                    <Text fontWeight="bold">学習時間[h]</Text>
+                    <Text style={{ whiteSpace: "pre-line" }}>
+                      {data.report.studyTime}
+                    </Text>
+                    <Text fontWeight="bold">目標振り返り</Text>
+                    <Text style={{ whiteSpace: "pre-line" }}>
+                      {data.report.goalReview}
+                    </Text>
+                    <Text fontWeight="bold">詰まっていること</Text>
+                    <Text style={{ whiteSpace: "pre-line" }}>
+                      {data.report.challenges}
+                    </Text>
+                    <Text fontWeight="bold">学んだこと</Text>
+                    <Text style={{ whiteSpace: "pre-line" }}>
+                      {data.report.learnings}
+                    </Text>
+                    <Text fontWeight="bold">感想</Text>
+                    <Text style={{ whiteSpace: "pre-line" }}>
+                      {data.report.thoughts}
+                    </Text>
+                    <Text fontWeight="bold">明日の目標</Text>
+                    <Text style={{ whiteSpace: "pre-line" }}>
+                      {data.report.tomorrowsGoal}
+                    </Text>
+                  </ListItem>
+
+                  <Flex>
+                    <Flex align="center" mr={4}>
+                      {data.isLiked ? (
+                        <AiFillLike
+                          size="24px"
+                          onClick={() => handleDeleteLike(data.report.id)}
+                          cursor="pointer"
+                        />
+                      ) : (
+                        <AiOutlineLike
+                          size="24px"
+                          onClick={() => handleCreateLike(data.report.id)}
+                          cursor="pointer"
+                        />
+                      )}
+                      <Text mx={1}>{data.likesCount}</Text>
+                    </Flex>
+                    <Flex align="center">
+                      <FaRegComment
+                        size="20px"
+                        onClick={() => navigate(`/reports/${data.report.id}`)}
+                        cursor="pointer"
+                      />
+                      <Text mx={1}>{data.commentsCount}</Text>
+                    </Flex>
+                  </Flex>
+                </Stack>
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+      )}
     </>
   );
 };
