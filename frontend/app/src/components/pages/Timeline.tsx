@@ -73,9 +73,13 @@ export const Timeline: FC = () => {
   return (
     <>
       {reports.length === 0 ? (
-        <Text>まだ投稿がありません。</Text>
+        <Text mt={{ base: "60px", md: "90px" }}>まだ投稿がありません。</Text>
       ) : (
-        <Box m={2} mx={{ base: 2, md: 32 }}>
+        <Box
+          mx={{ base: 2, md: 32 }}
+          mt={{ base: "75px", md: "100px" }}
+          mb="25px"
+        >
           <List spacing={5}>
             {reports.map((data) => (
               <ListItem
@@ -103,15 +107,13 @@ export const Timeline: FC = () => {
                     </Text>
                   </Flex>
 
-                  <ListItem>
+                  <Box>
                     <Text fontWeight="bold">本日の目標</Text>
                     <Text style={{ whiteSpace: "pre-line" }}>
                       {data.report.todaysGoal}
                     </Text>
                     <Text fontWeight="bold">学習時間[h]</Text>
-                    <Text style={{ whiteSpace: "pre-line" }}>
-                      {data.report.studyTime}
-                    </Text>
+                    <Text>{data.report.studyTime}</Text>
                     <Text fontWeight="bold">目標振り返り</Text>
                     <Text style={{ whiteSpace: "pre-line" }}>
                       {data.report.goalReview}
@@ -132,7 +134,7 @@ export const Timeline: FC = () => {
                     <Text style={{ whiteSpace: "pre-line" }}>
                       {data.report.tomorrowsGoal}
                     </Text>
-                  </ListItem>
+                  </Box>
 
                   <Flex>
                     <Flex align="center" mr={4}>

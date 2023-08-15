@@ -23,8 +23,8 @@ export const FollowedUsers: FC = () => {
     <Center>
       <UserList
         users={users}
-        title="フォロー中のユーザー"
-        emptyMessage="フォロー中のユーザーはいません"
+        title="フォロワー"
+        emptyMessage="フォロワーはいません"
       />
     </Center>
   );

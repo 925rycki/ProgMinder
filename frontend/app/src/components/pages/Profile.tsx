@@ -129,7 +129,7 @@ export const Profile: FC = () => {
   };
 
   return (
-    <Box maxW="md" mx="auto" mt="100px">
+    <Box maxW="md" mx="auto" mt={{ base: "100px", md: "125px" }} mb="25px">
       <form>
         <VStack spacing="24px">
           <label htmlFor="icon-button-file">

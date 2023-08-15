@@ -29,7 +29,7 @@ export const UserList: React.FC<UserListProps> = ({
         {title}
       </Heading>
       {users.length === 0 ? (
-        <Text>{emptyMessage}</Text>
+        <Text mt={{ base: "30px", md: "45px" }}>{emptyMessage}</Text>
       ) : (
         <List spacing={3}>
           {users.map((user) => (

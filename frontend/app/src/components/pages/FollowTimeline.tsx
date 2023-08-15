@@ -1,5 +1,13 @@
 import { FC, useContext, useEffect, useState } from "react";
-import { Box, Flex, Image, List, ListItem, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Image,
+  List,
+  ListItem,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -69,9 +77,15 @@ export const Follow: FC = () => {
   return (
     <>
       {reports.length === 0 ? (
-        <Text>フォローしているユーザーの投稿がありません。</Text>
+        <Text mt={{ base: "60px", md: "90px" }}>
+          フォローしているユーザーの投稿がありません。
+        </Text>
       ) : (
-        <Box m={2} mx={{ base: 2, md: 32 }}>
+        <Box
+          mx={{ base: 2, md: 32 }}
+          mt={{ base: "75px", md: "100px" }}
+          mb="25px"
+        >
           <List spacing={5}>
             {reports.map((data) => (
               <ListItem
@@ -99,7 +113,7 @@ export const Follow: FC = () => {
                     </Text>
                   </Flex>
 
-                  <ListItem>
+                  <Box>
                     <Text fontWeight="bold">本日の目標</Text>
                     <Text style={{ whiteSpace: "pre-line" }}>
                       {data.report.todaysGoal}
@@ -128,7 +142,7 @@ export const Follow: FC = () => {
                     <Text style={{ whiteSpace: "pre-line" }}>
                       {data.report.tomorrowsGoal}
                     </Text>
-                  </ListItem>
+                  </Box>
 
                   <Flex>
                     <Flex align="center" mr={4}>

@@ -39,8 +39,8 @@ export const SignUp: FC = () => {
   const [password, setPassword] = useState<string>("");
   const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
   const [show, setShow] = useState<boolean>(false);
-  const [image, setImage] = useState<string>("");
-  const [preview, setPreview] = useState<string>("");
+  const [image, setImage] = useState<string>("/default-user-icon.jpeg");
+  const [preview, setPreview] = useState<string>("/default-user-icon.jpeg");
 
   const [nicknameCount, setNicknameCount] = useState<number>(0);
   const [nameCount, setNameCount] = useState<number>(0);
@@ -61,7 +61,7 @@ export const SignUp: FC = () => {
     setPreview(window.URL.createObjectURL(file));
   }, []);
 
-  const createFormData = (): SignUpFormData => {
+  const createFormData = async (): Promise<SignUpFormData> => {
     const formData = new FormData();
 
     formData.append("name", name);
@@ -70,7 +70,16 @@ export const SignUp: FC = () => {
     formData.append("email", `${name}@temp.com`);
     formData.append("password", password);
     formData.append("passwordConfirmation", passwordConfirmation);
-    formData.append("image", image);
+    if (image === "/default-user-icon.jpeg") {
+      const response = await fetch(image);
+      const blob = await response.blob();
+      const file = new File([blob], "default-user-icon.jpeg", {
+        type: "image/jpeg",
+      });
+      formData.append("image", file);
+    } else {
+      formData.append("image", image);
+    }
 
     return formData;
   };
@@ -81,7 +90,7 @@ export const SignUp: FC = () => {
     const data = createFormData();
 
     try {
-      const res = await signUp(data);
+      const res = await signUp(await data);
       console.log(res);
 
       if (res.status === 200) {
@@ -160,7 +169,6 @@ export const SignUp: FC = () => {
                 >
                   プロフィール画像をアップロード
                 </Button>
-                <span style={{ color: "red" }}>*</span>
               </Center>
               <input
                 accept="image/*"

@@ -130,7 +130,7 @@ export const Report: FC = () => {
 
   return (
     <>
-      <Box p={4}>
+      <Box mt={{ base: "35px", md: "60px" }} p={4}>
         <Stack spacing={4} py={4} px={10}>
           <FormControl id="createdDate">
             <FormLabel>日付</FormLabel>
@@ -164,10 +164,7 @@ export const Report: FC = () => {
           </FormControl>
 
           <FormControl id="goalReview">
-            <FormLabel>
-              目標振り返り<span style={{ color: "red" }}>*</span>(
-              {goalReviewCount}/255)
-            </FormLabel>
+            <FormLabel>目標振り返り({goalReviewCount}/255)</FormLabel>
             <Textarea
               value={goalReview}
               onChange={handleGoalReviewChange}
@@ -213,7 +210,14 @@ export const Report: FC = () => {
           <Center mt={5}>
             <PrimaryButton
               onClick={handleCreateReport}
-              isDisabled={!goalReview}
+              isDisabled={
+                !todaysGoal &&
+                !goalReview &&
+                !challenges &&
+                !learnings &&
+                !thoughts &&
+                !tomorrowsGoal
+              }
             >
               日報作成
             </PrimaryButton>

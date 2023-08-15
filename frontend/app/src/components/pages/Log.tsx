@@ -24,9 +24,11 @@ export const Log: FC = () => {
   return (
     <>
       {reports.length === 0 && (
-        <Text>学習記録を作成するとここに表示されます。</Text>
+        <Text mt={{ base: "60px", md: "90px" }}>
+          学習記録を作成するとここに表示されます。
+        </Text>
       )}
-      <Box m={2}>
+      <Box m={2} mt={{ base: "75px", md: "100px" }} mb="25px">
         <Stack spacing={5}>
           {reports.map((data) => (
             <Box
@@ -38,13 +40,22 @@ export const Log: FC = () => {
               cursor="pointer"
             >
               <Heading fontSize="xl">{formatDate(data.createdDate)}</Heading>
-              <Text>本日の目標：{data.todaysGoal}</Text>
-              <Text>学習時間[h]：{data.studyTime}</Text>
-              <Text>達成度：{data.goalReview}</Text>
-              <Text>困難な点：{data.challenges}</Text>
-              <Text>学んだこと：{data.learnings}</Text>
-              <Text>感想：{data.thoughts}</Text>
-              <Text>明日の目標：{data.tomorrowsGoal}</Text>
+              <Text fontWeight="bold">本日の目標</Text>
+              <Text style={{ whiteSpace: "pre-line" }}>{data.todaysGoal}</Text>
+              <Text fontWeight="bold">学習時間[h]</Text>
+              <Text>{data.studyTime}</Text>
+              <Text fontWeight="bold">目標振り返り</Text>
+              <Text style={{ whiteSpace: "pre-line" }}>{data.goalReview}</Text>
+              <Text fontWeight="bold">詰まっていること</Text>
+              <Text style={{ whiteSpace: "pre-line" }}>{data.challenges}</Text>
+              <Text fontWeight="bold">学んだこと</Text>
+              <Text style={{ whiteSpace: "pre-line" }}>{data.learnings}</Text>
+              <Text fontWeight="bold">感想</Text>
+              <Text style={{ whiteSpace: "pre-line" }}>{data.thoughts}</Text>
+              <Text fontWeight="bold">明日の目標</Text>
+              <Text style={{ whiteSpace: "pre-line" }}>
+                {data.tomorrowsGoal}
+              </Text>
             </Box>
           ))}
         </Stack>
