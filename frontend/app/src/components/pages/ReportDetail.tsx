@@ -30,7 +30,7 @@ export const ReportDetail: FC = () => {
     getReportDetail(id).then((res) => {
       setReport(res.data);
       setComments(res.data.comments);
-      console.log(res.data);
+      console.log(comments);
     });
   }, []);
 
@@ -79,13 +79,21 @@ export const ReportDetail: FC = () => {
   };
 
   return (
-    <Box p={4} m={2} mx={{ base: 2, md: 32 }}>
+    <Box
+      p={4}
+      m={2}
+      mx={{ base: 2, md: 32 }}
+      mt={{ base: "75px", md: "100px" }}
+    >
       {report && (
         <>
           <Box bg="white" p={4} borderRadius="md" shadow="md">
             <Stack spacing={4} py={4} px={10}>
-              <Flex align="center" onClick={() => navigate(`/user/${report.report.user.id}`)}
-                  cursor="pointer">
+              <Flex
+                align="center"
+                onClick={() => navigate(`/user/${report.report.user.id}`)}
+                cursor="pointer"
+              >
                 <Image
                   borderRadius="full"
                   boxSize="50px"
@@ -95,53 +103,48 @@ export const ReportDetail: FC = () => {
                 <Text ml={4} fontWeight="bold">
                   {report.report.user.nickname}
                 </Text>
-              <Text fontWeight="bold" ml={4}>
-                {new Date(report.report.report.createdDate).toLocaleDateString(
-                  "ja-JP",
-                  {
+                <Text fontWeight="bold" ml={4}>
+                  {new Date(
+                    report.report.report.createdDate
+                  ).toLocaleDateString("ja-JP", {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
-                  }
-                )}
-              </Text>
+                  })}
+                </Text>
               </Flex>
               <Text fontWeight="bold">
                 本日の目標(TODO目標/できるようになりたいこと)
               </Text>
-              <Text>
+              <Text style={{ whiteSpace: "pre-line" }}>
                 {report.report.report.todaysGoal}
               </Text>
               <Text fontWeight="bold">学習時間[h]</Text>
-              <Text>{report.report.report.studyTime}</Text>
+              <Text style={{ whiteSpace: "pre-line" }}>
+                {report.report.report.studyTime}
+              </Text>
               <Text fontWeight="bold">
                 目標振り返り(TODO進捗/できるようになりたいこと振り返り)
               </Text>
-              <Text>
+              <Text style={{ whiteSpace: "pre-line" }}>
                 {report.report.report.goalReview}
               </Text>
-              <Text fontWeight="bold">
-                詰まっていること
-              </Text>
-              <Text>
+              <Text fontWeight="bold">詰まっていること</Text>
+              <Text style={{ whiteSpace: "pre-line" }}>
                 {report.report.report.challenges}
               </Text>
-              <Text fontWeight="bold">
-                学んだこと(新しい気付き、学び)
-              </Text>
-              <Text>
+              <Text fontWeight="bold">学んだこと(新しい気付き、学び)</Text>
+              <Text style={{ whiteSpace: "pre-line" }}>
                 {report.report.report.learnings}
               </Text>
-              <Text fontWeight="bold">
-                感想(一日の感想、雑談)
-              </Text>
-              <Text>
+              <Text fontWeight="bold">感想(一日の感想、雑談)</Text>
+              <Text style={{ whiteSpace: "pre-line" }}>
                 {report.report.report.thoughts}
               </Text>
               <Text fontWeight="bold">
                 明日の目標(TODO目標/できるようになりたいこと)
               </Text>
-              <Text>
+              <Text style={{ whiteSpace: "pre-line" }}>
                 {report.report.report.tomorrowsGoal}
               </Text>
             </Stack>
@@ -161,14 +164,20 @@ export const ReportDetail: FC = () => {
       {comments.map((commentData, index) => (
         <Box key={index} my={2}>
           <Flex align="center">
-            <Image
-            mr={2}
-              borderRadius="full"
-              boxSize="50px"
-              src={commentData.user?.image?.url}
-              alt="User image"
-            />
-            <Text fontWeight="bold">{commentData.user?.nickname}</Text>
+            <Flex
+              align="center"
+              onClick={() => navigate(`/user/${commentData.comment.userId}`)}
+              cursor="pointer"
+            >
+              <Image
+                mr={2}
+                borderRadius="full"
+                boxSize="50px"
+                src={commentData.user?.image?.url}
+                alt="User image"
+              />
+              <Text fontWeight="bold">{commentData.user?.nickname}</Text>
+            </Flex>
             <Text mx={2}>: {commentData.comment?.content}</Text>
             {currentUser?.id === commentData.comment?.userId && (
               <DangerButton

@@ -85,82 +85,81 @@ export const LogDetail: FC = () => {
 
   return (
     <Box p={4}>
-        <Stack spacing={4} py={4} px={10}>
+      <Stack spacing={4} py={4} px={10}>
+        <FormControl id="createdDate">
+          <FormLabel>日付</FormLabel>
+          <Input
+            type="date"
+            value={createdDate}
+            onChange={(e) => setCreatedDate(e.target.value)}
+          />
+        </FormControl>
+        <FormControl id="todaysGoal">
+          <FormLabel>本日の目標</FormLabel>
+          <Textarea
+            value={todaysGoal}
+            onChange={(e) => setTodaysGoal(e.target.value)}
+          />
+        </FormControl>
+        <FormControl id="studyTime">
+          <FormLabel>学習時間[h]</FormLabel>
+          <NumberInput
+            value={studyTime}
+            onChange={(valueString) => setStudyTime(Number(valueString))}
+            precision={2}
+            min={0}
+          >
+            <NumberInputField />
+          </NumberInput>
+        </FormControl>
 
-      <FormControl id="createdDate">
-        <FormLabel>日付</FormLabel>
-        <Input
-          type="date"
-          value={createdDate}
-          onChange={(e) => setCreatedDate(e.target.value)}
-        />
-      </FormControl>
-      <FormControl id="todaysGoal">
-        <FormLabel>本日の目標</FormLabel>
-        <Textarea
-          value={todaysGoal}
-          onChange={(e) => setTodaysGoal(e.target.value)}
-        />
-      </FormControl>
-      <FormControl id="studyTime">
-        <FormLabel>学習時間[h]</FormLabel>
-        <NumberInput
-          value={studyTime}
-          onChange={(valueString) => setStudyTime(Number(valueString))}
-          precision={2}
-          min={0}
-        >
-          <NumberInputField />
-        </NumberInput>
-      </FormControl>
+        <FormControl id="goalReview">
+          <FormLabel>
+            目標振り返り(TODO進捗/できるようになりたいこと振り返り)
+          </FormLabel>
+          <Textarea
+            value={goalReview}
+            onChange={(e) => setGoalReview(e.target.value)}
+          />
+        </FormControl>
 
-      <FormControl id="goalReview">
-        <FormLabel>
-          目標振り返り(TODO進捗/できるようになりたいこと振り返り)
-        </FormLabel>
-        <Textarea
-          value={goalReview}
-          onChange={(e) => setGoalReview(e.target.value)}
-        />
-      </FormControl>
+        <FormControl id="challenges">
+          <FormLabel>
+            詰まっていること(実現したいこと/現状/行ったこと/仮説)
+          </FormLabel>
+          <Textarea
+            value={challenges}
+            onChange={(e) => setChallenges(e.target.value)}
+          />
+        </FormControl>
 
-      <FormControl id="challenges">
-        <FormLabel>
-          詰まっていること(実現したいこと/現状/行ったこと/仮説)
-        </FormLabel>
-        <Textarea
-          value={challenges}
-          onChange={(e) => setChallenges(e.target.value)}
-        />
-      </FormControl>
+        <FormControl id="learnings">
+          <FormLabel>学んだこと(新しい気付き、学び)</FormLabel>
+          <Textarea
+            value={learnings}
+            onChange={(e) => setLearnings(e.target.value)}
+          />
+        </FormControl>
 
-      <FormControl id="learnings">
-        <FormLabel>学んだこと(新しい気付き、学び)</FormLabel>
-        <Textarea
-          value={learnings}
-          onChange={(e) => setLearnings(e.target.value)}
-        />
-      </FormControl>
+        <FormControl id="thoughts">
+          <FormLabel>感想(一日の感想、雑談)</FormLabel>
+          <Textarea
+            value={thoughts}
+            onChange={(e) => setThoughts(e.target.value)}
+          />
+        </FormControl>
 
-      <FormControl id="thoughts">
-        <FormLabel>感想(一日の感想、雑談)</FormLabel>
-        <Textarea
-          value={thoughts}
-          onChange={(e) => setThoughts(e.target.value)}
-        />
-      </FormControl>
-
-      <FormControl id="tomorrowsGoal">
-        <FormLabel>明日の目標(TODO目標/できるようになりたいこと)</FormLabel>
-        <Textarea
-          value={tomorrowsGoal}
-          onChange={(e) => setTomorrowsGoal(e.target.value)}
-        />
-      </FormControl>
-      <VStack mt={4}>
-        <PrimaryButton onClick={handleUpdateReport}>更新</PrimaryButton>
-        <DangerButton onClick={handleDeleteReport}>削除</DangerButton>
-      </VStack>
+        <FormControl id="tomorrowsGoal">
+          <FormLabel>明日の目標(TODO目標/できるようになりたいこと)</FormLabel>
+          <Textarea
+            value={tomorrowsGoal}
+            onChange={(e) => setTomorrowsGoal(e.target.value)}
+          />
+        </FormControl>
+        <VStack mt={4}>
+          <PrimaryButton onClick={handleUpdateReport}>更新</PrimaryButton>
+          <DangerButton onClick={handleDeleteReport}>削除</DangerButton>
+        </VStack>
       </Stack>
     </Box>
   );

@@ -39,8 +39,8 @@ export const SignUp: FC = () => {
   const [password, setPassword] = useState<string>("");
   const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
   const [show, setShow] = useState<boolean>(false);
-  const [image, setImage] = useState<string>("");
-  const [preview, setPreview] = useState<string>("");
+  const [image, setImage] = useState<string>("/default-user-icon.jpeg");
+  const [preview, setPreview] = useState<string>("/default-user-icon.jpeg");
 
   const [nicknameCount, setNicknameCount] = useState<number>(0);
   const [nameCount, setNameCount] = useState<number>(0);
@@ -61,7 +61,7 @@ export const SignUp: FC = () => {
     setPreview(window.URL.createObjectURL(file));
   }, []);
 
-  const createFormData = (): SignUpFormData => {
+  const createFormData = async (): Promise<SignUpFormData> => {
     const formData = new FormData();
 
     formData.append("name", name);
@@ -70,7 +70,16 @@ export const SignUp: FC = () => {
     formData.append("email", `${name}@temp.com`);
     formData.append("password", password);
     formData.append("passwordConfirmation", passwordConfirmation);
-    formData.append("image", image);
+    if (image === "/default-user-icon.jpeg") {
+      const response = await fetch(image);
+      const blob = await response.blob();
+      const file = new File([blob], "default-user-icon.jpeg", {
+        type: "image/jpeg",
+      });
+      formData.append("image", file);
+    } else {
+      formData.append("image", image);
+    }
 
     return formData;
   };
@@ -81,7 +90,7 @@ export const SignUp: FC = () => {
     const data = createFormData();
 
     try {
-      const res = await signUp(data);
+      const res = await signUp(await data);
       console.log(res);
 
       if (res.status === 200) {
@@ -132,15 +141,13 @@ export const SignUp: FC = () => {
     }
   };
 
-    const handlPasswordChange = (
-      e: React.ChangeEvent<HTMLInputElement>
-    ) => {
-      const value = e.target.value;
-      if (value.length <= 128) {
-        setPassword(value);
-        setPasswordCount(value.length);
-      }
-    };
+  const handlPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value.length <= 128) {
+      setPassword(value);
+      setPasswordCount(value.length);
+    }
+  };
 
   return (
     <Flex align="center" justify="center" height="100vh">
@@ -151,40 +158,65 @@ export const SignUp: FC = () => {
         <Divider my={4} />
         <Stack spacing={4} py={4} px={10}>
           <VStack>
-          <label htmlFor="icon-button-file">
-            <Center>
-            <Button mr={2} onClick={() => {
-                document.getElementById("icon-button-file")?.click();
-              }} fontSize="sm">プロフィール画像をアップロード</Button><span style={{ color: 'red' }}>*</span>
-            </Center>
-            <input
-              accept="image/*"
-              id="icon-button-file"
-              type="file"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                uploadImage(e);
-                previewImage(e);
-              }}
-              style={{ display: "none" }}
-            />
-          </label>
-          { preview && <Image src={preview} alt="preview img" boxSize="200px" borderRadius="full" /> }
+            <label htmlFor="icon-button-file">
+              <Center>
+                <Button
+                  mr={2}
+                  onClick={() => {
+                    document.getElementById("icon-button-file")?.click();
+                  }}
+                  fontSize="sm"
+                >
+                  プロフィール画像をアップロード
+                </Button>
+              </Center>
+              <input
+                accept="image/*"
+                id="icon-button-file"
+                type="file"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  uploadImage(e);
+                  previewImage(e);
+                }}
+                style={{ display: "none" }}
+              />
+            </label>
+            {preview && (
+              <Image
+                src={preview}
+                alt="preview img"
+                boxSize="200px"
+                borderRadius="full"
+              />
+            )}
           </VStack>
-          <Text>ユーザーID<span style={{ color: 'red' }}>*</span>({nameCount}/16)</Text>
+          <Text>
+            ユーザーID<span style={{ color: "red" }}>*</span>({nameCount}/16)
+          </Text>
           <Input
             placeholder="ユーザーID(半角英数字)"
             value={name}
             onChange={handleNameChange}
           />
-          <Text>ニックネーム<span style={{ color: 'red' }}>*</span>({nicknameCount}/16)</Text>
+          <Text>
+            ニックネーム<span style={{ color: "red" }}>*</span>({nicknameCount}
+            /16)
+          </Text>
           <Input
             placeholder="ニックネーム(表示名)"
             value={nickname}
             onChange={handleNicknameChange}
           />
           <Text>自己紹介文({bioCount}/255)</Text>
-          <Textarea placeholder="自己紹介文" value={bio} onChange={handleBioChange} />
-          <Text>パスワード<span style={{ color: 'red' }}>*</span>({passwordCount}/6~128)</Text>
+          <Textarea
+            placeholder="自己紹介文"
+            value={bio}
+            onChange={handleBioChange}
+          />
+          <Text>
+            パスワード<span style={{ color: "red" }}>*</span>({passwordCount}
+            /6~128)
+          </Text>
           <InputGroup>
             <Input
               placeholder="パスワード"
@@ -211,7 +243,9 @@ export const SignUp: FC = () => {
           <PrimaryButton
             onClick={handleSignUp}
             isDisabled={
-              !image || !name || !password || !passwordConfirmation ? true : false
+              !image || !name || !password || !passwordConfirmation
+                ? true
+                : false
             }
           >
             サインアップ

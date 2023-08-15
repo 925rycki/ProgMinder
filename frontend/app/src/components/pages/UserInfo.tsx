@@ -1,7 +1,7 @@
 import { FC, useContext, useEffect, useState } from "react";
 import { UserInfoType } from "../../types/report";
 import { createFollow, deleteFollow, getUserInfo } from "../../lib/api/report";
-import { Box, Flex, Image, Text, VStack } from "@chakra-ui/react";
+import { Flex, Image, List, ListItem, Text, VStack } from "@chakra-ui/react";
 import { useNavigate, useParams } from "react-router-dom";
 import { PrimaryButton } from "../atoms/button/PrimaryButton";
 import { SmallAddIcon, SmallCloseIcon } from "@chakra-ui/icons";
@@ -25,7 +25,7 @@ export const UserInfo: FC = () => {
   }, [id]);
 
   const handleFollow = () => {
-    if (!currentUser) { 
+    if (!currentUser) {
       showMessage({ title: "サインインしてください", status: "error" });
       return;
     }
@@ -66,7 +66,7 @@ export const UserInfo: FC = () => {
   }
 
   return (
-    <VStack spacing={4} my={4}>
+    <VStack spacing={4} my={4} mt={{ base: "75px", md: "100px" }}>
       <Image
         src={userInfo.image.url}
         alt="Profile Image"
@@ -78,10 +78,21 @@ export const UserInfo: FC = () => {
       </Text>
       <Text>{userInfo.bio}</Text>
       <Flex>
-        <Text fontWeight="bold" mr={2} cursor="pointer" onClick={() => navigate(`/following/${id}`)}>
+        <Text
+          fontWeight="bold"
+          mr={2}
+          cursor="pointer"
+          onClick={() => navigate(`/following/${id}`)}
+        >
           フォロー: {userInfo.followingCount}
         </Text>
-        <Text fontWeight="bold" cursor="pointer" onClick={() => navigate(`/followed/${id}`)}>フォロワー: {userInfo.followersCount}</Text>
+        <Text
+          fontWeight="bold"
+          cursor="pointer"
+          onClick={() => navigate(`/followed/${id}`)}
+        >
+          フォロワー: {userInfo.followersCount}
+        </Text>
       </Flex>
       {currentUser?.id !== id && (
         <>
@@ -98,20 +109,29 @@ export const UserInfo: FC = () => {
           )}
         </>
       )}
-      <Box>
+      <List width="80%">
         {userInfo.reports.map((report) => (
-          <Box key={report.id} p={4} borderWidth="1px" borderRadius="md" my={2}>
+          <ListItem key={report.id} p={5} shadow="md" borderWidth="1px">
             <Text fontSize="xl">{report.createdDate}</Text>
-            <Text>本日の目標: {report.todaysGoal}</Text>
-            <Text>学習時間: {report.studyTime} [h]</Text>
-            <Text>目標振り返り: {report.goalReview}</Text>
-            <Text>詰まっていること: {report.challenges}</Text>
-            <Text>学んだこと: {report.learnings}</Text>
-            <Text>感想: {report.thoughts}</Text>
-            <Text>明日の目標: {report.tomorrowsGoal}</Text>
-          </Box>
+            <Text fontWeight="bold">本日の目標</Text>
+            <Text style={{ whiteSpace: "pre-line" }}>{report.todaysGoal}</Text>
+            <Text fontWeight="bold">学習時間[h]</Text>
+            <Text style={{ whiteSpace: "pre-line" }}>{report.studyTime}</Text>
+            <Text fontWeight="bold">目標振り返り</Text>
+            <Text style={{ whiteSpace: "pre-line" }}>{report.goalReview}</Text>
+            <Text fontWeight="bold">詰まっていること</Text>
+            <Text style={{ whiteSpace: "pre-line" }}>{report.challenges}</Text>
+            <Text fontWeight="bold">学んだこと</Text>
+            <Text style={{ whiteSpace: "pre-line" }}>{report.learnings}</Text>
+            <Text fontWeight="bold">感想</Text>
+            <Text style={{ whiteSpace: "pre-line" }}>{report.thoughts}</Text>
+            <Text fontWeight="bold">明日の目標</Text>
+            <Text style={{ whiteSpace: "pre-line" }}>
+              {report.tomorrowsGoal}
+            </Text>
+          </ListItem>
         ))}
-      </Box>
+      </List>
     </VStack>
   );
 };

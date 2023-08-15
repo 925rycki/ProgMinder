@@ -129,13 +129,17 @@ export const Profile: FC = () => {
   };
 
   return (
-    <Box maxW="md" mx="auto" mt="100px">
+    <Box maxW="md" mx="auto" mt={{ base: "100px", md: "125px" }} mb="25px">
       <form>
         <VStack spacing="24px">
           <label htmlFor="icon-button-file">
-            <Button              onClick={() => {
+            <Button
+              onClick={() => {
                 document.getElementById("icon-button-file")?.click();
-              }}>画像を変更</Button>
+              }}
+            >
+              画像を変更
+            </Button>
             <input
               accept="image/*"
               id="icon-button-file"
@@ -153,12 +157,23 @@ export const Profile: FC = () => {
             boxSize="200px"
             borderRadius="full"
           />
-                <Flex>
-        <Text fontWeight="bold" mr={2} cursor="pointer" onClick={() => navigate(`/following/${currentUser?.id}`)}>
-          フォロー: {followingCount}
-        </Text>
-        <Text fontWeight="bold" cursor="pointer" onClick={() => navigate(`/followed/${currentUser?.id}`)}>フォロワー: {followersCount}</Text>
-      </Flex>
+          <Flex>
+            <Text
+              fontWeight="bold"
+              mr={2}
+              cursor="pointer"
+              onClick={() => navigate(`/following/${currentUser?.id}`)}
+            >
+              フォロー: {followingCount}
+            </Text>
+            <Text
+              fontWeight="bold"
+              cursor="pointer"
+              onClick={() => navigate(`/followed/${currentUser?.id}`)}
+            >
+              フォロワー: {followersCount}
+            </Text>
+          </Flex>
           <Text>ユーザー名（変更できません）</Text>
           <Input type="text" value={currentUser?.name} isReadOnly />
           <Text>ニックネーム</Text>
