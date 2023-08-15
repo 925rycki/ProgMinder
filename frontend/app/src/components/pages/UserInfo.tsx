@@ -25,7 +25,7 @@ export const UserInfo: FC = () => {
   }, [id]);
 
   const handleFollow = () => {
-    if (!currentUser) { 
+    if (!currentUser) {
       showMessage({ title: "サインインしてください", status: "error" });
       return;
     }
@@ -78,10 +78,21 @@ export const UserInfo: FC = () => {
       </Text>
       <Text>{userInfo.bio}</Text>
       <Flex>
-        <Text fontWeight="bold" mr={2} cursor="pointer" onClick={() => navigate(`/following/${id}`)}>
+        <Text
+          fontWeight="bold"
+          mr={2}
+          cursor="pointer"
+          onClick={() => navigate(`/following/${id}`)}
+        >
           フォロー: {userInfo.followingCount}
         </Text>
-        <Text fontWeight="bold" cursor="pointer" onClick={() => navigate(`/followed/${id}`)}>フォロワー: {userInfo.followersCount}</Text>
+        <Text
+          fontWeight="bold"
+          cursor="pointer"
+          onClick={() => navigate(`/followed/${id}`)}
+        >
+          フォロワー: {userInfo.followersCount}
+        </Text>
       </Flex>
       {currentUser?.id !== id && (
         <>

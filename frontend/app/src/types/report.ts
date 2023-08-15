@@ -124,6 +124,6 @@ export type FollowUserType = {
   nickname: string;
   image: {
     url: string;
-  },
+  };
   bio: string;
 };

@@ -151,7 +151,7 @@ export const Report: FC = () => {
           </FormControl>
 
           <FormControl id="studyTime">
-            <FormLabel>学習時間[h]</FormLabel>
+            <FormLabel>学習時間[h] (半角数字)</FormLabel>
             <NumberInput
               value={studyTime}
               onChange={(valueString) => setStudyTime(Number(valueString))}
@@ -164,7 +164,10 @@ export const Report: FC = () => {
           </FormControl>
 
           <FormControl id="goalReview">
-            <FormLabel>目標振り返り<span style={{ color: 'red' }}>*</span>({goalReviewCount}/255)</FormLabel>
+            <FormLabel>
+              目標振り返り<span style={{ color: "red" }}>*</span>(
+              {goalReviewCount}/255)
+            </FormLabel>
             <Textarea
               value={goalReview}
               onChange={handleGoalReviewChange}

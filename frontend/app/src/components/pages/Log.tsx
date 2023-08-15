@@ -23,30 +23,32 @@ export const Log: FC = () => {
 
   return (
     <>
-    {reports.length === 0 && <Text>学習記録を作成するとここに表示されます。</Text>}
-    <Box m={2}>
-      <Stack spacing={5}>
-        {reports.map((data) => (
-          <Box
-            key={data.id}
-            p={5}
-            shadow="md"
-            borderWidth="1px"
-            onClick={() => navigate(`/logs/${data.id}`)}
-            cursor="pointer"
-          >
-            <Heading fontSize="xl">{formatDate(data.createdDate)}</Heading>
-            <Text>本日の目標：{data.todaysGoal}</Text>
-            <Text>学習時間[h]：{data.studyTime}</Text>
-            <Text>達成度：{data.goalReview}</Text>
-            <Text>困難な点：{data.challenges}</Text>
-            <Text>学んだこと：{data.learnings}</Text>
-            <Text>感想：{data.thoughts}</Text>
-            <Text>明日の目標：{data.tomorrowsGoal}</Text>
-          </Box>
-        ))}
-      </Stack>
-    </Box>
+      {reports.length === 0 && (
+        <Text>学習記録を作成するとここに表示されます。</Text>
+      )}
+      <Box m={2}>
+        <Stack spacing={5}>
+          {reports.map((data) => (
+            <Box
+              key={data.id}
+              p={5}
+              shadow="md"
+              borderWidth="1px"
+              onClick={() => navigate(`/logs/${data.id}`)}
+              cursor="pointer"
+            >
+              <Heading fontSize="xl">{formatDate(data.createdDate)}</Heading>
+              <Text>本日の目標：{data.todaysGoal}</Text>
+              <Text>学習時間[h]：{data.studyTime}</Text>
+              <Text>達成度：{data.goalReview}</Text>
+              <Text>困難な点：{data.challenges}</Text>
+              <Text>学んだこと：{data.learnings}</Text>
+              <Text>感想：{data.thoughts}</Text>
+              <Text>明日の目標：{data.tomorrowsGoal}</Text>
+            </Box>
+          ))}
+        </Stack>
+      </Box>
     </>
   );
 };

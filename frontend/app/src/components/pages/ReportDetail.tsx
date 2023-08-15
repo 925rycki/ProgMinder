@@ -84,8 +84,11 @@ export const ReportDetail: FC = () => {
         <>
           <Box bg="white" p={4} borderRadius="md" shadow="md">
             <Stack spacing={4} py={4} px={10}>
-              <Flex align="center" onClick={() => navigate(`/user/${report.report.user.id}`)}
-                  cursor="pointer">
+              <Flex
+                align="center"
+                onClick={() => navigate(`/user/${report.report.user.id}`)}
+                cursor="pointer"
+              >
                 <Image
                   borderRadius="full"
                   boxSize="50px"
@@ -95,55 +98,36 @@ export const ReportDetail: FC = () => {
                 <Text ml={4} fontWeight="bold">
                   {report.report.user.nickname}
                 </Text>
-              <Text fontWeight="bold" ml={4}>
-                {new Date(report.report.report.createdDate).toLocaleDateString(
-                  "ja-JP",
-                  {
+                <Text fontWeight="bold" ml={4}>
+                  {new Date(
+                    report.report.report.createdDate
+                  ).toLocaleDateString("ja-JP", {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
-                  }
-                )}
-              </Text>
+                  })}
+                </Text>
               </Flex>
               <Text fontWeight="bold">
                 本日の目標(TODO目標/できるようになりたいこと)
               </Text>
-              <Text>
-                {report.report.report.todaysGoal}
-              </Text>
+              <Text>{report.report.report.todaysGoal}</Text>
               <Text fontWeight="bold">学習時間[h]</Text>
               <Text>{report.report.report.studyTime}</Text>
               <Text fontWeight="bold">
                 目標振り返り(TODO進捗/できるようになりたいこと振り返り)
               </Text>
-              <Text>
-                {report.report.report.goalReview}
-              </Text>
-              <Text fontWeight="bold">
-                詰まっていること
-              </Text>
-              <Text>
-                {report.report.report.challenges}
-              </Text>
-              <Text fontWeight="bold">
-                学んだこと(新しい気付き、学び)
-              </Text>
-              <Text>
-                {report.report.report.learnings}
-              </Text>
-              <Text fontWeight="bold">
-                感想(一日の感想、雑談)
-              </Text>
-              <Text>
-                {report.report.report.thoughts}
-              </Text>
+              <Text>{report.report.report.goalReview}</Text>
+              <Text fontWeight="bold">詰まっていること</Text>
+              <Text>{report.report.report.challenges}</Text>
+              <Text fontWeight="bold">学んだこと(新しい気付き、学び)</Text>
+              <Text>{report.report.report.learnings}</Text>
+              <Text fontWeight="bold">感想(一日の感想、雑談)</Text>
+              <Text>{report.report.report.thoughts}</Text>
               <Text fontWeight="bold">
                 明日の目標(TODO目標/できるようになりたいこと)
               </Text>
-              <Text>
-                {report.report.report.tomorrowsGoal}
-              </Text>
+              <Text>{report.report.report.tomorrowsGoal}</Text>
             </Stack>
           </Box>
         </>
@@ -162,7 +146,7 @@ export const ReportDetail: FC = () => {
         <Box key={index} my={2}>
           <Flex align="center">
             <Image
-            mr={2}
+              mr={2}
               borderRadius="full"
               boxSize="50px"
               src={commentData.user?.image?.url}

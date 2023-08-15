@@ -31,11 +31,11 @@ export const getUserInfo = (id: number) => {
 
 export const getCurrentUserFollowInfo = () => {
   return client.get("/get_current_user_follow_info");
-}
+};
 
 export const getFollowingUserReports = () => {
   return client.get(`/get_following_user_reports`);
-}
+};
 
 export const getFollowingUsers = (id: number) => {
   return client.get(`/get_following_users/${id}`);

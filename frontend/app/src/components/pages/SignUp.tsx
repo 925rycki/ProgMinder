@@ -132,15 +132,13 @@ export const SignUp: FC = () => {
     }
   };
 
-    const handlPasswordChange = (
-      e: React.ChangeEvent<HTMLInputElement>
-    ) => {
-      const value = e.target.value;
-      if (value.length <= 128) {
-        setPassword(value);
-        setPasswordCount(value.length);
-      }
-    };
+  const handlPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value.length <= 128) {
+      setPassword(value);
+      setPasswordCount(value.length);
+    }
+  };
 
   return (
     <Flex align="center" justify="center" height="100vh">
@@ -151,40 +149,66 @@ export const SignUp: FC = () => {
         <Divider my={4} />
         <Stack spacing={4} py={4} px={10}>
           <VStack>
-          <label htmlFor="icon-button-file">
-            <Center>
-            <Button mr={2} onClick={() => {
-                document.getElementById("icon-button-file")?.click();
-              }} fontSize="sm">プロフィール画像をアップロード</Button><span style={{ color: 'red' }}>*</span>
-            </Center>
-            <input
-              accept="image/*"
-              id="icon-button-file"
-              type="file"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                uploadImage(e);
-                previewImage(e);
-              }}
-              style={{ display: "none" }}
-            />
-          </label>
-          { preview && <Image src={preview} alt="preview img" boxSize="200px" borderRadius="full" /> }
+            <label htmlFor="icon-button-file">
+              <Center>
+                <Button
+                  mr={2}
+                  onClick={() => {
+                    document.getElementById("icon-button-file")?.click();
+                  }}
+                  fontSize="sm"
+                >
+                  プロフィール画像をアップロード
+                </Button>
+                <span style={{ color: "red" }}>*</span>
+              </Center>
+              <input
+                accept="image/*"
+                id="icon-button-file"
+                type="file"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  uploadImage(e);
+                  previewImage(e);
+                }}
+                style={{ display: "none" }}
+              />
+            </label>
+            {preview && (
+              <Image
+                src={preview}
+                alt="preview img"
+                boxSize="200px"
+                borderRadius="full"
+              />
+            )}
           </VStack>
-          <Text>ユーザーID<span style={{ color: 'red' }}>*</span>({nameCount}/16)</Text>
+          <Text>
+            ユーザーID<span style={{ color: "red" }}>*</span>({nameCount}/16)
+          </Text>
           <Input
             placeholder="ユーザーID(半角英数字)"
             value={name}
             onChange={handleNameChange}
           />
-          <Text>ニックネーム<span style={{ color: 'red' }}>*</span>({nicknameCount}/16)</Text>
+          <Text>
+            ニックネーム<span style={{ color: "red" }}>*</span>({nicknameCount}
+            /16)
+          </Text>
           <Input
             placeholder="ニックネーム(表示名)"
             value={nickname}
             onChange={handleNicknameChange}
           />
           <Text>自己紹介文({bioCount}/255)</Text>
-          <Textarea placeholder="自己紹介文" value={bio} onChange={handleBioChange} />
-          <Text>パスワード<span style={{ color: 'red' }}>*</span>({passwordCount}/6~128)</Text>
+          <Textarea
+            placeholder="自己紹介文"
+            value={bio}
+            onChange={handleBioChange}
+          />
+          <Text>
+            パスワード<span style={{ color: "red" }}>*</span>({passwordCount}
+            /6~128)
+          </Text>
           <InputGroup>
             <Input
               placeholder="パスワード"
@@ -211,7 +235,9 @@ export const SignUp: FC = () => {
           <PrimaryButton
             onClick={handleSignUp}
             isDisabled={
-              !image || !name || !password || !passwordConfirmation ? true : false
+              !image || !name || !password || !passwordConfirmation
+                ? true
+                : false
             }
           >
             サインアップ
