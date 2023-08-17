@@ -6,7 +6,7 @@ class Report < ApplicationRecord
   validates :created_date, length: { maximum: 255 }
   validates :todays_goal, length: { maximum: 255 }
   validates :study_time, presence: true
-  validates :goal_review, presence: true, length: { maximum: 255 }
+  validates :goal_review, length: { maximum: 255 }
   validates :challenges, length: { maximum: 255 }
   validates :learnings, length: { maximum: 255 }
   validates :thoughts, length: { maximum: 255 }

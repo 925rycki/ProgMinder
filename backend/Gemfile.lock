@@ -245,6 +245,8 @@ GEM
     ruby-progressbar (1.13.0)
     ruby-vips (2.1.4)
       ffi (~> 1.12)
+    shoulda-matchers (5.3.0)
+      activesupport (>= 5.2.0)
     ssrf_filter (1.1.1)
     thor (1.2.1)
     timeout (0.3.2)
@@ -281,6 +283,7 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   rubocop-rspec
+  shoulda-matchers
   tzinfo-data
 
 RUBY VERSION
