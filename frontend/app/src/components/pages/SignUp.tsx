@@ -150,7 +150,7 @@ export const SignUp: FC = () => {
   };
 
   return (
-    <Flex align="center" justify="center" height="100vh">
+    <Flex align="center" justify="center" my={4}>
       <Box bg="white" w="sm" p={4} borderRadius="md" shadow="md">
         <Heading as="h1" size="lg" textAlign="center">
           ProgMinder
@@ -258,6 +258,9 @@ export const SignUp: FC = () => {
           >
             サインインはこちら
           </Button>
+          <Center>
+            <Text fontSize="xs">※画像はjpg, jpeg, pngが利用可能です。</Text>
+          </Center>
         </Stack>
       </Box>
     </Flex>
