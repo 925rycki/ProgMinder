@@ -30,8 +30,6 @@ function App() {
       if (res?.data.isLogin === true) {
         setIsSignedIn(true);
         setCurrentUser(res?.data.data);
-
-        console.log(res?.data.data);
       } else {
         console.log("No current user");
       }
