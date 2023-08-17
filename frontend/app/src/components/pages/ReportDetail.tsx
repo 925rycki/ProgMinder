@@ -81,14 +81,14 @@ export const ReportDetail: FC = () => {
   return (
     <Box
       p={4}
-      m={2}
+      mb={2}
       mx={{ base: 2, md: 32 }}
       mt={{ base: "75px", md: "100px" }}
     >
       {report && (
         <>
           <Box bg="white" p={4} borderRadius="md" shadow="md">
-            <Stack spacing={4} py={4} px={10}>
+            <Stack spacing={2} py={4} px={10}>
               <Flex
                 align="center"
                 onClick={() => navigate(`/user/${report.report.user.id}`)}

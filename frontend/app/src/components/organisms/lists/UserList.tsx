@@ -25,13 +25,13 @@ export const UserList: React.FC<UserListProps> = ({
 
   return (
     <Box m={4}>
-      <Heading as="h1" mb="5" size="md" m={2} textAlign="center">
+      <Heading as="h1" mb="5" size="md" m={2} textAlign="center" mt={{ base: "60px", md: "80px" }}>
         {title}
       </Heading>
       {users.length === 0 ? (
-        <Text mt={{ base: "30px", md: "45px" }}>{emptyMessage}</Text>
+        <Text>{emptyMessage}</Text>
       ) : (
-        <List spacing={3}>
+        <List spacing={3} mt="10px">
           {users.map((user) => (
             <ListItem
               key={user.id}

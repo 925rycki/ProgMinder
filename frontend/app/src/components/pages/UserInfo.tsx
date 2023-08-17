@@ -76,7 +76,7 @@ export const UserInfo: FC = () => {
       <Text fontSize="xl" fontWeight="bold">
         {userInfo.nickname}
       </Text>
-      <Text>{userInfo.bio}</Text>
+      <Text style={{ whiteSpace: "pre-line" }}>{userInfo.bio}</Text>
       <Flex>
         <Text
           fontWeight="bold"
@@ -111,7 +111,7 @@ export const UserInfo: FC = () => {
       )}
       <List width="80%">
         {userInfo.reports.map((report) => (
-          <ListItem key={report.id} p={5} shadow="md" borderWidth="1px">
+          <ListItem key={report.id} my={2} p={5} shadow="md" borderWidth="1px">
             <Text fontSize="xl">{report.createdDate}</Text>
             <Text fontWeight="bold">本日の目標</Text>
             <Text style={{ whiteSpace: "pre-line" }}>{report.todaysGoal}</Text>
