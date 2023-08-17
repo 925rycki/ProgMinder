@@ -6,15 +6,14 @@ RSpec.describe "Api::V1::Reports" do
 
     before do
       create_list(:report, 3, user:)
-
       get api_v1_reports_path, as: :json
     end
 
-    it 'returns a successful response' do
+    it 'successレスポンスが返ってくること' do
       expect(response).to have_http_status(:success)
     end
 
-    it 'returns all reports' do
+    it 'すべての日報が返ってくること' do
       reports_data = response.parsed_body
       expect(reports_data.size).to eq(3)
     end
