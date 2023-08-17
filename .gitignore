@@ -54,4 +54,4 @@ frontend/appyarn-debug.log*
 frontend/appyarn-error.log*
 
 .env
-myapp-key-pair.pem
+my-key-pair-01.pem
