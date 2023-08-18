@@ -11,7 +11,7 @@ FactoryBot.define do
     user
 
     after(:create) do |report|
-      create(:comment, report: report)
+      create(:comment, report:)
     end
   end
 end
