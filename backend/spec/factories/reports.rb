@@ -9,5 +9,9 @@ FactoryBot.define do
     thoughts { "Sample thoughts" }
     tomorrows_goal { "Sample tomorrow goal" }
     user
+
+    after(:create) do |report|
+      create(:comment, report: report)
+    end
   end
 end
