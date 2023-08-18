@@ -7,6 +7,8 @@ module Api
 
       def show
         @report = Report.includes(comments: :user).find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        render json: { message: "レポートが存在しません" }, status: :not_found
       end
 
       def create
