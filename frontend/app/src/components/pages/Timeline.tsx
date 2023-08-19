@@ -1,10 +1,12 @@
 import { FC, useContext, useEffect, useState } from "react";
 import {
   Box,
+  Center,
   Flex,
   Image,
   List,
   ListItem,
+  Spinner,
   Stack,
   Text,
 } from "@chakra-ui/react";
@@ -73,7 +75,16 @@ export const Timeline: FC = () => {
   return (
     <>
       {reports.length === 0 ? (
-        <Text mt={{ base: "60px", md: "90px" }}>まだ投稿がありません。</Text>
+        <Center height="100vh">
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"
+          />
+          <Text ml={2}>Loading...</Text>
+        </Center>
       ) : (
         <Box
           mx={{ base: 2, md: 32 }}

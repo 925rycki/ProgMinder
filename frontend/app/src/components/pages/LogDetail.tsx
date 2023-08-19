@@ -84,7 +84,7 @@ export const LogDetail: FC = () => {
   };
 
   return (
-    <Box p={4}>
+    <Box p={4} mt={{ base: "40px", md: "60px" }}>
       <Stack spacing={4} py={4} px={10}>
         <FormControl id="createdDate">
           <FormLabel>日付</FormLabel>
