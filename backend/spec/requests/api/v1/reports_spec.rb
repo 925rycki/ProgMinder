@@ -2,10 +2,12 @@ require 'rails_helper'
 
 RSpec.describe 'Api::V1::Reports' do
   let(:user) { create(:user) }
+  let(:auth_headers) { user.create_new_auth_token }
+  let(:other_user) { create(:user) }
+  let(:other_auth_headers) { other_user.create_new_auth_token }
+  let(:report) { create(:report, user:) }
 
   describe 'GET /api/v1/reports' do
-    let(:user) { create(:user) }
-
     before do
       create_list(:report, 3, user:)
       get api_v1_reports_path, as: :json
@@ -15,68 +17,28 @@ RSpec.describe 'Api::V1::Reports' do
       expect(response).to have_http_status(:ok)
     end
 
-    it 'すべてのレポートが返ってくること' do
-      reports_data = response.parsed_body
-      expect(reports_data.size).to eq(3)
+    it '全てのレポートが返ってくること' do
+      expect(response.parsed_body.size).to eq(3)
     end
   end
 
   describe 'GET /api/v1/reports/:id' do
-    let(:user) { create(:user) }
-    let(:report) { create(:report, user:) }
-    let(:json_response) { response.parsed_body }
-    let(:retuened_report) { json_response['report']['report'] }
-
     context 'レポートが存在する場合' do
-      before do
-        get api_v1_report_path(report.id), as: :json
-      end
+      before { get api_v1_report_path(report.id), as: :json }
 
       it 'okレスポンスが返ってくること' do
         expect(response).to have_http_status(:ok)
       end
 
-      it 'IDが正しく返されること' do
-        expect(retuened_report['id']).to eq(report.id)
-      end
-
-      it '作成日が正しく返されること' do
-        expect(retuened_report['created_date']).to eq(report.created_date)
-      end
-
-      it '本日の目標が正しく返されること' do
-        expect(retuened_report['todays_goal']).to eq(report.todays_goal)
-      end
-
-      it '学習時間が正しく返されること' do
-        expect(retuened_report['study_time']).to eq(report.study_time)
-      end
-
-      it '目標振り返りが正しく返されること' do
-        expect(retuened_report['goal_review']).to eq(report.goal_review)
-      end
-
-      it '詰まっていることが正しく返されること' do
-        expect(retuened_report['challenges']).to eq(report.challenges)
-      end
-
-      it '学んだことが正しく返されること' do
-        expect(retuened_report['learnings']).to eq(report.learnings)
-      end
-
-      it '感想が正しく返されること' do
-        expect(retuened_report['thoughts']).to eq(report.thoughts)
-      end
-
-      it '明日の目標が正しく返されること' do
-        expect(retuened_report['tomorrows_goal']).to eq(report.tomorrows_goal)
+      %w[id created_date todays_goal study_time goal_review challenges learnings thoughts tomorrows_goal].each do |attribute|
+        it "正しい#{attribute}が返ってくること" do
+          expect(response.parsed_body['report']['report'][attribute]).to eq(report.send(attribute))
+        end
       end
     end
 
     context 'レポートが存在しない場合' do
-      before do
-        get api_v1_report_path(9_999_999), as: :json
-      end
+      before { get api_v1_report_path(9_999_999), as: :json }
 
       it 'not foundレスポンスが返ってくること' do
         expect(response).to have_http_status(:not_found)
@@ -85,58 +47,100 @@ RSpec.describe 'Api::V1::Reports' do
   end
 
   describe 'POST /api/v1/reports' do
-    let(:valid_params) do
-      {
-        report: {
-          created_date: '2023-01-01',
-          todays_goal: 'Sample todays goal',
-          study_time: 2,
-          goal_review: 'Sample goal review',
-          challenges: 'Sample challenges',
-          learnings: 'Sample learnings',
-          thoughts: 'Sample thoughts',
-          tomorrows_goal: 'Sample tomorrow goal'
-        }
+    valid_params = {
+      report: {
+        created_date: '2023-01-01',
+        todays_goal: 'Sample todays goal',
+        study_time: 2,
+        goal_review: 'Sample goal review',
+        challenges: 'Sample challenges',
+        learnings: 'Sample learnings',
+        thoughts: 'Sample thoughts',
+        tomorrows_goal: 'Sample tomorrow goal'
       }
-    end
+    }
 
-    context "ユーザーがログインしていて、有効なパラメータの場合" do
-      let(:auth_headers) { user.create_new_auth_token }
-
-      it "新しいレポートが作成できること" do
+    context 'ユーザーがサインインしていて、有効なパラメータの場合' do
+      it '新しいレポートを作成できること' do
         expect do
           post api_v1_reports_path, params: valid_params, headers: auth_headers, as: :json
         end.to change(Report, :count).by(1)
       end
     end
+
+    context 'ユーザーがサインインしていない場合' do
+      it 'unauthorizedレスポンスが返ってくること' do
+        post api_v1_reports_path, params: valid_params, as: :json
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    context 'ユーザーがサインインしていて、無効なパラメータの場合' do
+      invalid_params = {
+        report: {
+          created_date: nil,
+          todays_goal: nil,
+          study_time: nil,
+          goal_review: nil,
+          challenges: nil,
+          learnings: nil,
+          thoughts: nil,
+          tomorrows_goal: nil
+        }
+      }
+
+      it '新しいレポートを作成できないこと' do
+        expect do
+          post api_v1_reports_path, params: invalid_params, headers: auth_headers, as: :json
+        end.not_to change(Report, :count)
+      end
+
+      it 'unprocessable entityレスポンスが返ってくること' do
+        post api_v1_reports_path, params: invalid_params, headers: auth_headers, as: :json
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
   end
 
   describe 'PUT /api/v1/reports/:id' do
-    let(:auth_headers) { user.create_new_auth_token }
-    let(:report) { create(:report, user:) }
-    let(:valid_params) { { todays_goal: 'Updated sample todays goal' } }
+    def perform_request(report_id, headers = {}, params = {})
+      put api_v1_report_path(report_id), params:, headers:, as: :json
+    end
 
-    context 'レポートが存在して、ユーザーが所有者の場合' do
+    context 'レポートが存在していて、ユーザーが所有者である場合' do
+      before { perform_request(report.id, auth_headers, report: { todays_goal: 'Updated sample todays goal' }) }
+
       it 'レポートを更新できること' do
-        put api_v1_report_path(report.id), params: { report: valid_params }, headers: auth_headers, as: :json
-        expect(report.reload.todays_goal).to eq(valid_params[:todays_goal])
+        expect(report.reload.todays_goal).to eq('Updated sample todays goal')
       end
 
       it 'okレスポンスが返ってくること' do
-        put api_v1_report_path(report.id), params: { report: valid_params }, headers: auth_headers, as: :json
         expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'ユーザーがサインインしていない場合' do
+      before { perform_request(report.id, {}, report: { todays_goal: 'Updated sample todays goal' }) }
+
+      it 'unauthorizedレスポンスが返ってくること' do
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    context 'レポートが存在していて、ユーザーが所有者でない場合' do
+      before { perform_request(report.id, other_auth_headers, report: { todays_goal: 'Updated sample todays goal' }) }
+
+      it 'レポートを更新できないこと' do
+        expect(response).to have_http_status(:unauthorized)
       end
     end
   end
 
   describe 'DELETE /api/v1/reports/:id' do
-    let(:user) { create(:user) }
-    let(:other_user) { create(:other_user) }
     let!(:report) { create(:report, user:) }
-    let(:auth_headers) { user.create_new_auth_token }
 
-    context 'レポートが存在して、ユーザーが所有者の場合' do
-      it 'レポートが削除できること' do
+    context 'レポートが存在していて、ユーザーが所有者である場合' do
+      it 'レポートを削除できること' do
         expect do
           delete api_v1_report_path(report.id), headers: auth_headers, as: :json
         end.to change(Report, :count).by(-1)
@@ -145,6 +149,13 @@ RSpec.describe 'Api::V1::Reports' do
       it 'no contentレスポンスが返ってくること' do
         delete api_v1_report_path(report.id), headers: auth_headers, as: :json
         expect(response).to have_http_status(:no_content)
+      end
+    end
+
+    context 'レポートが存在していて、ユーザーが所有者でない場合' do
+      it 'unauthorizedレスポンスが返ってくること' do
+        delete api_v1_report_path(report.id), headers: other_auth_headers, as: :json
+        expect(response).to have_http_status(:unauthorized)
       end
     end
   end
