@@ -25,7 +25,14 @@ export const UserList: React.FC<UserListProps> = ({
 
   return (
     <Box m={4}>
-      <Heading as="h1" mb="5" size="md" m={2} textAlign="center" mt={{ base: "60px", md: "80px" }}>
+      <Heading
+        as="h1"
+        mb="5"
+        size="md"
+        m={2}
+        textAlign="center"
+        mt={{ base: "60px", md: "80px" }}
+      >
         {title}
       </Heading>
       {users.length === 0 ? (
