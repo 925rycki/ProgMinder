@@ -25,7 +25,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -59,7 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.2.2
@@ -69,34 +69,34 @@ jobs:
       - name: Run rubocop
         run: bundle exec rubocop
 
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
   
-  #     - uses: shimataro/ssh-key-action@v2
-  #       with:
-  #         key: ${{ secrets.BACKEND_SERVER_SSH_KEY }}
-  #         known_hosts: ${{ secrets.BACKEND_SERVER_KNOWN_HOSTS }}
+      - uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.BACKEND_SERVER_SSH_KEY }}
+          known_hosts: ${{ secrets.BACKEND_SERVER_KNOWN_HOSTS }}
         
-  #     - name: Deploy code
-  #       run: rsync -auz backend ${SERVER_USER}@${SERVER_IP}:/srv
-  #       env:
-  #         SERVER_USER: ${{ secrets.BACKEND_SERVER_USER }}
-  #         SERVER_IP: ${{ secrets.BACKEND_SERVER_IP }}
-  #       working-directory: .
+      - name: Deploy code
+        run: rsync -auz backend ${SERVER_USER}@${SERVER_IP}:/srv
+        env:
+          SERVER_USER: ${{ secrets.BACKEND_SERVER_USER }}
+          SERVER_IP: ${{ secrets.BACKEND_SERVER_IP }}
+        working-directory: .
   
-  #     - name: Restart service
-  #       run: ssh ${SERVER_USER}@${SERVER_IP} sudo systemctl restart backend
-  #       env:
-  #         SERVER_USER: ${{ secrets.BACKEND_SERVER_USER }}
-  #         SERVER_IP: ${{ secrets.BACKEND_SERVER_IP }}
-  #       working-directory: .
+      - name: Restart service
+        run: ssh ${SERVER_USER}@${SERVER_IP} sudo systemctl restart backend
+        env:
+          SERVER_USER: ${{ secrets.BACKEND_SERVER_USER }}
+          SERVER_IP: ${{ secrets.BACKEND_SERVER_IP }}
+        working-directory: .
   
-  #     - name: Check service status
-  #       run: ssh ${SERVER_USER}@${SERVER_IP} systemctl status backend
-  #       env:
-  #         SERVER_USER: ${{ secrets.BACKEND_SERVER_USER }}
-  #         SERVER_IP: ${{ secrets.BACKEND_SERVER_IP }}
-  #       working-directory: .
+      - name: Check service status
+        run: ssh ${SERVER_USER}@${SERVER_IP} systemctl status backend
+        env:
+          SERVER_USER: ${{ secrets.BACKEND_SERVER_USER }}
+          SERVER_IP: ${{ secrets.BACKEND_SERVER_IP }}
+        working-directory: .
         
