@@ -21,10 +21,10 @@ export const Header: FC = () => {
         align="center"
         justify="space-between"
         padding={{ base: 3, md: 5 }}
-        position="fixed" // このプロパティを追加
-        width="100%" // このプロパティを追加
-        top="0" // このプロパティを追加
-        zIndex={1} // このプロパティを追加
+        position="fixed"
+        width="100%"
+        top="0"
+        zIndex={1}
       >
         <Flex align="center" as="a" _hover={{ cursor: "pointer" }}>
           <Heading
