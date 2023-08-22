@@ -1,6 +1,12 @@
 import { FC, useEffect, useState } from "react";
-import { Box, Heading, Stack, Text } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import {
+  Box,
+  Heading,
+  Stack,
+  Text,
+  Link as ChakraLink,
+} from "@chakra-ui/react";
+import { useNavigate, Link as RouterLink } from "react-router-dom";
 
 import { ReportType } from "../../types/report";
 import { getCurrentUserReports } from "../../lib/api/report";
@@ -26,6 +32,13 @@ export const Log: FC = () => {
       {reports.length === 0 && (
         <Text mt={{ base: "60px", md: "90px" }}>
           学習記録を作成するとここに表示されます。
+          <Text>
+            上部メニューバーの
+            <ChakraLink as={RouterLink} to="/report" color="blue.500">
+              レポート
+            </ChakraLink>
+            をクリックして記録を作成してみましょう！
+          </Text>
         </Text>
       )}
       <Box m={2} mt={{ base: "75px", md: "100px" }} mb="25px">
