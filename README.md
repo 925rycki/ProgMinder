@@ -7,8 +7,9 @@
 [ProgMinder](https://progminder.tech/ "ProgMinder")
 
 ## 紹介動画
-アカウントを作成しなくても手軽に機能を確認できるように紹介動画を作成しました！(3分46秒)<br>
-[紹介動画](https://www.youtube.com/watch?v=fsDVQ4Rq13U)
+アカウントを作成しなくても手軽に機能を確認できるように紹介動画を作成しました！(3分44秒)<br>
+[紹介動画](https://www.youtube.com/watch?v=fsDVQ4Rq13U)<br>
+紹介動画内では、オリジナルプロダクトのドメインが.comになっていますが現在は.techに更新してあります。
 
 ## 画面キャプチャ
 

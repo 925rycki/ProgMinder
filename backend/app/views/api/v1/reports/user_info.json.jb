@@ -8,6 +8,7 @@
   reports: @user_reports.map do |report|
     {
       id: report.id,
+      created_date: report.created_date,
       todays_goal: report.todays_goal,
       study_time: report.study_time,
       goal_review: report.goal_review,
