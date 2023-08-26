@@ -4,7 +4,8 @@
 [![frontend](https://github.com/925rycki/ProgMinder/actions/workflows/frontend.yml/badge.svg)](https://github.com/925rycki/ProgMinder/actions/workflows/frontend.yml)
 
 ## オリジナルプロダクトのURL
-[ProgMinder](https://progminder.tech/ "ProgMinder")
+[ProgMinder](https://progminder.tech/ "ProgMinder")<br>
+chromeだと読み込むのに時間がかかる場合があるという問題を発見しました。原因は調査中です。現状、safariですとスムーズにご利用いただけると思います。
 
 ## 紹介動画
 アカウントを作成しなくても手軽に機能を確認できるように紹介動画を作成しました！(3分44秒)<br>
