@@ -118,7 +118,9 @@ export const UserInfo: FC = () => {
       <List width="80%">
         {userInfo.reports.map((report) => (
           <ListItem key={report.id} my={2} p={5} shadow="md" borderWidth="1px">
-            <Text fontSize="xl" fontWeight="bold">{formatDate(report.createdDate)}</Text>
+            <Text fontSize="xl" fontWeight="bold">
+              {formatDate(report.createdDate)}
+            </Text>
             <Text fontWeight="bold">本日の目標</Text>
             <Text style={{ whiteSpace: "pre-line" }}>{report.todaysGoal}</Text>
             <Text fontWeight="bold">学習時間[h]</Text>
