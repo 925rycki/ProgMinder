@@ -176,9 +176,32 @@ export const ReportDetail: FC = () => {
                 src={commentData.user?.image?.url}
                 alt="User image"
               />
-              <Text fontWeight="bold">{commentData.user?.nickname}</Text>
+              <Flex direction="column" flex={1} mr={2}>
+                <Flex align="center">
+                  <Text fontWeight="bold" mr={2}>
+                    {commentData.user?.nickname}
+                  </Text>
+                  <Text fontSize="sm" color="gray.700">
+                    {new Date(commentData.comment.createdAt).toLocaleDateString(
+                      "ja-JP",
+                      {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      }
+                    )}{" "}
+                    {new Date(commentData.comment.createdAt).toLocaleTimeString(
+                      "ja-JP",
+                      {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      }
+                    )}
+                  </Text>
+                </Flex>
+                <Text mt={2}>{commentData.comment?.content}</Text>
+              </Flex>
             </Flex>
-            <Text mx={2}>: {commentData.comment?.content}</Text>
             {currentUser?.id === commentData.comment?.userId && (
               <DangerButton
                 onClick={() => handleDeleteComment(commentData.comment?.id)}
