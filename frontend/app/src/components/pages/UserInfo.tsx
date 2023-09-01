@@ -1,7 +1,7 @@
 import { FC, useContext, useEffect, useState } from "react";
 import { UserInfoType } from "../../types/report";
 import { createFollow, deleteFollow, getUserInfo } from "../../lib/api/report";
-import { Flex, Image, List, ListItem, Text, VStack } from "@chakra-ui/react";
+import { Card, Flex, Image, Text, VStack } from "@chakra-ui/react";
 import { useNavigate, useParams } from "react-router-dom";
 import { PrimaryButton } from "../atoms/button/PrimaryButton";
 import { SmallAddIcon, SmallCloseIcon } from "@chakra-ui/icons";
@@ -115,31 +115,27 @@ export const UserInfo: FC = () => {
           )}
         </>
       )}
-      <List width="80%">
-        {userInfo.reports.map((report) => (
-          <ListItem key={report.id} my={2} p={5} shadow="md" borderWidth="1px">
-            <Text fontSize="xl" fontWeight="bold">
-              {formatDate(report.createdDate)}
-            </Text>
-            <Text fontWeight="bold">本日の目標</Text>
-            <Text style={{ whiteSpace: "pre-line" }}>{report.todaysGoal}</Text>
-            <Text fontWeight="bold">学習時間[h]</Text>
-            <Text style={{ whiteSpace: "pre-line" }}>{report.studyTime}</Text>
-            <Text fontWeight="bold">目標振り返り</Text>
-            <Text style={{ whiteSpace: "pre-line" }}>{report.goalReview}</Text>
-            <Text fontWeight="bold">詰まっていること</Text>
-            <Text style={{ whiteSpace: "pre-line" }}>{report.challenges}</Text>
-            <Text fontWeight="bold">学んだこと</Text>
-            <Text style={{ whiteSpace: "pre-line" }}>{report.learnings}</Text>
-            <Text fontWeight="bold">感想</Text>
-            <Text style={{ whiteSpace: "pre-line" }}>{report.thoughts}</Text>
-            <Text fontWeight="bold">明日の目標</Text>
-            <Text style={{ whiteSpace: "pre-line" }}>
-              {report.tomorrowsGoal}
-            </Text>
-          </ListItem>
-        ))}
-      </List>
+      {userInfo.reports.map((report) => (
+        <Card key={report.id} my={4} p={4} boxShadow="md" width="80%">
+          <Text fontSize="xl" fontWeight="bold">
+            {formatDate(report.createdDate)}
+          </Text>
+          <Text fontWeight="bold">本日の目標</Text>
+          <Text style={{ whiteSpace: "pre-line" }}>{report.todaysGoal}</Text>
+          <Text fontWeight="bold">学習時間[h]</Text>
+          <Text style={{ whiteSpace: "pre-line" }}>{report.studyTime}</Text>
+          <Text fontWeight="bold">目標振り返り</Text>
+          <Text style={{ whiteSpace: "pre-line" }}>{report.goalReview}</Text>
+          <Text fontWeight="bold">詰まっていること</Text>
+          <Text style={{ whiteSpace: "pre-line" }}>{report.challenges}</Text>
+          <Text fontWeight="bold">学んだこと</Text>
+          <Text style={{ whiteSpace: "pre-line" }}>{report.learnings}</Text>
+          <Text fontWeight="bold">感想</Text>
+          <Text style={{ whiteSpace: "pre-line" }}>{report.thoughts}</Text>
+          <Text fontWeight="bold">明日の目標</Text>
+          <Text style={{ whiteSpace: "pre-line" }}>{report.tomorrowsGoal}</Text>
+        </Card>
+      ))}
     </VStack>
   );
 };

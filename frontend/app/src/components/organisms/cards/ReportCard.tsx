@@ -17,10 +17,11 @@ type Props = {
   data: TimelineReportType;
   handleCreateLike: (id: number) => void;
   handleDeleteLike: (id: number) => void;
+  onClick?: () => void;
 };
 
 export const ReportCard: FC<Props> = (props) => {
-  const { data, handleCreateLike, handleDeleteLike } = props;
+  const { data, handleCreateLike, handleDeleteLike, onClick } = props;
   const navigate = useNavigate();
 
   const formatDate = (dateString: string) => {
@@ -28,8 +29,20 @@ export const ReportCard: FC<Props> = (props) => {
     return new Date(dateString).toLocaleDateString("ja-JP", options);
   };
 
+  const handleIconClick = (event: React.MouseEvent, callback: () => void) => {
+    event.stopPropagation();
+    callback();
+  };
+
   return (
-    <Card key={data.report.id} my={4} px={2} boxShadow="md">
+    <Card
+      key={data.report.id}
+      my={4}
+      px={2}
+      boxShadow="md"
+      onClick={onClick}
+      style={{ cursor: onClick ? "pointer" : "default" }}
+    >
       <CardBody>
         <Stack spacing={2}>
           <Flex
@@ -96,13 +109,17 @@ export const ReportCard: FC<Props> = (props) => {
               {data.isLiked ? (
                 <AiFillLike
                   size="24px"
-                  onClick={() => handleDeleteLike(data.report.id)}
+                  onClick={(e) =>
+                    handleIconClick(e, () => handleDeleteLike(data.report.id))
+                  }
                   cursor="pointer"
                 />
               ) : (
                 <AiOutlineLike
                   size="24px"
-                  onClick={() => handleCreateLike(data.report.id)}
+                  onClick={(e) =>
+                    handleIconClick(e, () => handleCreateLike(data.report.id))
+                  }
                   cursor="pointer"
                 />
               )}
@@ -111,7 +128,11 @@ export const ReportCard: FC<Props> = (props) => {
             <Flex align="center">
               <FaRegComment
                 size="20px"
-                onClick={() => navigate(`/reports/${data.report.id}`)}
+                onClick={(e) =>
+                  handleIconClick(e, () =>
+                    navigate(`/reports/${data.report.id}`)
+                  )
+                }
                 cursor="pointer"
               />
               <Text mx={1}>{data.commentsCount}</Text>
