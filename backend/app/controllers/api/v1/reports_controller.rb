@@ -50,7 +50,7 @@ module Api
 
       # 認証ユーザーに紐づくレポートを取得する
       def current_user_reports
-        @user_reports = current_api_v1_user.reports.order(created_at: :desc)
+        @user_reports = current_api_v1_user.reports.includes(:likes, :comments).order(created_at: :desc)
       end
 
       # 特定のユーザーに紐づく情報を取得する

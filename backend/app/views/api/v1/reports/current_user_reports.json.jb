@@ -1,13 +1,23 @@
 @user_reports.map do |report|
   {
-    id: report.id,
-    created_date: report.created_date,
-    todays_goal: report.todays_goal,
-    study_time: report.study_time,
-    goal_review: report.goal_review,
-    challenges: report.challenges,
-    learnings: report.learnings,
-    thoughts: report.thoughts,
-    tomorrows_goal: report.tomorrows_goal
+    report: {
+      id: report.id,
+      created_date: report.created_date,
+      todays_goal: report.todays_goal,
+      study_time: report.study_time,
+      goal_review: report.goal_review,
+      challenges: report.challenges,
+      learnings: report.learnings,
+      thoughts: report.thoughts,
+      tomorrows_goal: report.tomorrows_goal
+    },
+    likes_count: report.likes.count,
+    is_liked: report.likes.exists?(user_id: current_api_v1_user.id),
+    comments_count: report.comments.count,
+    user: {
+      id: report.user.id,
+      nickname: report.user.nickname,
+      image: report.user.image
+    }
   }
 end
