@@ -146,9 +146,9 @@ RSpec.describe 'Api::V1::Reports' do
         end.to change(Report, :count).by(-1)
       end
 
-      it 'no contentレスポンスが返ってくること' do
+      it 'okレスポンスが返ってくること' do
         delete api_v1_report_path(report.id), headers: auth_headers, as: :json
-        expect(response).to have_http_status(:no_content)
+        expect(response).to have_http_status(:ok)
       end
     end
 
