@@ -24,17 +24,17 @@ module Api
           if @report.update(report_params)
             render 'update'
           else
-            render json: @report.errors, status: :unprocessable_entity
+            render json: { message: "更新に失敗しました", errors: @report.errors }, status: :unprocessable_entity
           end
         else
-          render status: :unauthorized
+          render json: { message: "許可されていないユーザーです" }, status: :unauthorized
         end
       end
 
       def destroy
         if authorized_user?(@report.user)
           @report.destroy
-          head :no_content
+          render json: { message: "レポート削除しました" }, status: :ok
         else
           render json: { message: "許可されていないユーザーです" }, status: :unauthorized
         end
