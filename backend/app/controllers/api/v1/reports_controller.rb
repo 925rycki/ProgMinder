@@ -27,7 +27,7 @@ module Api
             render json: { message: "更新に失敗しました", errors: @report.errors }, status: :unprocessable_entity
           end
         else
-          render json: { message: "許可されていないユーザーです" } status: :unauthorized
+          render json: { message: "許可されていないユーザーです" }, status: :unauthorized
         end
       end
 
