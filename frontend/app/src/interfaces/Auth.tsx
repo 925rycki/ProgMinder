@@ -1,4 +1,3 @@
-// サインアップ
 export interface SignUpData {
   name: string;
   nickname: string;
@@ -10,17 +9,14 @@ export interface SignUpData {
 }
 
 export interface SignUpFormData extends FormData {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  append(name: keyof SignUpData, value: string | Blob, fileName?: string): any;
+  append(name: keyof SignUpData, value: string | Blob, fileName?: string): void;
 }
 
-// サインイン
 export interface SignInData {
   name: string;
   password: string;
 }
 
-// ユーザー
 export interface User {
   id: number;
   uid: string;
