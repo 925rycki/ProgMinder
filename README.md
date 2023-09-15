@@ -48,7 +48,7 @@
 ## 使用技術一覧
 
 ### 🖥️ **フロントエンド**
-- **Languages & Libraries**: HTML/CSS, TypeScript(4.9.5), React(18.2.0)
+- **Languages & Libraries**: HTML/CSS, TypeScript(4.9.5), React(18.2.0), Chakra UI(2.5.5)
 
 ### 🚀 **バックエンド**
 - **Languages**: Ruby(3.2.2)
