@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { CSSProperties, FC, ReactNode } from "react";
 import { Button } from "@chakra-ui/react";
 
 type BaseButtonProps = {
@@ -6,10 +6,11 @@ type BaseButtonProps = {
   isDisabled?: boolean;
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   colorScheme: string;
+  style?: CSSProperties;
 };
 
 export const BaseButton: FC<BaseButtonProps> = (props) => {
-  const { children, isDisabled = false, onClick, colorScheme } = props;
+  const { children, isDisabled = false, onClick, colorScheme, style } = props;
 
   return (
     <Button
@@ -19,6 +20,7 @@ export const BaseButton: FC<BaseButtonProps> = (props) => {
       isDisabled={isDisabled}
       _hover={{ opacity: 0.8 }}
       onClick={onClick}
+      style={style}
     >
       {children}
     </Button>
