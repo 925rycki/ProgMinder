@@ -1,5 +1,5 @@
 import { FC, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 import { signOut } from "../../lib/api/auth";
@@ -20,6 +20,14 @@ export const AuthButtons: FC<Props> = (props) => {
   const { setIsSignedIn } = useContext(AuthContext);
 
   const navigate = useNavigate();
+
+  const location = useLocation();
+
+  const activeStyle = {
+    textDecoration: "underline",
+    textDecorationThickness: "2px",
+    textUnderlineOffset: "4px",
+  };
 
   const handleSignOut = async () => {
     try {
@@ -46,17 +54,34 @@ export const AuthButtons: FC<Props> = (props) => {
     if (isSignedIn) {
       return (
         <>
-          <PrimaryButton onClick={() => navigate("/timeline")}>
+          <PrimaryButton
+            onClick={() => navigate("/timeline")}
+            style={location.pathname === "/timeline" ? activeStyle : {}}
+          >
             タイムライン
           </PrimaryButton>
-          <PrimaryButton onClick={() => navigate("/follow")}>
+          <PrimaryButton
+            onClick={() => navigate("/follow")}
+            style={location.pathname === "/follow" ? activeStyle : {}}
+          >
             フォロー
           </PrimaryButton>
-          <PrimaryButton onClick={() => navigate("/report")}>
+          <PrimaryButton
+            onClick={() => navigate("/report")}
+            style={location.pathname === "/report" ? activeStyle : {}}
+          >
             レポート
           </PrimaryButton>
-          <PrimaryButton onClick={() => navigate("/log")}>ログ</PrimaryButton>
-          <PrimaryButton onClick={() => navigate("/profile")}>
+          <PrimaryButton
+            onClick={() => navigate("/log")}
+            style={location.pathname === "/log" ? activeStyle : {}}
+          >
+            ログ
+          </PrimaryButton>
+          <PrimaryButton
+            onClick={() => navigate("/profile")}
+            style={location.pathname === "/profile" ? activeStyle : {}}
+          >
             プロフィール
           </PrimaryButton>
           <PrimaryButton onClick={handleSignOut}>サインアウト</PrimaryButton>
