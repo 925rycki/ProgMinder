@@ -56,7 +56,7 @@ export const AuthButtons: FC<Props> = (props) => {
         <>
           <PrimaryButton
             onClick={() => navigate("/timeline")}
-            style={location.pathname === "/timeline" ? activeStyle : {}}
+            style={(location.pathname === "/" || location.pathname === "/timeline") ? activeStyle : {}}
           >
             タイムライン
           </PrimaryButton>
